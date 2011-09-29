@@ -6,7 +6,7 @@
 
     <h1>This is a Django form, bootstrapped</h1>
     
-    <form>
+    <form action="" method="post">
         {% csrf_token %}
         {{ form|bootstrap }}
         <p class="actions">
@@ -14,4 +14,6 @@
         </p>
     </form>
 
+    <p>Submit the form to see error messages styled into it.</p>
+    
 {% endblock %}

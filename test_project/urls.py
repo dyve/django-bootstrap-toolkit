@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
 
     (r'^$', direct_to_template, {'template': 'index.html'}, "home"),
-    (r'^about$', direct_to_template, {'template': 'about.html'}, "about"),
     (r'^contact$', direct_to_template, {'template': 'contact.html'}, "contact"),
     (r'^form$', 'test_bootstrap.views.test_form'),
+    (r'^tabs$', direct_to_template, {'template': 'tabs.html'}, "tabs"),
 )

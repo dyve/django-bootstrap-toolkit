@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3>Demo</h3>
+
+    <ul class="tabs" data-tabs="tabs">
+        <li class="active"><a href="#django">Django</a></li>
+        <li><a href="#bootstrap">Bootstrap</a></li>
+        <li><a href="#jquery">jQuery</a></li>
+        <li><a href="#github">GitHub</a></li>
+    </ul>
+
+    <div id="my-tab-content" class="tab-content">
+        <div class="active" id="django">
+            <p>Django is pretty awesome.</p>
+        </div>
+        <div id="bootstrap">
+            <p>Bootstrap is cooler than ice.</p>
+        </div>
+        <div id="jquery">
+            <p>jQuery makes JavaScript smile.</p>
+        </div>
+        <div id="github">
+            <p>GitHub keeps our code warm.</p>
+        </div>
+    </div>
+
+{% endblock %}
