@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load bootstrap %}
+
+{% block content %}
+
+    <h1>This is a Django form, bootstrapped</h1>
+    
+    <form>
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <p class="actions">
+            <input type="submit" value="Submit" class="btn primary">
+        </p>
+    </form>
+
+{% endblock %}

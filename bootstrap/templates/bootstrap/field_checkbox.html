@@ -1,0 +1,17 @@
+{% load bootstrap %}
+
+<div class="input">
+
+    <ul class="inputs-list">
+        <li>
+            <label class="{% if field|is_disabled %}disabled{% endif %}">
+                {{ field }}
+                <span>{{ field.label }}</span>
+            </label>
+        </li>
+    </ul>
+
+    {% include "bootstrap/field_errors.html" %}
+    {% include "bootstrap/field_help.html" %}
+
+</div> <!-- input -->

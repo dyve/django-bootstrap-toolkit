@@ -1,0 +1,12 @@
+{% load bootstrap %}
+
+<label>{{ field.label }}</label>
+
+<div class="input{% if field|is_disabled %} disabled{% endif %}">
+
+    {{ field|bootstrap_choices }}
+
+    {% include "bootstrap/field_errors.html" %}
+    {% include "bootstrap/field_help.html" %}
+
+</div> <!-- input -->
