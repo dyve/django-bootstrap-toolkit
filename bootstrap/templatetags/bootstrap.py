@@ -47,14 +47,49 @@ def bootstrap_media():
     # HTML tags to insert Bootstrap stylesheet and javascript
     return bootstrap_media()
 
+
 @register.filter
 def bootstrap(form):
-    # Filter to Bootstrap a Django form
-    return get_template("bootstrap/form.html").render(
-        Context({
-            'form': form
-        })
-    )
+    output = []
+    output.append(unicode(form.non_field_errors()))
+
+    for field in form.visible_fields():
+
+        output.append(u'<div class="clearfix%s%s">'%(' error' if field.errors else '',
+                                                     ' required' if field.field.required else ''))
+
+        disabled = u' disabled' if is_disabled(field) else ''
+        if isinstance(field.field.widget, CheckboxInput):  # checkbox
+            output.append(u'<div class="input">\n<ul class="inputs-list">\n<li>')
+            output.append(u'<label class="%s">'%disabled)
+            output.append(unicode(field))
+            output.append(u'<span>%s</span>'%field.label)
+            output.append(u'</label>\n</li>\n</ul>')
+
+        elif hasattr(field.field.widget, 'choices'):  # choices
+            output.append('<label>%s</label>'%field.label)
+            output.append('<div class="input%s">'%disabled)
+            output.append(unicode(field).replace('<ul>', '<ul class="inputs-list">'))
+
+        else:  #default
+            output.append(field.label_tag())
+            output.append(u'<div class="input%s">'%disabled)
+            output.append(unicode(field))
+
+        for error in field.errors:
+            output.append(u'<span class="help-inline">%s</span>'%error)
+
+        if field.help_text:
+            output.append(u'<span class="help-block">%s</span>'%field.help_text)
+
+        output.append(u'</div> <!-- input -->')
+        output.append(u'</div> <!-- clearfix -->')
+
+    for field in form.hidden_fields():
+        output.append(field)
+
+    return mark_safe('\n'.join(output))
+
 
 @register.filter
 def is_disabled(field):
@@ -67,20 +102,12 @@ def is_disabled(field):
         return True
     return False
 
+
 @register.filter
 def is_enabled(field):
     # Filter to determine if a field is enabled
     return not is_disabled(field)
 
-@register.filter
-def input_type(field):
-    widget = field.field.widget
-    bootstrap_input_type = getattr(widget.attrs, 'bootstrap_input_type', None)
-    if bootstrap_input_type:
-        return bootstrap_input_type
-    if isinstance(widget, CheckboxInput):
-        return u'checkbox'
-    return u'default'
 
 @register.simple_tag
 def active_url(request, url, output=u'active'):
@@ -88,8 +115,3 @@ def active_url(request, url, output=u'active'):
     if url == request.path:
         return output
     return ''
-
-@register.filter
-def bootstrap_choices(html_ul):
-    # Nasty hack to make widgets with choices behave
-    return mark_safe(str(html_ul).replace('<ul>', '<ul class="inputs-list">'))
