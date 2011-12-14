@@ -5,3 +5,6 @@ doc/*
 .sass-cache
 .idea*
 .DS_Store
+MANIFEST
+dist/
+django_bootstrap.egg-info/
