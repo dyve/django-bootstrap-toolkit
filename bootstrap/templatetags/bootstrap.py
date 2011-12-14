@@ -5,7 +5,7 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
-BOOTSTRAP_DEFAULT_VERSION = '1.3.0'
+BOOTSTRAP_DEFAULT_VERSION = '1.4.0'
 
 BOOTSTRAP_VERSION =  getattr(settings, 'BOOTSTRAP_VERSION',
     BOOTSTRAP_DEFAULT_VERSION
