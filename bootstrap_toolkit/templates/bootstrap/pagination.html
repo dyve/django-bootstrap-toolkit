@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div class="pagination">
+    <ul>
+
+        <li class="prev{% if page.number == 1 %} disabled{% endif %}"><a href="?page=1">&larr; {% trans "First" %}</a></li>
+
+        {% for p in page.paginator.page_range %}
+            {% if p|add:5 >= page.number and p|add:-5 <= page.number %}
+
+        <li{% if p == page.number %} class="active"{% endif %}><a href="?page={{ p }}">{{ p }}</a></li>
+
+            {% endif %}
+        {% endfor %}
+
+        <li class="next{% if page.number == page.paginator.num_pages %} disabled{% endif %}"><a href="?page={{ page.paginator.num_pages }}">{% trans "Last" %} &rarr;</a></li>
+
+    </ul>
+</div>

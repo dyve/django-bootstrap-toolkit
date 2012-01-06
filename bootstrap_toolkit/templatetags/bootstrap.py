@@ -7,7 +7,7 @@ from django.conf import settings
 
 BOOTSTRAP_DEFAULT_VERSION = '1.4.0'
 
-BOOTSTRAP_VERSION =  getattr(settings, 'BOOTSTRAP_VERSION',
+BOOTSTRAP_VERSION = getattr(settings, 'BOOTSTRAP_VERSION',
     BOOTSTRAP_DEFAULT_VERSION
 )
 
@@ -93,3 +93,20 @@ def active_url(request, url, output=u'active'):
 def bootstrap_choices(html_ul):
     # Nasty hack to make widgets with choices behave
     return mark_safe(str(html_ul).replace('<ul>', '<ul class="inputs-list">'))
+
+@register.filter
+def pagination(page, range=5):
+    # Filter to generate Bootstrap pagination from a page
+    num_pages = page.paginator.num_pages
+    current_page = page.number
+    range_min = max(current_page - range, 1)
+    range_max = min(current_page + range, num_pages)
+    return get_template("bootstrap/pagination.html").render(
+        Context({
+            'page': page,
+            'num_pages': num_pages,
+            'current_page': current_page,
+            'range_min': range_min,
+            'range_max': range_max,
+        })
+    )
