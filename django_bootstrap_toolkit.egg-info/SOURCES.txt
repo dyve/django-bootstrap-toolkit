@@ -1,7 +1,7 @@
 setup.py
-bootstrap/__init__.py
-bootstrap/templatetags/__init__.py
-bootstrap/templatetags/bootstrap.py
+bootstrap_toolkit/__init__.py
+bootstrap_toolkit/templatetags/__init__.py
+bootstrap_toolkit/templatetags/bootstrap.py
 django_bootstrap_toolkit.egg-info/PKG-INFO
 django_bootstrap_toolkit.egg-info/SOURCES.txt
 django_bootstrap_toolkit.egg-info/dependency_links.txt

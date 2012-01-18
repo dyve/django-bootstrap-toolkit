@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: django-bootstrap-toolkit
-Version: 0.1
+Version: 1.0.1
 Summary: Bootstrap support for Django projects
 Home-page: https://github.com/dyve/django-bootstrap-toolkit
 Author: Dylan Verheul
