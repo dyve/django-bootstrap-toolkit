@@ -48,8 +48,8 @@ def bootstrap_media():
     return bootstrap_media()
 
 @register.filter
-def bootstrap(form):
-    # Filter to Bootstrap a Django form
+def as_bootstrap(form):
+    # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
     return get_template("bootstrap/form.html").render(
         Context({
             'form': form
@@ -90,7 +90,7 @@ def active_url(request, url, output=u'active'):
     return ''
 
 @register.filter
-def bootstrap_choices(html_ul):
+def as_bootstrap_choices(html_ul):
     # Nasty hack to make widgets with choices behave
     return mark_safe(str(html_ul).replace('<ul>', '<ul class="inputs-list">'))
 

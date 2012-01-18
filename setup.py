@@ -6,10 +6,9 @@ if not root_dir:
     root_dir = '.'
 long_desc = open(root_dir + '/README.md').read()
 
-
 setup(
     name='django-bootstrap-toolkit',
-    version='0.1',
+    version='1.0',
     url='https://github.com/dyve/django-bootstrap-toolkit',
     author='Dylan Verheul',
     author_email='dylan@dyve.net',
