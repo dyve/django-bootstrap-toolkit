@@ -7,4 +7,4 @@ doc/*
 .DS_Store
 MANIFEST
 dist/
-django_bootstrap.egg-info/
+django_bootstrap_toolkit.egg-info/
