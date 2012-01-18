@@ -1,9 +1,0 @@
-setup.py
-bootstrap_toolkit/__init__.py
-bootstrap_toolkit/templatetags/__init__.py
-bootstrap_toolkit/templatetags/bootstrap.py
-django_bootstrap_toolkit.egg-info/PKG-INFO
-django_bootstrap_toolkit.egg-info/SOURCES.txt
-django_bootstrap_toolkit.egg-info/dependency_links.txt
-django_bootstrap_toolkit.egg-info/requires.txt
-django_bootstrap_toolkit.egg-info/top_level.txt
