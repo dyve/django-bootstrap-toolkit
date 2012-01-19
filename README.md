@@ -6,9 +6,9 @@ django-bootstrap-toolkit is a Django application for easily incorporating the Bo
 Install
 -------
 
-Just call `pip install -e git+https://github.com/dyve/django-bootstrap.git#egg=django-bootstrap` and add `bootstrap` to your `INSTALLED_APPS`.
+Just call `pip install django-bootstrap-toolkit` and add `bootstrap` to your `INSTALLED_APPS`.
 
-Alternatively, you can add `-e git+https://github.com/dyve/django-bootstrap.git#egg=django-bootstrap` to your requirements.txt.
+Alternatively, you can add `django-bootstrap-toolkit` to your requirements.txt.
 
 If you want to hack django-bootstrap itself, clone this repo and call `pip install -e .`.
 
