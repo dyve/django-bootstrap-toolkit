@@ -1,12 +1,12 @@
 django-bootstrap-toolkit
-================
+========================
 
 django-bootstrap-toolkit is a Django application for easily incorporating the Bootstrap framework in Django projects.
 
 Install
 -------
 
-Just call `pip install django-bootstrap-toolkit` and add `bootstrap` to your `INSTALLED_APPS`.
+Just call `pip install django-bootstrap-toolkit` and add `bootstrap_toolkit` to your `INSTALLED_APPS`.
 
 Alternatively, you can add `django-bootstrap-toolkit` to your requirements.txt.
 
