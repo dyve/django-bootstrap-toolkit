@@ -8,6 +8,6 @@
 
 {% for field in form.visible_fields %}
     <div class="clearfix{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
-        {% include "bootstrap/field.html" %}
+        {% include "bootstrap_toolkit/field.html" %}
     </div> <!-- clearfix -->
 {% endfor %}

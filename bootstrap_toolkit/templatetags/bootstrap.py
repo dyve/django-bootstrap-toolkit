@@ -12,11 +12,11 @@ BOOTSTRAP_VERSION = getattr(settings, 'BOOTSTRAP_VERSION',
 )
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    '//twitter.github.com/bootstrap/%s/' % BOOTSTRAP_VERSION
+    '//twitter.github.com/bootstrap_toolkit/%s/' % BOOTSTRAP_VERSION
 )
 
 BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
-    BOOTSTRAP_BASE_URL + 'bootstrap.min.css'
+    BOOTSTRAP_BASE_URL + 'bootstrap_toolkit.min.css'
 )
 
 register = template.Library()
@@ -34,12 +34,12 @@ def bootstrap_stylesheet_tag():
 @register.simple_tag
 def bootstrap_javascript_url(name):
     # URL to Bootstrap javascript file
-    # http://twitter.github.com/bootstrap/1.3.0/bootstrap-dropdown.js
-    return BOOTSTRAP_BASE_URL + 'bootstrap-' + name + '.js'
+    # http://twitter.github.com/bootstrap_toolkit/1.3.0/bootstrap_toolkit-dropdown.js
+    return BOOTSTRAP_BASE_URL + 'bootstrap_toolkit-' + name + '.js'
 
 @register.simple_tag
 def bootstrap_javascript_tag(name):
-    # HTML tag to insert bootstrap javascript file
+    # HTML tag to insert bootstrap_toolkit javascript file
     return u'<script src="%s"></script>' % bootstrap_javascript_url(name)
 
 @register.simple_tag
@@ -50,7 +50,7 @@ def bootstrap_media():
 @register.filter
 def as_bootstrap(form):
     # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
-    return get_template("bootstrap/form.html").render(
+    return get_template("bootstrap_toolkit/form.html").render(
         Context({
             'form': form
         })
@@ -101,7 +101,7 @@ def pagination(page, range=5):
     current_page = page.number
     range_min = max(current_page - range, 1)
     range_max = min(current_page + range, num_pages)
-    return get_template("bootstrap/pagination.html").render(
+    return get_template("bootstrap_toolkit/pagination.html").render(
         Context({
             'page': page,
             'num_pages': num_pages,

@@ -1,0 +1,11 @@
+{% load bootstrap %}
+
+{% if field|input_type == "checkbox" %}
+    {% include "bootstrap_toolkit/field_checkbox.html" %}
+{% else %}
+    {% if field.field.widget.choices %}
+        {% include "bootstrap_toolkit/field_with_choices.html" %}
+    {% else %}
+        {% include "bootstrap_toolkit/field_default.html" %}
+    {% endif %}
+{% endif %}
