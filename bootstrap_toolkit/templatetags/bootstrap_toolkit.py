@@ -12,7 +12,7 @@ BOOTSTRAP_VERSION = getattr(settings, 'BOOTSTRAP_VERSION',
 )
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    '//twitter.github.com/bootstrap_toolkit/%s/' % BOOTSTRAP_VERSION
+    'http://twitter.github.com/bootstrap_toolkit/%s/' % BOOTSTRAP_VERSION
 )
 
 BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
