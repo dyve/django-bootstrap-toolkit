@@ -12,11 +12,11 @@ BOOTSTRAP_VERSION = getattr(settings, 'BOOTSTRAP_VERSION',
 )
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    'http://twitter.github.com/bootstrap_toolkit/%s/' % BOOTSTRAP_VERSION
+    'http://twitter.github.com/bootstrap/%s/' % BOOTSTRAP_VERSION
 )
 
 BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
-    BOOTSTRAP_BASE_URL + 'bootstrap_toolkit.min.css'
+    BOOTSTRAP_BASE_URL + 'bootstrap.min.css'
 )
 
 register = template.Library()
