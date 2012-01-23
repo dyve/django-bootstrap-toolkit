@@ -35,7 +35,7 @@ def bootstrap_stylesheet_tag():
 def bootstrap_javascript_url(name):
     # URL to Bootstrap javascript file
     # http://twitter.github.com/bootstrap_toolkit/1.3.0/bootstrap_toolkit-dropdown.js
-    return BOOTSTRAP_BASE_URL + 'bootstrap_toolkit-' + name + '.js'
+    return BOOTSTRAP_BASE_URL + 'bootstrap-' + name + '.js'
 
 @register.simple_tag
 def bootstrap_javascript_tag(name):
