@@ -49,7 +49,7 @@ When building my first Django project with Bootstrap I went looking for availabl
 
 I found  https://github.com/tzangms/django-bootstrap-form. The approach to template tags and filters seemed right, but Bootstrap does so much more than just forms.
 
-This is how `django-bootstrap-toolkit` started. I used ideas from other Django apps. The code was started from scratch in order to avoid license issues.
+This is how `django-bootstrap-toolkit` started. I used ideas from other Django apps. The code was started from scratch.
 
 License
 -------
