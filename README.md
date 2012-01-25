@@ -1,16 +1,32 @@
-django-bootstrap-toolkit
-========================
+Django Toolkit for integration with Twitter's Bootstrap
+=======================================================
+http://twitter.github.com/bootstrap
 
-django-bootstrap-toolkit is a Django application for easily incorporating the Bootstrap framework in Django projects.
 
-Install
--------
+Installation
+------------
+1. Install using pip:
 
-Just call `pip install django-bootstrap-toolkit` and add `bootstrap_toolkit` to your `INSTALLED_APPS`.
+        pip install django-bootstrap-toolkit
+
+2. Add to INSTALLED_APPS:
+
+        'bootstrap_toolkit',
 
 Alternatively, you can add `django-bootstrap-toolkit` to your requirements.txt.
 
 If you want to hack django-bootstrap itself, clone this repo and call `pip install -e .`.
+
+Usage
+-----
+
+    <form action="/url/to/submit/" method="post">
+        {% csrf_token %}
+        {{ form|as_bootstrap }}
+        <div class="actions">
+            <button type="submit" class="btn primary">Submit</button>
+        </div>
+    </form>
 
 About
 -----
