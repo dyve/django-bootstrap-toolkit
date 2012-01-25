@@ -20,6 +20,8 @@ If you want to hack django-bootstrap itself, clone this repo and call `pip insta
 Usage
 -----
 
+    {% load bootstrap_toolkit %}
+
     <form action="/url/to/submit/" method="post">
         {% csrf_token %}
         {{ form|as_bootstrap }}
