@@ -45,9 +45,16 @@ https://github.com/dyve/django-bootstrap-toolkit/issues
 History
 -------
 
-When building my first Django project with Bootstrap I went looking for available open soure applications that connected Django and Bootstrap. I found  https://github.com/tzangms/django-bootstrap-form, but I felt limiting the Django support to forms only was too limited.
+When building my first Django project with Bootstrap I went looking for available open source applications that connected Django and Bootstrap.
 
-This is how my django-bootstrap-toolkit project started. The basic idea of filtering a form came from django-bootstrap-form. I wrote my own version and improved the form handling, added various tags and filters, and gave the applications some settings to work from. Then I put the Apache 2.0 license on it and published it on GitHub. We'll see where it goes, I hope it comes in handy.
+I found  https://github.com/tzangms/django-bootstrap-form. The approach to template tags and filters seemed right, but Bootstrap does so much more than just forms.
+
+This is how `django-bootstrap-toolkit` started. I used ideas from other Django apps. The code was started from scratch in order to avoid license issues.
+
+License
+-------
+
+You can use this under Apache 2.0. See LICENSE file for details.
 
 Thanks
 ------
