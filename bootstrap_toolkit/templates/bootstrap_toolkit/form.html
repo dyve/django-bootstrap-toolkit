@@ -7,7 +7,7 @@
 {% endfor %}
 
 {% for field in form.visible_fields %}
-    <div class="clearfix{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+    <div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
         {% include "bootstrap_toolkit/field.html" %}
-    </div> <!-- clearfix -->
+    </div>
 {% endfor %}
