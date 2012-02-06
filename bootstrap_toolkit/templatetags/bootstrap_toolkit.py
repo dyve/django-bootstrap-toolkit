@@ -5,18 +5,26 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
-BOOTSTRAP_DEFAULT_VERSION = '1.4.0'
+BOOTSTRAP_DEFAULT_VERSION = '2.0.0'
 
 BOOTSTRAP_VERSION = getattr(settings, 'BOOTSTRAP_VERSION',
     BOOTSTRAP_DEFAULT_VERSION
 )
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    'http://twitter.github.com/bootstrap/%s/' % BOOTSTRAP_VERSION
+    'http://twitter.github.com/bootstrap/assets/'
+)
+
+BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
+    BOOTSTRAP_BASE_URL + 'js/'
+)
+
+BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
+    BOOTSTRAP_BASE_URL + 'css/'
 )
 
 BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
-    BOOTSTRAP_BASE_URL + 'bootstrap.min.css'
+    BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
 )
 
 register = template.Library()
@@ -34,8 +42,8 @@ def bootstrap_stylesheet_tag():
 @register.simple_tag
 def bootstrap_javascript_url(name):
     # URL to Bootstrap javascript file
-    # http://twitter.github.com/bootstrap_toolkit/1.3.0/bootstrap_toolkit-dropdown.js
-    return BOOTSTRAP_BASE_URL + 'bootstrap-' + name + '.js'
+    # http://twitter.github.com/bootstrap/assets/js/bootstrap-<name>.js
+    return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
 
 @register.simple_tag
 def bootstrap_javascript_tag(name):

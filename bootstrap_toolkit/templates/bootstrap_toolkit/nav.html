@@ -1,0 +1,3 @@
+{% for tab in tabs %}
+    <li{% if request.path == tab.link %} class="active"{% endif %}><a href="{{ tab.link }}">{{ tab.title }}</a></li>
+{% endfor %}
