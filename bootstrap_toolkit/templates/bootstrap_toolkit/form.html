@@ -7,7 +7,5 @@
 {% endfor %}
 
 {% for field in form.visible_fields %}
-    <div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
-        {% include "bootstrap_toolkit/field.html" %}
-    </div>
+    {% include "bootstrap_toolkit/field.html" %}
 {% endfor %}

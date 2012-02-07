@@ -1,12 +1,1 @@
-{% load bootstrap_toolkit %}
-
-{{ field.label_tag }}
-
-<div class="controls{% if field|is_disabled %} disabled{% endif %}">
-
-    {{ field }}
-
-    {% include "bootstrap_toolkit/field_errors.html" %}
-    {% include "bootstrap_toolkit/field_help.html" %}
-    
-</div>
+{{ field }}

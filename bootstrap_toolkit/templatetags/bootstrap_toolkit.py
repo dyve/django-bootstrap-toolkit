@@ -1,4 +1,4 @@
-from django.forms.widgets import CheckboxInput
+from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
 from django import template
@@ -81,13 +81,17 @@ def is_enabled(field):
     return not is_disabled(field)
 
 @register.filter
-def input_type(field):
+def bootstrap_input_type(field):
     widget = field.field.widget
     bootstrap_input_type = getattr(widget.attrs, 'bootstrap_input_type', None)
     if bootstrap_input_type:
         return bootstrap_input_type
     if isinstance(widget, CheckboxInput):
         return u'checkbox'
+    if isinstance(widget, CheckboxSelectMultiple):
+        return u'multicheckbox'
+    if isinstance(widget, RadioSelect):
+        return u'radioset'
     return u'default'
 
 @register.simple_tag
@@ -98,9 +102,21 @@ def active_url(request, url, output=u'active'):
     return ''
 
 @register.filter
-def as_bootstrap_choices(html_ul):
+def as_bootstrap_choices(field):
     # Nasty hack to make widgets with choices behave
-    return mark_safe(str(html_ul).replace('<ul>', '<ul class="inputs-list">'))
+    type = bootstrap_input_type(field)
+    if type == "radioset":
+        type = "radio"
+    elif type == "multicheckbox":
+        type = "checkbox"
+    else:
+        type = ""
+    choices = str(field).replace('<ul>', '')
+    choices = choices.replace('</ul>', '')
+    choices = choices.replace('<li>', '')
+    choices = choices.replace('</li>', '')
+    choices = choices.replace('<label', '<label class="%s"' % type)
+    return mark_safe(choices)
 
 @register.filter
 def pagination(page, range=5):
