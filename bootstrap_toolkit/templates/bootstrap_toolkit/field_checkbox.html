@@ -1,13 +1,6 @@
 {% load bootstrap_toolkit %}
 
-<div class="controls">
-
-    <label class="checkbox{% if field|is_disabled %} disabled{% endif %}">
-        {{ field }}
-        {{ field.label }}
-    </label>
-
-    {% include "bootstrap_toolkit/field_errors.html" %}
-    {% include "bootstrap_toolkit/field_help.html" %}
-
-</div>
+<label class="checkbox">
+    {{ field }}
+    {{ field.label }}
+</label>

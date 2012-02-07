@@ -6,7 +6,7 @@
     <title>django-bootstrap-toolkit = Bootstrap support for Django</title>
     <meta name="description" content="">
     <meta name="author" content="Dylan Verheul">
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+    {% bootstrap_stylesheet_tag %}
     <style type="text/css">
         body {
             padding-top: 60px;
@@ -27,8 +27,8 @@
 
 <body>
 
-<div class="topbar">
-    <div class="fill">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="/">django-bootstrap-toolkit</a>
             <ul class="nav">
@@ -42,6 +42,7 @@
 </div>
 
 <div class="container">
+
     {% block content %}Empty page{% endblock %}
 
     <footer class="row">

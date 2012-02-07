@@ -6,14 +6,16 @@
 
     <h1>This is a Django form, bootstrapped</h1>
     
-    <form action="" method="post">
+    <p>&nbsp;</p>
+        
+    <form class="form-horizontal" action="" method="post">
         {% csrf_token %}
         {{ form|as_bootstrap }}
-        <p class="actions">
-            <input type="submit" value="Submit" class="btn primary">
+        <p class="form-actions">
+            <input type="submit" value="Submit" class="btn btn-primary">
         </p>
     </form>
 
     <p>Submit the form to see error messages styled into it.</p>
-    
+
 {% endblock %}

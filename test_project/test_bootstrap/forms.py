@@ -3,9 +3,15 @@ from django import forms
 class TestForm(forms.Form):
     title = forms.CharField(
         max_length=100,
-        help_text=u'And we have radiosets',
+        help_text=u'This is the standard text input',
     )
-    content = forms.CharField()
+    content = forms.ChoiceField(
+        choices=(
+            ("text", "Plain text"),
+            ("html", "HTML"),
+        ),
+        help_text=u'Pick your choice',
+    )
     email = forms.EmailField()
     like = forms.BooleanField(required=False)
     fruits = forms.MultipleChoiceField(
