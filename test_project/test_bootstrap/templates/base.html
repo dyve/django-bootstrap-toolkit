@@ -15,14 +15,8 @@
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-    {% bootstrap_javascript_tag "alerts" %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     {% bootstrap_javascript_tag "dropdown" %}
-    {% bootstrap_javascript_tag "modal" %}
-    {% bootstrap_javascript_tag "twipsy" %}
-    {% bootstrap_javascript_tag "popover" %}
-    {% bootstrap_javascript_tag "scrollspy" %}
-    {% bootstrap_javascript_tag "tabs" %}
 </head>
 
 <body>
@@ -34,6 +28,13 @@
             <ul class="nav">
                 <li><a href="{% url home %}" class="">Home</a></li>
                 <li><a href="{% url test_bootstrap.views.test_form %}">Form</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forms<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <a href="{% url test_bootstrap.views.test_form %}?layout=vertical">Vertical</a>
+                        <a href="{% url test_bootstrap.views.test_form %}?layout=horizontal">Horizontal</a>
+                    </ul>
+                </li>
                 <li><a href="{% url tabs %}">Tabs</a></li>
                 <li><a href="{% url contact %}">Contact</a></li>
             </ul>

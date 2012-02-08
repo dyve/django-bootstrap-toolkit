@@ -11,9 +11,13 @@
     <form class="form-{{ layout }}" action="" method="post">
         {% csrf_token %}
         {{ form|as_bootstrap:layout }}
-        <p class="form-actions">
+        {% if layout == "horizontal" %}
+            <p class="form-actions">
+                <input type="submit" value="Submit" class="btn btn-primary">
+            </p>
+        {% else %}
             <input type="submit" value="Submit" class="btn btn-primary">
-        </p>
+        {% endif %}
     </form>
 
     <p>Submit the form to see error messages styled into it.</p>
