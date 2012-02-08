@@ -56,11 +56,12 @@ def bootstrap_media():
     return bootstrap_media()
 
 @register.filter
-def as_bootstrap(form):
+def as_bootstrap(form, layout='vertical'):
     # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
     return get_template("bootstrap_toolkit/form.html").render(
         Context({
-            'form': form
+            'form': form,
+            'layout': str(layout).lower(),
         })
     )
 

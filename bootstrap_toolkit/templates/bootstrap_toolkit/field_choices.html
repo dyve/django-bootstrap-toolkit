@@ -1,5 +1,3 @@
-{% load bootstrap_toolkit %}
-
 {% for choice_id, choice_label in field.field.choices %}
     <label class="{{ type }}">
         <input type="{{ type }}" name="{{ field.html_name }}" value="{{ choice_id }}"{% if type == "checkbox" %}{% if choice_id in field.value %} checked{% endif %}{% else %}{% if choice_id == field.value %} checked{% endif %}{% endif %}>
