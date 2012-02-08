@@ -102,23 +102,6 @@ def active_url(request, url, output=u'active'):
     return ''
 
 @register.filter
-def as_bootstrap_choices(field):
-    # Nasty hack to make widgets with choices behave
-    type = bootstrap_input_type(field)
-    if type == "radioset":
-        type = "radio"
-    elif type == "multicheckbox":
-        type = "checkbox"
-    else:
-        type = ""
-    choices = str(field).replace('<ul>', '')
-    choices = choices.replace('</ul>', '')
-    choices = choices.replace('<li>', '')
-    choices = choices.replace('</li>', '')
-    choices = choices.replace('<label', '<label class="%s"' % type)
-    return mark_safe(choices)
-
-@register.filter
 def pagination(page, range=5):
     # Filter to generate Bootstrap pagination from a page
     num_pages = page.paginator.num_pages
