@@ -1,0 +1,20 @@
+<div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+    <label class="control-label" for="{{ field.html_name }}">{{ field.label }}</label>
+    <div class="controls">
+        {% if input_type == "checkbox" %}
+            {% include "bootstrap_toolkit/field_checkbox.html" %}
+        {% else %}
+            {% if input_type == "multicheckbox" %}
+                {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
+            {% else %}
+                {% if input_type == "radioset" %}
+                    {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
+                {% else %}
+                    {% include "bootstrap_toolkit/field_default.html" %}
+                {% endif %}
+            {% endif %}
+            {% include "bootstrap_toolkit/field_help.html" with inline=False %}
+        {% endif %}
+        {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
+    </div>
+</div>

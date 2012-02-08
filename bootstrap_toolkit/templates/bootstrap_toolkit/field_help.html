@@ -1,3 +1,7 @@
 {% if field.help_text %}
-    <p class="help-block">{{ field.help_text }}</p>
+    {% if inline %}
+        <span class="help-inline">{{ field.help_text }}</span>
+    {% else %}
+        <p class="help-block">{{ field.help_text }}</p>
+    {% endif %}
 {% endif %}
