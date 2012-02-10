@@ -15,3 +15,23 @@ def test_form(request):
         'form': form,
         'layout': layout,
     }))
+
+def test_tabs(request):
+    layout = request.GET.get('layout')
+    if not layout:
+        layout = 'tabs'
+    tabs = [
+        {
+            'link': "#",
+            'title': 'Tab 1',
+        },
+        {
+            'link': "#",
+            'title': 'Tab 2',
+        }
+    ]
+
+    return render_to_response('tabs.html', RequestContext(request, {
+        'tabs': tabs,
+        'layout': layout,
+    }))
