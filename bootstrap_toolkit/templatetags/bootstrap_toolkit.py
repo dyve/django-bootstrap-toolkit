@@ -72,7 +72,7 @@ def as_bootstrap_inline_choices(form, layout='vertical'):
         Context({
             'form': form,
             'layout': str(layout).lower(),
-			'inline': True,
+            'inline': True,
         })
     )
 
