@@ -8,7 +8,9 @@ class TestForm(forms.Form):
     disabled = forms.CharField(
         max_length=100,
         help_text=u'I am read only',
-        widget=forms.TextInput(attrs={'disabled': 'disabled'})
+        widget=forms.TextInput(attrs={
+            'disabled': 'disabled',
+        })
     )
     content = forms.ChoiceField(
         choices=(
@@ -26,6 +28,17 @@ class TestForm(forms.Form):
             ("pear", "Pear"),
         ),
         help_text=u'As you can see, multiple checkboxes work too',
+    )
+    veggies = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple(attrs={
+            'inline': True,
+        }),
+        choices=(
+            ("broccoli", "Broccoli"),
+            ("carrots", "Carrots"),
+            ("turnips", "Turnips"),
+        ),
+        help_text=u'And can be inline',
     )
     color = forms.ChoiceField(
         widget=forms.RadioSelect,
