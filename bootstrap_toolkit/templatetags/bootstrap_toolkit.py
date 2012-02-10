@@ -66,6 +66,17 @@ def as_bootstrap(form, layout='vertical'):
     )
 
 @register.filter
+def as_bootstrap_inline_choices(form, layout='vertical'):
+    # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
+    return get_template("bootstrap_toolkit/form.html").render(
+        Context({
+            'form': form,
+            'layout': str(layout).lower(),
+			'inline': True,
+        })
+    )
+
+@register.filter
 def is_disabled(field):
     # Filter to determine if a field is disabled
     if not getattr(field.field, 'editable', True):
