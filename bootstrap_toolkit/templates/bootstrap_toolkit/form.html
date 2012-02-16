@@ -1,6 +1,8 @@
 {% load bootstrap_toolkit %}
 
-{{ form.non_field_errors }}
+{% if form.non_field_errors %}
+    {% include "bootstrap_toolkit/non_field_errors.html" %}
+{% endif %}
 
 {% for field in form.hidden_fields %}
     {{ field }}

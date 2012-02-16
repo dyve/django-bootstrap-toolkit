@@ -1,0 +1,8 @@
+<div data-alert="alert" class="alert alert-error fade in">
+    <a href="#" data-dismiss="alert" class="close">&times;</a>
+    <ol>
+        {% for error in form.non_field_errors %}
+            <li><strong>{{ error }}</strong></li>
+        {% endfor %}
+    </ol>
+</div>
