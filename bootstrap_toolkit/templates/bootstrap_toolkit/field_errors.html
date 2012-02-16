@@ -1,9 +1,9 @@
 {% if field.errors %}
     {% for error in field.errors %}
         {% if inline %}
-            <p class="help-block error">{{ error }}</p>
-        {% else %}
             <span class="help-inline error">{{ error }}</span>
+        {% else %}
+            <p class="help-block error">{{ error }}</p>
         {% endif %}
     {% endfor %}
 {% endif %}
