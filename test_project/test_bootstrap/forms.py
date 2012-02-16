@@ -49,3 +49,8 @@ class TestForm(forms.Form):
         ),
         help_text=u'And we have radiosets',
     )
+
+    def clean(self):
+        cleaned_data = super(TestForm, self).clean()
+        raise forms.ValidationError("This error was added to show the non field errors styling.")
+        return cleaned_data
