@@ -11,7 +11,11 @@
             {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
             {% include "bootstrap_toolkit/field_help.html" with inline=False %}
         {% else %}
-            {% include "bootstrap_toolkit/field_default.html" %}
+            {% if input_type == "text" %}
+                {% include "bootstrap_toolkit/field_text.html" with type="text" %}
+            {% else %}
+                {% include "bootstrap_toolkit/field_default.html" %}
+            {% endif %}
             {% include "bootstrap_toolkit/field_help.html" with inline=True %}
         {% endif %}
     {% endif %}
