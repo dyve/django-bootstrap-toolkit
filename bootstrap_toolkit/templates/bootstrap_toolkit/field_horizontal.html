@@ -1,5 +1,5 @@
 <div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
-    <label class="control-label" for="{{ field.html_name }}">{{ field.label }}</label>
+    <label class="control-label"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
     <div class="controls">
         {% if input_type == "checkbox" %}
             {% include "bootstrap_toolkit/field_checkbox.html" %}
@@ -10,7 +10,11 @@
                 {% if input_type == "radioset" %}
                     {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
                 {% else %}
-                    {% include "bootstrap_toolkit/field_default.html" %}
+                    {% if input_type == "text" %}
+                        {% include "bootstrap_toolkit/field_text.html" with type="text" %}
+                    {% else %}
+                        {% include "bootstrap_toolkit/field_default.html" %}
+                    {% endif %}
                 {% endif %}
             {% endif %}
             {% include "bootstrap_toolkit/field_help.html" with inline=False %}
