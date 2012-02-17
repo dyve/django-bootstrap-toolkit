@@ -1,4 +1,4 @@
-from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, RadioSelect
+from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
 from django import template
@@ -87,6 +87,8 @@ def bootstrap_input_type(field):
     bootstrap_input_type = getattr(widget.attrs, 'bootstrap_input_type', None)
     if bootstrap_input_type:
         return bootstrap_input_type
+    if isinstance(widget, TextInput):
+        return u'text'
     if isinstance(widget, CheckboxInput):
         return u'checkbox'
     if isinstance(widget, CheckboxSelectMultiple):
