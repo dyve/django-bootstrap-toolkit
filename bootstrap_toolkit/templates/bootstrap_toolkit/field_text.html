@@ -1,0 +1,17 @@
+{% with field.field.widget.attrs as attrs %}
+    {% if attrs.prepend %}
+        <div class="input-prepend">
+            <span class="add-on">{{ attrs.prepend }}</span>
+            <input{% if field.auto_id %} id="{{ field.auto_id }}"{% endif %} type="{{ type }}" name="{{ field.html_name }}"{% for key, value in attrs.items %}{% if not key == "prepend" %} {{ key }}="{{ value }}"{% endif %}{% endfor %}>
+        </div>
+    {% else %}
+        {% if attrs.append %}
+        <div class="input-append">
+            <input{% if field.auto_id %} id="{{ field.auto_id }}"{% endif %} type="{{ type }}" name="{{ field.html_name }}"{% for key, value in attrs.items %}{% if not key == "append" %} {{ key }}="{{ value }}"{% endif %}{% endfor %}>
+            <span class="add-on">{{ attrs.append }}</span>
+        </div>
+        {% else %}
+            {% include "bootstrap_toolkit/field_default.html" %}
+        {% endif %}
+    {% endif %}
+{% endwith %}
