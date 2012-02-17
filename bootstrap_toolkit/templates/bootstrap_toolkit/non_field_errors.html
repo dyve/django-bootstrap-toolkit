@@ -1,5 +1,5 @@
 <div class="alert alert-block alert-error">
     {% for error in form.non_field_errors %}
-        <p>{{ error }}</p>
+        {% include "bootstrap_toolkit/non_field_error.html" %}
     {% endfor %}
 </div>

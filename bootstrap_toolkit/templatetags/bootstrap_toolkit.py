@@ -120,3 +120,7 @@ def pagination(page, range=5):
             'range_max': range_max,
         })
     )
+
+@register.filter
+def split(str,splitter):
+    return str.split(splitter)

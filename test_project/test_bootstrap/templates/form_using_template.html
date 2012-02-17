@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block content %}
+
+    <h1>This form uses templates</h1>
+    
+    <p>The disabled field gets a $ appended using a template.</p>
+    
+    <p>&nbsp;</p>
+        
+    <form class="form-{{ layout }}" action="" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            {% if field.name == 'disabled' %}
+                {% include "bootstrap_toolkit/field.html" with append='$' %}
+            {% else %}
+                {% include "bootstrap_toolkit/field.html" %}
+            {% endif %}
+        {% endfor %}
+
+        {% if layout == "horizontal" %}
+            <p class="form-actions">
+                <input type="submit" value="Submit" class="btn btn-primary">
+            </p>
+        {% else %}
+            <input type="submit" value="Submit" class="btn btn-primary">
+        {% endif %}
+    </form>
+
+    <p>Submit the form to see error messages styled into it.</p>
+
+{% endblock %}

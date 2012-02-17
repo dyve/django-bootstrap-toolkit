@@ -9,7 +9,7 @@ class TestForm(forms.Form):
         max_length=100,
         help_text=u'I am read only',
         widget=forms.TextInput(attrs={
-            'disabled': 'disabled',
+            'disabled': 'disabled'
         })
     )
     content = forms.ChoiceField(

@@ -1,1 +1,18 @@
+{% if prepend  %}
+    <div class="input-prepend">
+    <span class="add-on">{{ prepend }}</span>
+{% endif %}
+
+{% if append and not prepend %}
+    <div class="input-append">
+{% endif  %}
+
 {{ field }}
+
+{% if append and not prepend %}
+    <span class="add-on">{{ append }}</span>
+{% endif %}
+
+{% if append or prepend %}
+    </div>
+{% endif %}

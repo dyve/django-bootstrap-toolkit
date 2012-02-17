@@ -19,5 +19,6 @@ urlpatterns = patterns('',
     (r'^$', direct_to_template, {'template': 'index.html'}, "home"),
     (r'^contact$', direct_to_template, {'template': 'contact.html'}, "contact"),
     (r'^form$', 'test_bootstrap.views.test_form'),
+    (r'^form_template$', 'test_bootstrap.views.test_form_with_template'),
     (r'^tabs$', 'test_bootstrap.views.test_tabs', {}, "tabs"),
 )
