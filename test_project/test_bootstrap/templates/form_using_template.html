@@ -21,6 +21,12 @@
             {% endif %}
         {% endfor %}
 
+        {{ form.color|as_bootstrap:"horizontal" }}
+
+        {% with inline=True %}
+        {{ form.color|as_bootstrap:"vertical" }}
+        {% endwith %}
+
         {% if layout == "horizontal" %}
             <p class="form-actions">
                 <input type="submit" value="Submit" class="btn btn-primary">

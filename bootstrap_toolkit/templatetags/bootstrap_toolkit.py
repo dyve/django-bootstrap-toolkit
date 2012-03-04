@@ -1,8 +1,8 @@
+from django.forms import Form
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
 from django import template
-from django.utils.safestring import mark_safe
 from django.conf import settings
 
 BOOTSTRAP_DEFAULT_VERSION = '2.0.1'
@@ -56,14 +56,24 @@ def bootstrap_media():
     return bootstrap_media()
 
 @register.filter
-def as_bootstrap(form, layout='vertical'):
-    # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
-    return get_template("bootstrap_toolkit/form.html").render(
-        Context({
-            'form': form,
-            'layout': str(layout).lower(),
-        })
-    )
+def as_bootstrap(form_or_field, layout='vertical'):
+    layout = str(layout).lower()
+    if isinstance(form_or_field, Form):
+        # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
+        return get_template("bootstrap_toolkit/form.html").render(
+            Context({
+                'form': form_or_field,
+                'layout': layout,
+            })
+        )
+    else:
+        # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
+        return get_template("bootstrap_toolkit/field.html").render(
+            Context({
+                'field': form_or_field,
+                'layout': layout,
+            })
+        )
 
 @register.filter
 def is_disabled(field):
@@ -122,5 +132,5 @@ def pagination(page, range=5):
     )
 
 @register.filter
-def split(str,splitter):
+def split(str, splitter):
     return str.split(splitter)

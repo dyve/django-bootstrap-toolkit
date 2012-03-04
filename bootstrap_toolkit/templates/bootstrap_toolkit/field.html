@@ -1,12 +1,11 @@
 {% load bootstrap_toolkit %}
-{% spaceless %}
-    {% if not field.name|lower in exclude|lower|split:',' %}
-        {% if not fields or field.name|lower in fields|lower|split:','  %}
-                {% if field.is_hidden %}
-                    {{ field }}
-                {% else %}
-                    {% include "bootstrap_toolkit/visible_field.html" %}
-                {% endif %}
-        {% endif %}
+
+{% if not field.name|lower in exclude|lower|split:',' %}
+    {% if not fields or field.name|lower in fields|lower|split:','  %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% else %}
+                {% include "bootstrap_toolkit/visible_field.html" %}
+            {% endif %}
     {% endif %}
-{% endspaceless %}
+{% endif %}
