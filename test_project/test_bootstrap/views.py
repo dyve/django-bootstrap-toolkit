@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from test_bootstrap.forms import TestForm
+from test_project.test_bootstrap.forms import TestModelForm
+from django import forms
 
 def test_form_with_template(request):
     layout = request.GET.get('layout')
@@ -11,6 +13,7 @@ def test_form_with_template(request):
         form.is_valid()
     else:
         form = TestForm()
+    modelform = TestModelForm()
     return render_to_response('form_using_template.html', RequestContext(request, {
         'form': form,
         'layout': layout,

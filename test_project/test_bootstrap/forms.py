@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 class TestForm(forms.Form):
     title = forms.CharField(
@@ -54,3 +55,7 @@ class TestForm(forms.Form):
         cleaned_data = super(TestForm, self).clean()
         raise forms.ValidationError("This error was added to show the non field errors styling.")
         return cleaned_data
+
+class TestModelForm(forms.ModelForm):
+    class Meta:
+        model = User

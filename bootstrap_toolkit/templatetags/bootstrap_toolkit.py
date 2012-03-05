@@ -1,4 +1,4 @@
-from django.forms import Form
+from django.forms import BaseForm
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
@@ -58,7 +58,7 @@ def bootstrap_media():
 @register.filter
 def as_bootstrap(form_or_field, layout='vertical'):
     layout = str(layout).lower()
-    if isinstance(form_or_field, Form):
+    if isinstance(form_or_field, BaseForm):
         # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
         return get_template("bootstrap_toolkit/form.html").render(
             Context({
