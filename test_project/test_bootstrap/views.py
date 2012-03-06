@@ -1,8 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from test_bootstrap.forms import TestForm
-from test_project.test_bootstrap.forms import TestModelForm
-from django import forms
+from test_project.test_bootstrap.forms import TestModelForm, TestInlineForm
 
 def test_form_with_template(request):
     layout = request.GET.get('layout')
@@ -29,6 +28,16 @@ def test_form(request):
     else:
         form = TestForm()
     return render_to_response('form.html', RequestContext(request, {
+        'form': form,
+        'layout': layout,
+        }))
+
+def test_form_inline(request):
+    layout = request.GET.get('layout', '')
+    if layout != 'search':
+        layout = 'inline'
+    form = TestInlineForm()
+    return render_to_response('form_inline.html', RequestContext(request, {
         'form': form,
         'layout': layout,
     }))

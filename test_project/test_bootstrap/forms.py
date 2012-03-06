@@ -59,3 +59,12 @@ class TestForm(forms.Form):
 class TestModelForm(forms.ModelForm):
     class Meta:
         model = User
+
+class TestInlineForm(forms.Form):
+    query = forms.CharField(required=False, label="")
+    active = forms.ChoiceField(widget=forms.RadioSelect, label="", choices=(
+        ('all', 'all'),
+        ('active', 'active'),
+        ('inactive', 'inactive')
+        ), initial='all')
+    mine = forms.BooleanField(required=False, label='Mine only', initial=False)

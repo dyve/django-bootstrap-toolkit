@@ -1,16 +1,15 @@
 {% load bootstrap_toolkit %}
-{% spaceless %}
-    {% if form.non_field_errors %}
-        {% include "bootstrap_toolkit/non_field_errors.html" %}
-    {% endif %}
 
-    {% for field in form.hidden_fields %}
-        {% for error in field.errors %}
-            {% include "bootstrap_toolkit/non_field_error.html" %}
-        {% endfor %}
-    {% endfor %}
+{% if form.non_field_errors %}
+    {% include "bootstrap_toolkit/non_field_errors.html" %}
+{% endif %}
 
-    {% for field in form %}
-        {% include "bootstrap_toolkit/field.html" %}
+{% for field in form.hidden_fields %}
+    {% for error in field.errors %}
+        {% include "bootstrap_toolkit/non_field_error.html" %}
     {% endfor %}
-{% endspaceless %}
+{% endfor %}
+
+{% for field in form %}
+    {% include "bootstrap_toolkit/field.html" %}
+{% endfor %}

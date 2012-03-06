@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block content %}
+
+<h1>This form uses templates</h1>
+
+<p>The disabled field gets a $ appended using a template.</p>
+
+<p>&nbsp;</p>
+
+<form class="form-{{ layout }}" action="" method="post">
+
+    {% csrf_token %}
+
+    {{ form|as_bootstrap:"inline" }}
+
+    <input type="submit" class="text btn btn-primary">
+
+</form>
+
+<p>Submit the form to see error messages styled into it.</p>
+
+{% endblock %}
+
