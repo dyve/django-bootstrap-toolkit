@@ -11,5 +11,9 @@
 {% endfor %}
 
 {% for field in form %}
-    {% include "bootstrap_toolkit/field.html" %}
+    {% if not field.name|lower in exclude|lower|split:',' %}
+        {% if not fields or field.name|lower in fields|lower|split:','  %}
+            {% include "bootstrap_toolkit/field.html" %}
+        {% endif %}
+    {% endif %}
 {% endfor %}

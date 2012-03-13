@@ -23,7 +23,7 @@
             {% endif %}
         {% endfor %}
 
-        {{ form.color|as_bootstrap:"inline" }}
+        {{ form.color|as_bootstrap:layout }}
 
         {% if layout == "horizontal" %}
             <p class="form-actions">
@@ -32,6 +32,7 @@
         {% else %}
             <input type="submit" value="Submit" class="btn btn-primary">
         {% endif %}
+
     </form>
 
     <p>Submit the form to see error messages styled into it.</p>

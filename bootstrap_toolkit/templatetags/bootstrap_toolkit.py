@@ -1,4 +1,4 @@
-from django.forms import BaseForm
+from django.forms import BaseForm, Field
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
@@ -31,35 +31,39 @@ register = template.Library()
 
 @register.simple_tag
 def bootstrap_stylesheet_url():
-    # URL to Bootstrap Stylesheet (CSS file)
-   return BOOTSTRAP_CSS_URL
+    """
+    URL to Bootstrap Stylesheet (CSS)
+    """
+    return BOOTSTRAP_CSS_URL
 
 @register.simple_tag
 def bootstrap_stylesheet_tag():
-    # HTML tag to insert Bootstrap stylesheet
+    """
+    HTML tag to insert Bootstrap stylesheet
+    """
     return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url()
 
 @register.simple_tag
 def bootstrap_javascript_url(name):
-    # URL to Bootstrap javascript file
-    # http://twitter.github.com/bootstrap/assets/js/bootstrap-<name>.js
+    """
+    URL to Bootstrap javascript file
+    """
     return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
 
 @register.simple_tag
 def bootstrap_javascript_tag(name):
-    # HTML tag to insert bootstrap_toolkit javascript file
+    """
+    HTML tag to insert bootstrap_toolkit javascript file
+    """
     return u'<script src="%s"></script>' % bootstrap_javascript_url(name)
-
-@register.simple_tag
-def bootstrap_media():
-    # HTML tags to insert Bootstrap stylesheet and javascript
-    return bootstrap_media()
 
 @register.filter
 def as_bootstrap(form_or_field, layout='vertical'):
+    """
+    Render a field or a form according to Bootstrap guidelines
+    """
     layout = str(layout).lower()
     if isinstance(form_or_field, BaseForm):
-        # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
         return get_template("bootstrap_toolkit/form.html").render(
             Context({
                 'form': form_or_field,
@@ -67,7 +71,6 @@ def as_bootstrap(form_or_field, layout='vertical'):
             })
         )
     else:
-        # Filter to Bootstrap a Django form, analogous to as_p, as_table, as_ul
         return get_template("bootstrap_toolkit/field.html").render(
             Context({
                 'field': form_or_field,
@@ -77,7 +80,9 @@ def as_bootstrap(form_or_field, layout='vertical'):
 
 @register.filter
 def is_disabled(field):
-    # Filter to determine if a field is disabled
+    """
+    Returns True if fields is disabled, readonly or not marked as editable, False otherwise
+    """
     if not getattr(field.field, 'editable', True):
         return True
     if getattr(field.field.widget.attrs, 'readonly', False):
@@ -88,15 +93,23 @@ def is_disabled(field):
 
 @register.filter
 def is_enabled(field):
-    # Filter to determine if a field is enabled
+    """
+    Shortcut to return the logical negative of is_disabled
+    """
     return not is_disabled(field)
 
 @register.filter
 def bootstrap_input_type(field):
-    widget = field.field.widget
-    bootstrap_input_type = getattr(widget.attrs, 'bootstrap_input_type', None)
-    if bootstrap_input_type:
-        return bootstrap_input_type
+    """
+    Return input type to use for field
+    """
+    try:
+        widget = field.field.widget
+    except:
+        raise ValueError("Expected a Field, got a %s" % type(field))
+    input_type = getattr(widget.attrs, 'bootstrap_input_type', None)
+    if input_type:
+        return input_type
     if isinstance(widget, TextInput):
         return u'text'
     if isinstance(widget, CheckboxInput):
@@ -116,7 +129,9 @@ def active_url(request, url, output=u'active'):
 
 @register.filter
 def pagination(page, range=5):
-    # Filter to generate Bootstrap pagination from a page
+    """
+    Generate Bootstrap pagination links from a page object
+    """
     num_pages = page.paginator.num_pages
     current_page = page.number
     range_min = max(current_page - range, 1)
@@ -133,4 +148,7 @@ def pagination(page, range=5):
 
 @register.filter
 def split(str, splitter):
+    """
+    Split a string
+    """
     return str.split(splitter)

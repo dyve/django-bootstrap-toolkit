@@ -1,6 +1,11 @@
+{{ choices_start }}
 {% for choice_id, choice_label in field.field.choices %}
     <label class="{{ type }}{% if inline or field.field.widget.attrs.inline %} inline{% endif %}">
         <input type="{{ type }}" name="{{ field.html_name }}" value="{{ choice_id }}"{% if type == "checkbox" %}{% if choice_id in field.value %} checked{% endif %}{% else %}{% if choice_id == field.value %} checked{% endif %}{% endif %}>
         {{ choice_label }}
     </label>
+    {% if not forloop.last and choices_separator > "" and forloop.counter|divisibleby:choices_group %}
+        {{ choices_separator }}
+    {% endif %}
 {% endfor %}
+{{ choices_end }}

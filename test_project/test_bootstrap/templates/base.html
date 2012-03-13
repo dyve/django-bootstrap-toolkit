@@ -34,7 +34,7 @@
                         <a href="{% url test_bootstrap.views.test_form %}?layout=vertical">Vertical</a>
                         <a href="{% url test_bootstrap.views.test_form %}?layout=horizontal">Horizontal</a>
                         <a href="{% url test_bootstrap.views.test_form_inline %}">Inline</a>
-                        <a href="{% url test_bootstrap.views.test_form_with_template %}">Using template</a>
+                        <a href="{% url test_bootstrap.views.test_form_with_template %}?layout=horizontal">Using template</a>
                     </ul>
                 </li>
                 <li><a href="{% url tabs %}">Tabs</a></li>
@@ -48,12 +48,18 @@
 
     {% block content %}Empty page{% endblock %}
 
+    <p><hr></p>
+
     <footer class="row">
-        <div class="span8 columns">
-            <p>This is <a href="https://github.com/dyve/django-bootstrap-toolkit">django-bootstrap-toolkit</a> by <a href="http://twitter.com/dyve">Dylan Verheul</a></p>
+        <div class="span6">
+            <p>This is <a href="https://github.com/dyve/django-bootstrap-toolkit">django-bootstrap-toolkit</a></p>
         </div>
-        <div class="span8 columns" style="text-align:right">
-            <p><a href="https://github.com/dyve/django-bootstrap-toolkit/blob/master/LICENSE">license</a></p>
+        <div class="span6" style="text-align:right">
+            <p>
+                &copy; <a href="http://twitter.com/dyve">Dylan Verheul</a> 2012
+                |
+                <a href="https://raw.github.com/dyve/django-bootstrap-toolkit/master/LICENSE">license</a>
+            </p>
         </div>
     </footer>
 
