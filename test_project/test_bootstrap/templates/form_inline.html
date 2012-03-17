@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h1>This is an inline form</h1>
+<h1>This is form layout is {{ layout }}</h1>
 
 <p>&nbsp;</p>
 
@@ -12,7 +12,7 @@
 
     {% csrf_token %}
 
-    {{ form|as_bootstrap:"inline" }}
+    {{ form|as_bootstrap:layout }}
 
     <input type="submit" class="text btn btn-primary">
 

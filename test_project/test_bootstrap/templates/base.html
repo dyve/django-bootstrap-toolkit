@@ -33,7 +33,8 @@
                     <ul class="dropdown-menu">
                         <a href="{% url test_bootstrap.views.test_form %}?layout=vertical">Vertical</a>
                         <a href="{% url test_bootstrap.views.test_form %}?layout=horizontal">Horizontal</a>
-                        <a href="{% url test_bootstrap.views.test_form_inline %}">Inline</a>
+                        <a href="{% url test_bootstrap.views.test_form_inline %}?layout=inline">Inline</a>
+                        <a href="{% url test_bootstrap.views.test_form_inline %}?layout=search">Search</a>
                         <a href="{% url test_bootstrap.views.test_form_with_template %}?layout=horizontal">Using template</a>
                     </ul>
                 </li>

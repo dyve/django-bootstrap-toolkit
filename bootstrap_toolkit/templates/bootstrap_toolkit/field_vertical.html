@@ -9,12 +9,13 @@
         {% include "bootstrap_toolkit/field_help.html" with inline=False %}
         {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
     {% else %}
-        <label class="nonfield{% if field.field.required %} required{% endif %}"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
         {% if input_type == "radioset" %}
+            <label class="nonfield{% if field.required %} required{% endif %}">{{ field.label }}</label>
             {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
             {% include "bootstrap_toolkit/field_help.html" with inline=False %}
             {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
         {% else %}
+            <label class="nonfield{% if field.field.required %} required{% endif %}"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
             {% include "bootstrap_toolkit/field_default.html" %}
             {% include "bootstrap_toolkit/field_help.html" with inline=True %}
             {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
