@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-bootstrap-toolkit',
-    version='2.3.7',
+    version='2.4.0',
     url='https://github.com/dyve/django-bootstrap-toolkit',
     author='Dylan Verheul',
     author_email='dylan@dyve.net',
