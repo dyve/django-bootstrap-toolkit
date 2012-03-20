@@ -2,6 +2,10 @@
 
 {% load bootstrap_toolkit %}
 
+{% block extra_head %}
+    {{ form.media }}
+{% endblock %}
+
 {% block content %}
 
     <h1>This is a <em>{{ layout }}</em> Django form, bootstrapped</h1>

@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from test_bootstrap.forms import TestForm
-from test_project.test_bootstrap.forms import TestModelForm, TestInlineForm
+from test_project.test_bootstrap.forms import TestModelForm, TestInlineForm, WidgetsForm
 
 def test_form_with_template(request):
     layout = request.GET.get('layout')
@@ -59,5 +59,13 @@ def test_tabs(request):
 
     return render_to_response('tabs.html', RequestContext(request, {
         'tabs': tabs,
+        'layout': layout,
+    }))
+
+def test_widgets(request):
+    layout = request.GET.get('layout', 'vertical')
+    form = WidgetsForm()
+    return render_to_response('form.html', RequestContext(request, {
+        'form': form,
         'layout': layout,
     }))

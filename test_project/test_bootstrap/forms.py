@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from bootstrap_toolkit.widgets import BootstrapDateInput
 
 class TestForm(forms.Form):
     title = forms.CharField(
@@ -68,3 +69,6 @@ class TestInlineForm(forms.Form):
         ('inactive', 'inactive')
         ), initial='all')
     mine = forms.BooleanField(required=False, label='Mine only', initial=False)
+
+class WidgetsForm(forms.Form):
+    date = forms.DateField(widget=BootstrapDateInput)

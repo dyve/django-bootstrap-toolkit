@@ -62,3 +62,4 @@ Thanks
 * to Twitter for building and releasing Bootstrap
 * to the Django community for Django
 * to the authors of django-bootstrap-form for the inspiration
+* to Stefan Petre

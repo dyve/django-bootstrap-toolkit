@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     (r'^form_template$', 'test_bootstrap.views.test_form_with_template'),
     (r'^form_inline$', 'test_bootstrap.views.test_form_inline'),
     (r'^tabs$', 'test_bootstrap.views.test_tabs', {}, "tabs"),
+    (r'^widgets$', 'test_bootstrap.views.test_widgets', {}, "widgets"),
 )

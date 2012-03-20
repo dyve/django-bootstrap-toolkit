@@ -5,12 +5,6 @@ from django.template.loader import get_template
 from django import template
 from django.conf import settings
 
-BOOTSTRAP_DEFAULT_VERSION = '2.0.1'
-
-BOOTSTRAP_VERSION = getattr(settings, 'BOOTSTRAP_VERSION',
-    BOOTSTRAP_DEFAULT_VERSION
-)
-
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
     'http://twitter.github.com/bootstrap/assets/'
 )
