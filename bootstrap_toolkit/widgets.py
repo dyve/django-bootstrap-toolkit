@@ -21,6 +21,11 @@ def add_to_css_class(classes, new_class):
 
 class BootstrapDateInput(forms.TextInput):
 
+    bootstrap = {
+        'append': mark_safe('<i class="icon-th"></i>'),
+        'prepend': None,
+    }
+
     class Media:
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
