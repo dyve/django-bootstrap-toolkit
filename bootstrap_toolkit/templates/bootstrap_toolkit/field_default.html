@@ -2,7 +2,7 @@
     {% comment %}
         Spaceless is required here to make sure prepend and append work properly
     {% endcomment %}
-    {% with prepend=prepend|default:field.field.widget.bootstrap.prepend append=append|default:field.field.widget.bootstrap.append %}
+    {% with prepend=prepend|default:field.field.widget.bootstrap.prepend|default:"" append=append|default:field.field.widget.bootstrap.append|default:"" %}
         {% if prepend  %}
             <div class="input-prepend"><span class="add-on">{{ prepend }}</span>{{ field }}</div>
         {% else %}

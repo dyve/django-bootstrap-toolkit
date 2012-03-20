@@ -1,7 +1,6 @@
 from django import forms
 from django.conf import settings
 from django.utils.safestring import mark_safe
-from urls import *
 
 def add_to_css_class(classes, new_class):
     new_class = new_class.strip()
