@@ -1,1 +1,2 @@
 recursive-include bootstrap_toolkit/templates *.html
+recursive-include bootstrap_toolkit/static *
