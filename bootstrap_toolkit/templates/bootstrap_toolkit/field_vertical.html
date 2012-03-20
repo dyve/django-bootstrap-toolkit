@@ -7,7 +7,7 @@
         </div>
     {% else %}
         {% if input_type == "multicheckbox" %}
-            <label class="control-label{% if field.required %} required{% endif %}">{{ field.label }}</label>
+            <label class="control-label">{{ field.label }}</label>
             <div class="controls">
                 {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
                 {% include "bootstrap_toolkit/field_help.html" with inline=False %}
@@ -15,14 +15,14 @@
             </div>
         {% else %}
             {% if input_type == "radioset" %}
-                <label class="control-label{% if field.required %} required{% endif %}">{{ field.label }}</label>
+                <label class="control-label">{{ field.label }}</label>
                 <div class="controls">
                     {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
                     {% include "bootstrap_toolkit/field_help.html" with inline=False %}
                     {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
                 </div>
             {% else %}
-                <label class="contral-label{% if field.field.required %} required{% endif %}"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
+                <label class="contral-label"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
                 <div class="controls">
                     {% include "bootstrap_toolkit/field_default.html" %}
                     {% include "bootstrap_toolkit/field_help.html" with inline=True %}
