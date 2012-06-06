@@ -13,6 +13,10 @@ BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
     BOOTSTRAP_BASE_URL + 'js/'
 )
 
+BOOTSTRAP_JS_URL = getattr(settings, 'BOOTSTRAP_JS_URL',
+    None
+)
+
 BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
     BOOTSTRAP_BASE_URL + 'css/'
 )
@@ -42,13 +46,17 @@ def bootstrap_javascript_url(name):
     """
     URL to Bootstrap javascript file
     """
+    if BOOTSTRAP_JS_URL:
+        return BOOTSTRAP_JS_URL
     return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
+
 
 @register.simple_tag
 def bootstrap_javascript_tag(name):
     """
     HTML tag to insert bootstrap_toolkit javascript file
     """
+
     return u'<script src="%s"></script>' % bootstrap_javascript_url(name)
 
 @register.filter
