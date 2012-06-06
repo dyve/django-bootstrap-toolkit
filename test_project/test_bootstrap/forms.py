@@ -49,7 +49,7 @@ class TestForm(forms.Form):
             ("#0f0", "green"),
             ("#00f", "blue"),
         ),
-        help_text=u'And we have radiosets',
+        help_text=u'And we have <i>radiosets</i>',
     )
 
     def clean(self):
