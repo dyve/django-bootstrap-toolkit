@@ -1,4 +1,5 @@
-from django.forms import BaseForm, Field
+from django.forms import BaseForm
+from django.forms.forms import BoundField
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
@@ -72,13 +73,16 @@ def as_bootstrap(form_or_field, layout='vertical'):
                 'layout': layout,
             })
         )
-    else:
+    elif isinstance(form_or_field, BoundField):
         return get_template("bootstrap_toolkit/field.html").render(
             Context({
                 'field': form_or_field,
                 'layout': layout,
             })
         )
+    else:
+        # Display the default
+        return settings.TEMPLATE_STRING_IF_INVALID
 
 @register.filter
 def is_disabled(field):
