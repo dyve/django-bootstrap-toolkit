@@ -13,8 +13,10 @@
                     {% include "bootstrap_toolkit/field_default.html" %}
                 {% endif %}
             {% endif %}
-            {% include "bootstrap_toolkit/field_help.html" with inline=False %}
         {% endif %}
-        {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
+        {% include "bootstrap_toolkit/field_errors.html" with inline="True" %}
+        {% if input_type != "checkbox" %}
+            {% include "bootstrap_toolkit/field_help.html" with inline="False" %}
+        {% endif %}
     </div>
 </div>
