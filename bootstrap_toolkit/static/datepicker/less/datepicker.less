@@ -2,11 +2,12 @@
  * Datepicker for Bootstrap
  *
  * Copyright 2012 Stefan Petre
+ * Improvements by Andrew Rowls
  * Licensed under the Apache License v2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
- 
+
 .datepicker {
 	top: 0;
 	left: 0;
@@ -47,7 +48,6 @@
 		display: block;
 	}
 	table{
-		width: 100%;
 		margin: 0;
 	}
 	td,
@@ -66,9 +66,17 @@
 		&.new {
 			color: @grayLight;
 		}
+		&.disabled,
+		&.disabled:hover {
+			background: none;
+			color: @grayLight;
+			cursor: default;
+		}
 		&.active,
-		&.active:hover {
-			.buttonBackground(@primaryButtonBackground, spin(@primaryButtonBackground, 20));
+		&.active:hover,
+		&.active.disabled,
+		&.active.disabled:hover {
+			.buttonBackground(@btnPrimaryBackground, spin(@btnPrimaryBackground, 20));
 			color: #fff;
 			text-shadow: 0 -1px 0 rgba(0,0,0,.25);
 		}
@@ -84,8 +92,17 @@
 			&:hover {
 				background: @grayLighter;
 			}
-			&.active {
-				.buttonBackground(@primaryButtonBackground, spin(@primaryButtonBackground, 20));
+			&.disabled,
+			&.disabled:hover {
+				background:none;
+				color: @grayLight;
+				cursor: default;
+			}
+			&.active,
+			&.active:hover,
+			&.active.disabled,
+			&.active.disabled:hover {
+				.buttonBackground(@btnPrimaryBackground, spin(@btnPrimaryBackground, 20));
 				color: #fff;
 				text-shadow: 0 -1px 0 rgba(0,0,0,.25);
 			}
@@ -94,11 +111,11 @@
 			}
 		}
 	}
-	
+
 	th.switch {
 		width: 145px;
 	}
-	
+
 	thead tr:first-child th {
 		cursor: pointer;
 		&:hover{
