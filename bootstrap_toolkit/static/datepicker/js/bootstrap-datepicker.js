@@ -275,7 +275,7 @@
 	$.fn.datepicker = function ( option ) {
 		return this.each(function () {
 			var $this = $(this),
-				data = $this.data('datepicker'),
+				data = $this.data('datepicker-widget'),
 				options = typeof option == 'object' && option;
 			if (!data) {
 				$this.data('datepicker', (data = new Datepicker(this, $.extend({}, $.fn.datepicker.defaults,options))));

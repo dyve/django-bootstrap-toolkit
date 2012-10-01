@@ -18,12 +18,23 @@ def add_to_css_class(classes, new_class):
         classes = u" ".join(classes)
     return classes
 
-class BootstrapDateInput(forms.TextInput):
+
+class BootstrapDateInput(forms.DateInput):
 
     bootstrap = {
-        'append': mark_safe('<i class="icon-th"></i>'),
+        'append': mark_safe('<i class="icon-calendar"></i>'),
         'prepend': None,
     }
+
+    def __init__(self, *args, **kwargs):
+        if 'popup_date_format' in kwargs:
+            date_format = kwargs.pop('popup_date_format')
+            if not 'attrs' in kwargs or kwargs['attrs'] is None:
+                kwargs['attrs'] = {}
+            if date_format:
+                kwargs['attrs']['data-date-format'] = date_format
+
+        super(BootstrapDateInput, self).__init__(*args, **kwargs)
 
     class Media:
         js = (
@@ -40,7 +51,7 @@ class BootstrapDateInput(forms.TextInput):
         if not attrs:
             attrs = {}
         if 'class' in attrs:
-            attrs['class'] = add_to_css_class(attrs['class'], 'datepicker')
+            attrs['class'] = add_to_css_class(attrs['class'], 'datepicker-widget')
         else:
-            attrs['class'] = 'datepicker'
+            attrs['class'] = 'datepicker-widget'
         return super(BootstrapDateInput, self).render(name, value, attrs)
