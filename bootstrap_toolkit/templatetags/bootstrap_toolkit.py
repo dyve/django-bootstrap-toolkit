@@ -68,8 +68,10 @@ def as_bootstrap(form_or_field, layout='vertical,false'):
     params = split(layout, ",")
     layout = str(params[0]).lower()
 
-    if len(params) > 1:
+    try:
         float = str(params[1]).lower() == "float"
+    except IndexError:
+        float = False
 
     if isinstance(form_or_field, BaseForm):
         return get_template("bootstrap_toolkit/form.html").render(
