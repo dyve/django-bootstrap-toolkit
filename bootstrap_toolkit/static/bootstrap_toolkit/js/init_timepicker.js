@@ -1,5 +1,5 @@
 (function($){
     $(function() {
-        $(".timepicker").timepicker()
+        $(".timepicker-widget").timepicker()
     })
 })(jQuery)

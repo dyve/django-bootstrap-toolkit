@@ -75,7 +75,7 @@ class BootstrapDateInput(BootstrapInput, forms.DateInput):
         'prepend': mark_safe('<i class="icon-calendar"></i>'),
     }
     attrs = {
-        'class': 'datepicker'
+        'class': 'datepicker-widget'
     }
 
     def __init__(self, *args, **kwargs):
@@ -107,7 +107,7 @@ class BootstrapTimeInput(BootstrapInput, forms.TimeInput):
         'prepend': mark_safe('<i class="icon-time"></i>')
     }
     attrs = {
-        'class': 'timepicker'
+        'class': 'timepicker-widget'
     }
 
     class Media:
