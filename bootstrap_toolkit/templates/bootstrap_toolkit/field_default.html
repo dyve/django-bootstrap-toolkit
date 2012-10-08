@@ -1,5 +1,5 @@
 {% if field.field.widget.bootstrap %}
-    {% with bootstrap as field.field.widget.bootstrap %}
+    {% with bootstrap=field.field.widget.bootstrap %}
         {% with prepend=prepend|default:bootstrap.prepend|default:"" append=append|default:bootstrap.append|default:"" %}
             {% include "bootstrap_toolkit/field_prepend_append.html" %}
         {% endwith %}

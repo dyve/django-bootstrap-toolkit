@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from bootstrap_toolkit.widgets import BootstrapDateInput
 
 class TestForm(forms.Form):
+    date = forms.DateField(
+        widget=BootstrapDateInput(),
+    )
     title = forms.CharField(
         max_length=100,
         help_text=u'This is the standard text input',
