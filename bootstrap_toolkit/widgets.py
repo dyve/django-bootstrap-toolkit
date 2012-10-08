@@ -19,6 +19,12 @@ def add_to_css_class(classes, new_class):
         classes = u" ".join(classes)
     return classes
 
+def convert_date_format(format):
+    format = format.replace('%m', 'mm')
+    format = format.replace('%d', 'dd')
+    format = format.replace('%Y', 'yyyy')
+    format = format.replace('%y', 'yy')
+    return format
 
 class BootstrapInput(forms.TextInput):
 
@@ -78,15 +84,9 @@ class BootstrapDateInput(BootstrapInput, forms.DateInput):
         'class': 'datepicker-widget'
     }
 
-    def __init__(self, *args, **kwargs):
-        if 'popup_date_format' in kwargs:
-            date_format = kwargs.pop('popup_date_format')
-            if not 'attrs' in kwargs or kwargs['attrs'] is None:
-                kwargs['attrs'] = {}
-            if date_format:
-                kwargs['attrs']['data-date-format'] = date_format
-
-        super(BootstrapDateInput, self).__init__(*args, **kwargs)
+    def __init__(self, attrs=None, format=None):
+        super(BootstrapDateInput, self).__init__(attrs, format)
+        self.attrs['data-date-format'] = convert_date_format(str(self.format))
 
     class Media:
         js = (
