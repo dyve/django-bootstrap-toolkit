@@ -1,30 +1,13 @@
-{% comment %}
-    Spaceless is required here to make sure prepend and append work properly
-{% endcomment %}
 {% if field.field.widget.bootstrap %}
     {% with bootstrap as field.field.widget.bootstrap %}
-        {% with prepend=prepend|default:field.field.widget.bootstrap.prepend|default:"" append=append|default:field.field.widget.bootstrap.append|default:"" %}
-            {% if prepend  %}
-                {% if append %}
-                    <div class="input-prepend input-append">
-                        <span class="add-on">{{ prepend }}</span>{{ field }}<span class="add-on">{{ append }}</span>
-                    </div>
-                {% else %}
-                    <div class="input-prepend">
-                        <span class="add-on">{{ prepend }}</span>{{ field }}
-                    </div>
-                {% endif %}
-            {% else %}
-                {% if append %}
-                    <div class="input-append">
-                        {{ field }}<span class="add-on">{{ append }}</span>
-                    </div>
-                {% else %}
-                    {{ field }}
-                {% endif %}
-            {% endif %}
+        {% with prepend=prepend|default:bootstrap.prepend|default:"" append=append|default:bootstrap.append|default:"" %}
+            {% include "bootstrap_toolkit/field_prepend_append.html" %}
         {% endwith %}
     {% endwith %}
 {% else %}
-    {{ field }}
+    {% if prepend or append %}
+        {% include "bootstrap_toolkit/field_prepend_append.html" %}
+    {% else %}
+        {{ field }}
+    {% endif %}
 {% endif %}
