@@ -2,31 +2,31 @@
     {% if input_type == "checkbox" %}
         <div class="controls">
             {% include "bootstrap_toolkit/field_checkbox.html" %}
-            {% include "bootstrap_toolkit/field_help.html" with inline=True %}
-            {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
+            {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
+            {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
         </div>
     {% else %}
         {% if input_type == "multicheckbox" %}
             <label class="control-label">{{ field.label }}</label>
             <div class="controls">
                 {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
-                {% include "bootstrap_toolkit/field_help.html" with inline=False %}
-                {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
+                {% include "bootstrap_toolkit/field_help.html" with display="block" %}
+                {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
             </div>
         {% else %}
             {% if input_type == "radioset" %}
                 <label class="control-label">{{ field.label }}</label>
                 <div class="controls">
                     {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
-                    {% include "bootstrap_toolkit/field_help.html" with inline=False %}
-                    {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
+                    {% include "bootstrap_toolkit/field_help.html" with display="block" %}
+                    {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
                 </div>
             {% else %}
                 <label class="control-label"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
                 <div class="controls">
                     {% include "bootstrap_toolkit/field_default.html" %}
-                    {% include "bootstrap_toolkit/field_help.html" with inline=True %}
-                    {% include "bootstrap_toolkit/field_errors.html" with inline=False %}
+                    {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
+                    {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
                 </div>
             {% endif %}
         {% endif %}

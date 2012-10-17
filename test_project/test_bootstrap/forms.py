@@ -14,7 +14,8 @@ class TestForm(forms.Form):
         max_length=100,
         help_text=u'I am read only',
         widget=forms.TextInput(attrs={
-            'disabled': 'disabled'
+            'disabled': 'disabled',
+            'placeholder': 'I am disabled',
         })
     )
     content = forms.ChoiceField(
@@ -66,6 +67,13 @@ class TestModelForm(forms.ModelForm):
 
 class TestInlineForm(forms.Form):
     query = forms.CharField(required=False, label="")
+    vegetable = forms.ChoiceField(
+        choices=(
+            ("broccoli", "Broccoli"),
+            ("carrots", "Carrots"),
+            ("turnips", "Turnips"),
+        ),
+    )
     active = forms.ChoiceField(widget=forms.RadioSelect, label="", choices=(
         ('all', 'all'),
         ('active', 'active'),

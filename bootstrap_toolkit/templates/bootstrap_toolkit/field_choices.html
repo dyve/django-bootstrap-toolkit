@@ -1,6 +1,6 @@
 {{ choices_start }}
 {% for choice_id, choice_label in field.field.choices %}
-    <label class="{{ type }}{% if inline or field.field.widget.attrs.inline %} inline{% endif %}">
+    <label class="{{ type }}{% if display == "inline" or field.field.widget.attrs.inline %} inline{% endif %}">
         <input type="{{ type }}" name="{{ field.html_name }}" value="{{ choice_id }}"{% if type == "checkbox" %}{% if choice_id|safe in field.value|safe %} checked{% endif %}{% else %}{% if field.value|safe == choice_id|safe %} checked{% endif %}{% endif %}>
         {{ choice_label }}
     </label>
