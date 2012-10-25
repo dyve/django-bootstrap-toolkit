@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from bootstrap_toolkit.widgets import BootstrapDateInput
+from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput
 
 class TestForm(forms.Form):
     date = forms.DateField(
@@ -54,6 +54,11 @@ class TestForm(forms.Form):
             ("#00f", "blue"),
         ),
         help_text=u'And we have <i>radiosets</i>',
+    )
+    prepended = forms.CharField(
+        max_length=100,
+        help_text=u'I am prepended by a P',
+        widget=BootstrapTextInput(prepend='P'),
     )
 
     def clean(self):

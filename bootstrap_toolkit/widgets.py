@@ -19,6 +19,15 @@ def add_to_css_class(classes, new_class):
     return classes
 
 
+class BootstrapTextInput(forms.TextInput):
+    bootstrap = {}
+
+    def __init__(self, *args, **kwargs):
+        self.bootstrap['append'] = kwargs.pop('append', None)
+        self.bootstrap['prepend'] = kwargs.pop('prepend', None)
+        super(BootstrapTextInput, self).__init__(*args, **kwargs)
+
+
 class BootstrapDateInput(forms.DateInput):
 
     bootstrap = {
