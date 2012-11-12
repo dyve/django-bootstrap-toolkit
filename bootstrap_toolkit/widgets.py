@@ -19,6 +19,17 @@ def add_to_css_class(classes, new_class):
     return classes
 
 
+class BootstrapUneditableInput(forms.TextInput):
+    def render(self, name, value, attrs=None):
+        if attrs is None:
+            attrs = {}
+        attrs['type'] = 'hidden'
+        klass = add_to_css_class(self.attrs.pop('class', ''), 'uneditable-input')
+        klass = add_to_css_class(klass, attrs.pop('class', ''))
+        base = super(BootstrapUneditableInput, self).render(name, value, attrs)
+        return mark_safe(base + u'<span class="%s">%s</span>' % (klass, value))
+
+
 class BootstrapTextInput(forms.TextInput):
     bootstrap = {}
 
@@ -57,10 +68,7 @@ class BootstrapDateInput(forms.DateInput):
         }
 
     def render(self, name, value, attrs=None):
-        if not attrs:
+        if attrs is None:
             attrs = {}
-        if 'class' in attrs:
-            attrs['class'] = add_to_css_class(attrs['class'], 'datepicker-widget')
-        else:
-            attrs['class'] = 'datepicker-widget'
+        attrs['class'] = add_to_css_class(attrs.get('class', ''), 'datepicker-widget')
         return super(BootstrapDateInput, self).render(name, value, attrs)

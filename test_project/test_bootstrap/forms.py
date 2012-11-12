@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput
+from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput
 
 class TestForm(forms.Form):
     date = forms.DateField(
@@ -12,11 +12,17 @@ class TestForm(forms.Form):
     )
     disabled = forms.CharField(
         max_length=100,
-        help_text=u'I am read only',
+        help_text=u'I am disabled',
         widget=forms.TextInput(attrs={
             'disabled': 'disabled',
             'placeholder': 'I am disabled',
         })
+    )
+    uneditable = forms.CharField(
+        max_length=100,
+        help_text=u'I am uneditable and you cannot enable me with JS',
+        initial=u'Uneditable',
+        widget=BootstrapUneditableInput()
     )
     content = forms.ChoiceField(
         choices=(
