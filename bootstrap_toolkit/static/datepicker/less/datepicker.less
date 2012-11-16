@@ -37,15 +37,6 @@
 	>div {
 		display: none;
 	}
-	&.days div.datepicker-days {
-		display: block;
-	}
-	&.months div.datepicker-months {
-		display: block;
-	}
-	&.years div.datepicker-years {
-		display: block;
-	}
 	table{
 		width: 100%;
 		margin: 0;
@@ -95,8 +86,14 @@
 		}
 	}
 	
-	th.switch {
-		width: 145px;
+	th {
+		&.switch {
+			width: 145px;
+		}
+		&.next,
+		&.prev {
+			font-size: @baseFontSize * 1.5;
+		}
 	}
 	
 	thead tr:first-child th {

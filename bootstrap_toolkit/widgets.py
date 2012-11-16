@@ -2,6 +2,21 @@ from django import forms
 from django.conf import settings
 from django.utils.safestring import mark_safe
 
+default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
+if default_date_format:
+    default_date_format = str(default_date_format[0])
+
+def javascript_date_format(python_date_format):
+    format = python_date_format.replace(r'%Y', 'yyyy')
+    format = format.replace(r'%m', 'mm')
+    format = format.replace(r'%d', 'dd')
+    if '%' in format:
+        format = ''
+    if not format:
+        format = 'yyyy-mm-dd'
+    return format
+
+
 def add_to_css_class(classes, new_class):
     new_class = new_class.strip()
     if new_class:
@@ -46,16 +61,6 @@ class BootstrapDateInput(forms.DateInput):
         'prepend': None,
     }
 
-    def __init__(self, *args, **kwargs):
-        if 'popup_date_format' in kwargs:
-            date_format = kwargs.pop('popup_date_format')
-            if not 'attrs' in kwargs or kwargs['attrs'] is None:
-                kwargs['attrs'] = {}
-            if date_format:
-                kwargs['attrs']['data-date-format'] = date_format
-
-        super(BootstrapDateInput, self).__init__(*args, **kwargs)
-
     class Media:
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
@@ -70,5 +75,9 @@ class BootstrapDateInput(forms.DateInput):
     def render(self, name, value, attrs=None):
         if attrs is None:
             attrs = {}
-        attrs['class'] = add_to_css_class(attrs.get('class', ''), 'datepicker-widget')
+        format = self.format
+        if not format:
+            format = default_date_format
+        attrs['data-date-format'] = javascript_date_format(format)
+        attrs['data-bootstrap-widget'] = 'datepicker'
         return super(BootstrapDateInput, self).render(name, value, attrs)
