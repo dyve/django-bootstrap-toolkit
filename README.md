@@ -90,4 +90,4 @@ Thanks
 * to Twitter for building and releasing Bootstrap
 * to the Django community for Django
 * to the authors of django-bootstrap-form for the inspiration
-* to Stefan Petre for the datepicker
+* to Stefan Petre and Andy Rowles for the datepicker https://github.com/eternicode/bootstrap-datepicker
