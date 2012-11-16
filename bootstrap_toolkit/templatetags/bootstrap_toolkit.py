@@ -122,6 +122,9 @@ def bootstrap_input_type(field):
         widget = field.field.widget
     except:
         raise ValueError("Expected a Field, got a %s" % type(field))
+    input_type = getattr(widget, 'bootstrap_input_type', None)
+    if input_type:
+        return unicode(input_type)
     if isinstance(widget, TextInput):
         return u'text'
     if isinstance(widget, CheckboxInput):

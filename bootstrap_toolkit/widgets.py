@@ -66,7 +66,7 @@ class BootstrapDateInput(forms.DateInput):
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
         )
-        lang = translation.get_language()
+        lang = translation.get_language().split('-')[0].lower()
         if lang != 'en':
             js = js + (
                 settings.STATIC_URL + 'datepicker/js/locales/bootstrap-datepicker.%s.js' % lang,
@@ -87,6 +87,6 @@ class BootstrapDateInput(forms.DateInput):
         if not format:
             format = default_date_format
         attrs['data-date-format'] = javascript_date_format(format)
-        attrs['data-date-language'] = attrs.get('data-date-language', translation.get_language())
+        attrs['data-date-language'] = translation.get_language().split('-')[0].lower()
         attrs['data-bootstrap-widget'] = 'datepicker'
         return super(BootstrapDateInput, self).render(name, value, attrs)
