@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.utils import translation
 from django.utils.safestring import mark_safe
 
 default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
@@ -64,6 +65,13 @@ class BootstrapDateInput(forms.DateInput):
     class Media:
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
+        )
+        lang = translation.get_language()
+        if lang != 'en':
+            js = js + (
+                settings.STATIC_URL + 'datepicker/js/locales/bootstrap-datepicker.%s.js' % lang,
+            )
+        js = js + (
             settings.STATIC_URL + 'bootstrap_toolkit/js/init_datepicker.js',
         )
         css = {
@@ -79,5 +87,6 @@ class BootstrapDateInput(forms.DateInput):
         if not format:
             format = default_date_format
         attrs['data-date-format'] = javascript_date_format(format)
+        attrs['data-date-language'] = attrs.get('data-date-language', translation.get_language())
         attrs['data-bootstrap-widget'] = 'datepicker'
         return super(BootstrapDateInput, self).render(name, value, attrs)
