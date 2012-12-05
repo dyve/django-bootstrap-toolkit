@@ -17,8 +17,8 @@ Alternatively, you can add `django-bootstrap-toolkit` to your requirements.txt.
 
 If you want to hack django-bootstrap itself, clone this repo and call `pip install -e .`.
 
-Usage
------
+Use in templates
+----------------
 
     {% load bootstrap_toolkit %}
 
@@ -29,6 +29,34 @@ Usage
             <button type="submit" class="btn primary">Submit</button>
         </div>
     </form>
+
+Use in forms
+------------
+
+    class TestForm(forms.Form):
+        date = forms.DateField(
+            widget=BootstrapDateInput(),
+        )
+        title = forms.CharField(
+            max_length=100,
+            help_text=u'This is the standard text input',
+        )
+        uneditable = forms.CharField(
+            max_length=100,
+            help_text=u'I am uneditable and you cannot enable me with JS',
+            initial=u'Uneditable',
+            widget=BootstrapUneditableInput()
+        )
+        prepended = forms.CharField(
+            max_length=100,
+            help_text=u'I am prepended by a P',
+            widget=BootstrapTextInput(prepend='P'),
+        )
+
+More examples
+-------------
+
+See Django project `test_project/test_bootstrap` for more examples.
 
 About
 -----
@@ -62,4 +90,4 @@ Thanks
 * to Twitter for building and releasing Bootstrap
 * to the Django community for Django
 * to the authors of django-bootstrap-form for the inspiration
-* to Stefan Petre for the datepicker
+* to Stefan Petre and Andy Rowles for the datepicker https://github.com/eternicode/bootstrap-datepicker

@@ -1,22 +1,23 @@
 <div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
     <label class="control-label"{% if field.auto_id and not input_type == "multicheckbox" and not input_type == "radioset" %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
-    <div class="controls">
+    <div class="controls{% if float %} controls-row{% endif %}">
         {% if input_type == "checkbox" %}
             {% include "bootstrap_toolkit/field_checkbox.html" %}
+            {% include "bootstrap_toolkit/field_errors.html" with display="inline" %}
         {% else %}
             {% if input_type == "multicheckbox" %}
                 {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
+                {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
             {% else %}
                 {% if input_type == "radioset" %}
                     {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
+                    {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
                 {% else %}
                     {% include "bootstrap_toolkit/field_default.html" %}
+                    {% include "bootstrap_toolkit/field_errors.html" with display="inline" %}
                 {% endif %}
             {% endif %}
         {% endif %}
-        {% include "bootstrap_toolkit/field_errors.html" with inline="True" %}
-        {% if input_type != "checkbox" %}
-            {% include "bootstrap_toolkit/field_help.html" with inline="False" %}
-        {% endif %}
+        {% include "bootstrap_toolkit/field_help.html" with display="block" %}
     </div>
 </div>

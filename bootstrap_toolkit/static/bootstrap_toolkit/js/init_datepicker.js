@@ -1,6 +1,5 @@
 (function($){
     $(function() {
-        $(".datepicker").datepicker({ format: "dd-mm-yyyy" })
+        $('input[data-bootstrap-widget=datepicker]').datepicker();
     })
-})(jQuery)
-
+})(jQuery);

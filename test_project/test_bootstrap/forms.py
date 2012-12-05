@@ -1,18 +1,28 @@
 from django import forms
 from django.contrib.auth.models import User
-from bootstrap_toolkit.widgets import BootstrapDateInput
+from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput
 
 class TestForm(forms.Form):
+    date = forms.DateField(
+        widget=BootstrapDateInput(),
+    )
     title = forms.CharField(
         max_length=100,
         help_text=u'This is the standard text input',
     )
     disabled = forms.CharField(
         max_length=100,
-        help_text=u'I am read only',
+        help_text=u'I am disabled',
         widget=forms.TextInput(attrs={
-            'disabled': 'disabled'
+            'disabled': 'disabled',
+            'placeholder': 'I am disabled',
         })
+    )
+    uneditable = forms.CharField(
+        max_length=100,
+        help_text=u'I am uneditable and you cannot enable me with JS',
+        initial=u'Uneditable',
+        widget=BootstrapUneditableInput()
     )
     content = forms.ChoiceField(
         choices=(
@@ -51,6 +61,11 @@ class TestForm(forms.Form):
         ),
         help_text=u'And we have <i>radiosets</i>',
     )
+    prepended = forms.CharField(
+        max_length=100,
+        help_text=u'I am prepended by a P',
+        widget=BootstrapTextInput(prepend='P'),
+    )
 
     def clean(self):
         cleaned_data = super(TestForm, self).clean()
@@ -63,6 +78,13 @@ class TestModelForm(forms.ModelForm):
 
 class TestInlineForm(forms.Form):
     query = forms.CharField(required=False, label="")
+    vegetable = forms.ChoiceField(
+        choices=(
+            ("broccoli", "Broccoli"),
+            ("carrots", "Carrots"),
+            ("turnips", "Turnips"),
+        ),
+    )
     active = forms.ChoiceField(widget=forms.RadioSelect, label="", choices=(
         ('all', 'all'),
         ('active', 'active'),

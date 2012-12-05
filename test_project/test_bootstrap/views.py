@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from test_bootstrap.forms import TestForm
+from bootstrap_toolkit.widgets import BootstrapUneditableInput
 from test_project.test_bootstrap.forms import TestModelForm, TestInlineForm, WidgetsForm
 
 def test_form_with_template(request):
@@ -27,10 +28,11 @@ def test_form(request):
         form.is_valid()
     else:
         form = TestForm()
+    form.fields['title'].widget = BootstrapUneditableInput()
     return render_to_response('form.html', RequestContext(request, {
         'form': form,
         'layout': layout,
-        }))
+    }))
 
 def test_form_inline(request):
     layout = request.GET.get('layout', '')
@@ -56,7 +58,6 @@ def test_tabs(request):
             'title': 'Tab 2',
         }
     ]
-
     return render_to_response('tabs.html', RequestContext(request, {
         'tabs': tabs,
         'layout': layout,

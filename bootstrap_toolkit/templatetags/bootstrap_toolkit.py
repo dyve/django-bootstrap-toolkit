@@ -1,4 +1,5 @@
-from django.forms import BaseForm, Field
+from django.forms import BaseForm
+from django.forms.forms import BoundField
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
@@ -60,25 +61,37 @@ def bootstrap_javascript_tag(name):
     return u'<script src="%s"></script>' % bootstrap_javascript_url(name)
 
 @register.filter
-def as_bootstrap(form_or_field, layout='vertical'):
+def as_bootstrap(form_or_field, layout='vertical,false'):
     """
     Render a field or a form according to Bootstrap guidelines
     """
-    layout = str(layout).lower()
+    params = split(layout, ",")
+    layout = str(params[0]).lower()
+
+    try:
+        float = str(params[1]).lower() == "float"
+    except IndexError:
+        float = False
+
     if isinstance(form_or_field, BaseForm):
         return get_template("bootstrap_toolkit/form.html").render(
             Context({
                 'form': form_or_field,
                 'layout': layout,
+                'float': float,
             })
         )
-    else:
+    elif isinstance(form_or_field, BoundField):
         return get_template("bootstrap_toolkit/field.html").render(
             Context({
                 'field': form_or_field,
                 'layout': layout,
+                'float': float,
             })
         )
+    else:
+        # Display the default
+        return settings.TEMPLATE_STRING_IF_INVALID
 
 @register.filter
 def is_disabled(field):
@@ -109,9 +122,9 @@ def bootstrap_input_type(field):
         widget = field.field.widget
     except:
         raise ValueError("Expected a Field, got a %s" % type(field))
-    input_type = getattr(widget.attrs, 'bootstrap_input_type', None)
+    input_type = getattr(widget, 'bootstrap_input_type', None)
     if input_type:
-        return input_type
+        return unicode(input_type)
     if isinstance(widget, TextInput):
         return u'text'
     if isinstance(widget, CheckboxInput):

@@ -1,6 +1,22 @@
 from django import forms
 from django.conf import settings
+from django.utils import translation
 from django.utils.safestring import mark_safe
+
+default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
+if default_date_format:
+    default_date_format = str(default_date_format[0])
+
+def javascript_date_format(python_date_format):
+    format = python_date_format.replace(r'%Y', 'yyyy')
+    format = format.replace(r'%m', 'mm')
+    format = format.replace(r'%d', 'dd')
+    if '%' in format:
+        format = ''
+    if not format:
+        format = 'yyyy-mm-dd'
+    return format
+
 
 def add_to_css_class(classes, new_class):
     new_class = new_class.strip()
@@ -18,16 +34,44 @@ def add_to_css_class(classes, new_class):
         classes = u" ".join(classes)
     return classes
 
-class BootstrapDateInput(forms.TextInput):
+
+class BootstrapUneditableInput(forms.TextInput):
+    def render(self, name, value, attrs=None):
+        if attrs is None:
+            attrs = {}
+        attrs['type'] = 'hidden'
+        klass = add_to_css_class(self.attrs.pop('class', ''), 'uneditable-input')
+        klass = add_to_css_class(klass, attrs.pop('class', ''))
+        base = super(BootstrapUneditableInput, self).render(name, value, attrs)
+        return mark_safe(base + u'<span class="%s">%s</span>' % (klass, value))
+
+
+class BootstrapTextInput(forms.TextInput):
+    bootstrap = {}
+
+    def __init__(self, *args, **kwargs):
+        self.bootstrap['append'] = kwargs.pop('append', None)
+        self.bootstrap['prepend'] = kwargs.pop('prepend', None)
+        super(BootstrapTextInput, self).__init__(*args, **kwargs)
+
+
+class BootstrapDateInput(forms.DateInput):
 
     bootstrap = {
-        'append': mark_safe('<i class="icon-th"></i>'),
+        'append': mark_safe('<i class="icon-calendar"></i>'),
         'prepend': None,
     }
 
     class Media:
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
+        )
+        lang = translation.get_language().split('-')[0].lower()
+        if lang != 'en':
+            js = js + (
+                settings.STATIC_URL + 'datepicker/js/locales/bootstrap-datepicker.%s.js' % lang,
+            )
+        js = js + (
             settings.STATIC_URL + 'bootstrap_toolkit/js/init_datepicker.js',
         )
         css = {
@@ -37,10 +81,12 @@ class BootstrapDateInput(forms.TextInput):
         }
 
     def render(self, name, value, attrs=None):
-        if not attrs:
+        if attrs is None:
             attrs = {}
-        if 'class' in attrs:
-            attrs['class'] = add_to_css_class(attrs['class'], 'datepicker')
-        else:
-            attrs['class'] = 'datepicker'
+        format = self.format
+        if not format:
+            format = default_date_format
+        attrs['data-date-format'] = javascript_date_format(format)
+        attrs['data-date-language'] = translation.get_language().split('-')[0].lower()
+        attrs['data-bootstrap-widget'] = 'datepicker'
         return super(BootstrapDateInput, self).render(name, value, attrs)

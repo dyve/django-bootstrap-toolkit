@@ -1,21 +1,21 @@
 {% if input_type == "checkbox" %}
     {% include "bootstrap_toolkit/field_checkbox.html" %}
-    {% include "bootstrap_toolkit/field_help.html" with inline="True" %}
+    {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
 {% else %}
     {% if input_type == "multicheckbox" %}
         {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
-        {% include "bootstrap_toolkit/field_help.html" with inline="False" %}
+        {% include "bootstrap_toolkit/field_help.html" with display="block" %}
     {% else %}
         {% if field.label %}
             <label{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
         {% endif %}
         {% if input_type == "radioset" %}
             {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
-            {% include "bootstrap_toolkit/field_help.html" with inline="False" %}
+            {% include "bootstrap_toolkit/field_help.html" with display="block" %}
         {% else %}
-            {% include "bootstrap_toolkit/field_default.html" with inline="True"%}
-            {% include "bootstrap_toolkit/field_help.html" with inline="True" %}
+            {% include "bootstrap_toolkit/field_default.html" with display="inline"%}
+            {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
         {% endif %}
     {% endif %}
 {% endif %}
-{% include "bootstrap_toolkit/field_errors.html" with inline="False" %}
+{% include "bootstrap_toolkit/field_errors.html" with display="block" %}
