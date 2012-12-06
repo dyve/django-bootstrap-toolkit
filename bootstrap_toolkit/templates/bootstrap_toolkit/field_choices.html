@@ -10,7 +10,7 @@
             {% else %}
                 {% if field.value|safe == choice_id|safe %}checked{% endif %}
             {% endif %}
-            {% for attr,value in field.field.widget.attrs.items %}{{ attr }}="{{ value }}"{% endfor %}
+            {% for attr,value in field.field.widget.attrs.items %}{{ attr }}="{{ value }}" {% endfor %}
         >
         {{ choice_label }}
     </label>
