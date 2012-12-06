@@ -1,8 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from test_bootstrap.forms import TestForm
+from forms import TestForm, TestModelForm, TestInlineForm, WidgetsForm
 from bootstrap_toolkit.widgets import BootstrapUneditableInput
-from test_project.test_bootstrap.forms import TestModelForm, TestInlineForm, WidgetsForm
 
 def test_form_with_template(request):
     layout = request.GET.get('layout')

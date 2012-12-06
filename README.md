@@ -56,19 +56,26 @@ Use in forms
 More examples
 -------------
 
-See Django project `test_project/test_bootstrap` for more examples.
+See Django project `demo_project/demo_app` for more examples.
+
+Questions
+---------
+
+Do you have a question about the usage of this toolkit in your Django project? Please ask it on StackOverflow.com so others can help out and/or learn. Label your question django-bootstrap-toolkit if possible.
+
+http://stackoverflow.com/
+
+Bugs and requests
+-----------------
+
+If you have found a bug or a request for additional functionality, please use the issue tracker on GitHub.
+
+https://github.com/dyve/django-bootstrap-toolkit/issues
 
 About
 -----
 
 django-bootstrap-toolkit is written by Dylan Verheul (dylan@dyve.net).
-
-Bug tracker
------------
-
-Have a bug? Please create an issue here on GitHub!
-
-https://github.com/dyve/django-bootstrap-toolkit/issues
 
 History
 -------

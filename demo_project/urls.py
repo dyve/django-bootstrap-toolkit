@@ -7,8 +7,8 @@ from django.views.generic.simple import direct_to_template
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'test_project.views.home', name='home'),
-    # url(r'^test_project/', include('test_project.foo.urls')),
+    # url(r'^$', 'demo_project.views.home', name='home'),
+    # url(r'^demo_project/', include('demo_project.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -18,9 +18,9 @@ urlpatterns = patterns('',
 
     (r'^$', direct_to_template, {'template': 'index.html'}, "home"),
     (r'^contact$', direct_to_template, {'template': 'contact.html'}, "contact"),
-    (r'^form$', 'test_bootstrap.views.test_form'),
-    (r'^form_template$', 'test_bootstrap.views.test_form_with_template'),
-    (r'^form_inline$', 'test_bootstrap.views.test_form_inline'),
-    (r'^tabs$', 'test_bootstrap.views.test_tabs', {}, "tabs"),
-    (r'^widgets$', 'test_bootstrap.views.test_widgets', {}, "widgets"),
+    (r'^form$', 'demo_app.views.test_form'),
+    (r'^form_template$', 'demo_app.views.test_form_with_template'),
+    (r'^form_inline$', 'demo_app.views.test_form_inline'),
+    (r'^tabs$', 'demo_app.views.test_tabs', {}, "tabs"),
+    (r'^widgets$', 'demo_app.views.test_widgets', {}, "widgets"),
 )

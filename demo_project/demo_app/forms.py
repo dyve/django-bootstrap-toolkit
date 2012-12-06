@@ -53,7 +53,7 @@ class TestForm(forms.Form):
         help_text=u'And can be inline',
     )
     color = forms.ChoiceField(
-        widget=forms.RadioSelect,
+        widget=forms.RadioSelect(attrs = {'data-demo-attr': 'bazinga' }),
         choices=(
             ("#f00", "red"),
             ("#0f0", "green"),
