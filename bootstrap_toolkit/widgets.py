@@ -7,6 +7,7 @@ default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
 if default_date_format:
     default_date_format = str(default_date_format[0])
 
+
 def javascript_date_format(python_date_format):
     format = python_date_format.replace(r'%Y', 'yyyy')
     format = format.replace(r'%m', 'mm')
@@ -35,6 +36,13 @@ def add_to_css_class(classes, new_class):
     return classes
 
 
+def create_preppend_append(**kwargs):
+    bootstrap = {}
+    bootstrap['append'] = kwargs.pop('append', None)
+    bootstrap['prepend'] = kwargs.pop('prepend', None)
+    return bootstrap, kwargs
+
+
 class BootstrapUneditableInput(forms.TextInput):
     def render(self, name, value, attrs=None):
         if attrs is None:
@@ -47,19 +55,16 @@ class BootstrapUneditableInput(forms.TextInput):
 
 
 class BootstrapTextInput(forms.TextInput):
-    bootstrap = {}
 
     def __init__(self, *args, **kwargs):
-        self.bootstrap['append'] = kwargs.pop('append', None)
-        self.bootstrap['prepend'] = kwargs.pop('prepend', None)
+        self.bootstrap, kwargs = create_preppend_append(**kwargs)
         super(BootstrapTextInput, self).__init__(*args, **kwargs)
 
+
 class BootstrapPasswordInput(forms.PasswordInput):
-    bootstrap = {}
 
     def __init__(self, *args, **kwargs):
-        self.bootstrap['append'] = kwargs.pop('append', None)
-        self.bootstrap['prepend'] = kwargs.pop('prepend', None)
+        self.bootstrap, kwargs = create_preppend_append(**kwargs)
         super(BootstrapPasswordInput, self).__init__(*args, **kwargs)
 
 
