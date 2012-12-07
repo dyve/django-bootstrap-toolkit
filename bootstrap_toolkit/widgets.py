@@ -36,7 +36,7 @@ def add_to_css_class(classes, new_class):
     return classes
 
 
-def create_preppend_append(**kwargs):
+def create_prepend_append(**kwargs):
     bootstrap = {}
     bootstrap['append'] = kwargs.pop('append', None)
     bootstrap['prepend'] = kwargs.pop('prepend', None)
@@ -44,6 +44,7 @@ def create_preppend_append(**kwargs):
 
 
 class BootstrapUneditableInput(forms.TextInput):
+
     def render(self, name, value, attrs=None):
         if attrs is None:
             attrs = {}
@@ -57,14 +58,14 @@ class BootstrapUneditableInput(forms.TextInput):
 class BootstrapTextInput(forms.TextInput):
 
     def __init__(self, *args, **kwargs):
-        self.bootstrap, kwargs = create_preppend_append(**kwargs)
+        self.bootstrap, kwargs = create_prepend_append(**kwargs)
         super(BootstrapTextInput, self).__init__(*args, **kwargs)
 
 
 class BootstrapPasswordInput(forms.PasswordInput):
 
     def __init__(self, *args, **kwargs):
-        self.bootstrap, kwargs = create_preppend_append(**kwargs)
+        self.bootstrap, kwargs = create_prepend_append(**kwargs)
         super(BootstrapPasswordInput, self).__init__(*args, **kwargs)
 
 
