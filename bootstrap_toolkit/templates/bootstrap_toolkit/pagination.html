@@ -1,13 +1,23 @@
 <div class="pagination">
     {% spaceless %}
         <ul>
-            <li class="prev{% if page.number == 1 %} disabled{% endif %}"><a href="?page=1">{{ txt_first_page|default:"&laquo;" }}</a></li>
             {% for p in page.paginator.page_range %}
                 {% if p|add:5 >= page.number and p|add:-5 <= page.number %}
-                    <li{% if p == page.number %} class="active"{% endif %}><a href="?page={{ p }}">{{ p }}</a></li>
+                    <li class="django-bootstrap-toolkit{% if p == page.number %} active{% endif %}{% if forloop.first %} prev{% endif %}{% if forloop.last %} next{% endif %}">
+                        <a href="?page={{ p }}">{% if forloop.first %}&laquo; {% endif %}{{ p }}{% if forloop.last %}&raquo; {% endif %}</a>
+                    </li>
+                {% else %}
+                    {% if forloop.first %}
+                        <li class="django-bootstrap-toolkit prev"><a href="?page=1">{{ txt_first_page|default:"&laquo; "|add:"1" }}</a></li>
+                    {% elif forloop.last %}
+                        <li class="django-bootstrap-toolkit next"><a href="?page={{ page.paginator.num_pages }}">{{ txt_last_page|default:page.paginator.num_pages|slugify|add:" &raquo;" }}</a></li>
+                    {% elif p|add:6 == page.number %}
+                        <li class="django-bootstrap-toolkit"><a href="?page={{ page.number|add:-6 }}">{{ txt_more|default:"&hellip;" }}</a></li>
+                    {% elif p|add:-6 == page.number %}
+                        <li class="django-bootstrap-toolkit"><a href="?page={{ page.number|add:6 }}">{{ txt_more|default:"&hellip;" }}</a></li>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
-            <li class="next{% if page.number == page.paginator.num_pages %} disabled{% endif %}"><a href="?page={{ page.paginator.num_pages }}">{{ txt_last_page|default:"&raquo;" }}</a></li>
         </ul>
     {% endspaceless %}
 </div>
