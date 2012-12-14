@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block content %}
+
+    <h1>Pagination</h1>
+
+    <table class="table">
+        {% for line in lines %}
+            <tr>
+                <td>{{ line }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ lines|pagination }}
+
+{% endblock %}

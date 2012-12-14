@@ -1,4 +1,4 @@
-# Django settings for test_project project.
+# Django settings for demo_app project.
 
 import os
 SETTINGS_ROOT = os.path.dirname(__file__)
