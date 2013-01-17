@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.util import to_current_timezone
 from django.conf import settings
 from django.utils import translation
 from django.utils.safestring import mark_safe
@@ -7,6 +8,7 @@ default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
 if default_date_format:
     default_date_format = str(default_date_format[0])
 
+default_time_format = getattr(settings, 'TIME_INPUT_FORMATS', None)
 
 def javascript_date_format(python_date_format):
     format = python_date_format.replace(r'%Y', 'yyyy')
@@ -22,11 +24,10 @@ def javascript_date_format(python_date_format):
 def javascript_time_format(python_time_format):
     format = python_time_format.replace(r'%H', 'HH')
     format = format.replace(r'%M', 'MM')
-    format = format.replace(r'%S', 'SS')
     if '%' in format:
         format = ''
     if not format:
-        format = 'HH:MM:SS'
+        format = 'HH:MM'
     return format
 
 
@@ -147,11 +148,15 @@ class BootstrapTimeInput(forms.TimeInput):
         format = self.format
         if not format:
             format = default_date_format
-        attrs['data-date-format'] = javascript_time_format(format)
-        attrs['data-date-language'] = translation.get_language().split('-')[0].lower()
+        attrs['data-time-format'] = javascript_time_format(format)
+        attrs['data-time-language'] = translation.get_language().split('-')[0].lower()
         attrs['data-bootstrap-widget'] = 'timepicker'
         return super(BootstrapTimeInput, self).render(name, value, attrs)
 
 
-class BootstrapDateTimeInput(forms.DateTimeInput):
-    pass
+class BootstrapDateTimeInput(forms.MultiWidget):
+
+    def __init__(self, attrs=None):
+        widgets = (BootstrapDateInput(attrs=attrs),
+                   BootstrapTimeInput(attrs=attrs))
+        super(BootstrapDateTimeInput, self).__init__(widgets, attrs)
