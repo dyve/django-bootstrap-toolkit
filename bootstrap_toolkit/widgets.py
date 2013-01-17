@@ -160,3 +160,9 @@ class BootstrapDateTimeInput(forms.MultiWidget):
         widgets = (BootstrapDateInput(attrs=attrs),
                    BootstrapTimeInput(attrs=attrs))
         super(BootstrapDateTimeInput, self).__init__(widgets, attrs)
+
+    def decompress(self, value):
+        if value:
+            value = to_current_timezone(value)
+            return [value.date(), value.time().replace(microsecond=0)]
+        return [None, None]
