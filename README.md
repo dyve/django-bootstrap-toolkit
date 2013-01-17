@@ -1,7 +1,7 @@
-Django Toolkit for integration with Twitter's Bootstrap
-=======================================================
-http://twitter.github.com/bootstrap
+Django Toolkit for integration with Bootstrap
+=============================================
 
+The easiest way to use Bootstrap in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
 
 Installation
 ------------

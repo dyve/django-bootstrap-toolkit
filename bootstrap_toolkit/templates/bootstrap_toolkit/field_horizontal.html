@@ -1,5 +1,7 @@
 <div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
-    <label class="control-label"{% if field.auto_id and not input_type == "multicheckbox" and not input_type == "radioset" %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
+    {% if input_type != "checkbox" %}
+        <label class="control-label"{% if field.auto_id and not input_type == "multicheckbox" and not input_type == "radioset" %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
+    {% endif %}
     <div class="controls{% if float %} controls-row{% endif %}">
         {% if input_type == "checkbox" %}
             {% include "bootstrap_toolkit/field_checkbox.html" %}
