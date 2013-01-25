@@ -9,6 +9,8 @@ if default_date_format:
     default_date_format = str(default_date_format[0])
 
 default_time_format = getattr(settings, 'TIME_INPUT_FORMATS', None)
+if default_time_format:
+    default_time_format = str(default_time_format[0])
 
 def javascript_date_format(python_date_format):
     format = python_date_format.replace(r'%Y', 'yyyy')
@@ -24,10 +26,11 @@ def javascript_date_format(python_date_format):
 def javascript_time_format(python_time_format):
     format = python_time_format.replace(r'%H', 'HH')
     format = format.replace(r'%M', 'MM')
+    format = format.replace(r'%S', 'SS')
     if '%' in format:
         format = ''
     if not format:
-        format = 'HH:MM'
+        format = 'HH:MM:SS'
     return format
 
 
@@ -147,7 +150,7 @@ class BootstrapTimeInput(forms.TimeInput):
             attrs = {}
         format = self.format
         if not format:
-            format = default_date_format
+            format = default_time_format
         attrs['data-time-format'] = javascript_time_format(format)
         attrs['data-time-language'] = translation.get_language().split('-')[0].lower()
         attrs['data-bootstrap-widget'] = 'timepicker'
