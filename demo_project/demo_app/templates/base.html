@@ -16,8 +16,7 @@
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    {% bootstrap_javascript_tag "dropdown" %}
-    {% bootstrap_javascript_tag "alert" %}
+    {% bootstrap_javascript_tag %}
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -50,7 +49,7 @@
 
 <div class="container">
 
-    {% include "bootstrap_toolkit/messages.html" %}
+    {% bootstrap_messages %}
 
     {% block content %}Empty page{% endblock %}
 

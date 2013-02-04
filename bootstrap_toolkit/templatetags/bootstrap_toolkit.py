@@ -44,22 +44,26 @@ def bootstrap_stylesheet_tag():
     return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url()
 
 @register.simple_tag
-def bootstrap_javascript_url(name):
+def bootstrap_javascript_url(name=None):
     """
     URL to Bootstrap javascript file
     """
     if BOOTSTRAP_JS_URL:
         return BOOTSTRAP_JS_URL
-    return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
-
+    if name:
+        return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
+    else:
+        return BOOTSTRAP_JS_BASE_URL + 'bootstrap.min.js'
 
 @register.simple_tag
-def bootstrap_javascript_tag(name):
+def bootstrap_javascript_tag(name=None):
     """
     HTML tag to insert bootstrap_toolkit javascript file
     """
-
-    return u'<script src="%s"></script>' % bootstrap_javascript_url(name)
+    url = bootstrap_javascript_url(name)
+    if url:
+        return u'<script src="%s"></script>' % url
+    return u''
 
 @register.filter
 def as_bootstrap(form_or_field, layout='vertical,false'):
@@ -203,3 +207,7 @@ def split(str, splitter):
     Split a string
     """
     return str.split(splitter)
+
+@register.simple_tag(takes_context=True)
+def bootstrap_messages(context, *args, **kwargs):
+    return get_template("bootstrap_toolkit/messages.html").render(context)
