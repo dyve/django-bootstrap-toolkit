@@ -5,8 +5,8 @@
             type="{{ type }}"
             name="{{ field.html_name }}"
             value="{{ choice_id }}"
-            {% if type == "checkbox" %}
-                {% if choice_id|safe in field.value|safe %}checked{% endif %}
+            {% if field.field.widget.allow_multiple_selected %}
+                {% if choice_id|safe in field.value|safeseq %}checked{% endif %}
             {% else %}
                 {% if field.value|safe == choice_id|safe %}checked{% endif %}
             {% endif %}

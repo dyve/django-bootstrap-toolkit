@@ -41,14 +41,14 @@ class TestForm(forms.Form):
         ),
         help_text=u'As you can see, multiple checkboxes work too',
     )
-    veggies = forms.MultipleChoiceField(
+    number = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={
             'inline': True,
         }),
         choices=(
-            ("broccoli", "Broccoli"),
-            ("carrots", "Carrots"),
-            ("turnips", "Turnips"),
+            ("3", "Three"),
+            ("33", "Thirty three"),
+            ("333", "Three hundred thirty three"),
         ),
         help_text=u'And can be inline',
     )
