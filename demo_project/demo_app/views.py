@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from forms import TestForm, TestModelForm, TestInlineForm, WidgetsForm
@@ -20,6 +21,7 @@ def demo_form_with_template(request):
     }))
 
 def demo_form(request):
+    messages.success(request, 'I am a success message.')
     layout = request.GET.get('layout')
     if not layout:
         layout = 'vertical'
