@@ -28,7 +28,7 @@ Use in templates
         {% csrf_token %}
         {{ form|as_bootstrap }}
         <div class="form-actions">
-            <button type="submit" class="btn primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 
@@ -38,7 +38,7 @@ Use in templates
         {% csrf_token %}
         {% bootstrap_form form layout="vertical" %}
         <div class="form-actions">
-            <button type="submit" class="btn primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 
