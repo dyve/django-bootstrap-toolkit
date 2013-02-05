@@ -2,6 +2,7 @@ from django import forms
 from django.conf import settings
 from django.utils import translation
 from django.utils.safestring import mark_safe
+from django.utils.html import conditional_escape
 
 default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
 if default_date_format:
@@ -52,7 +53,7 @@ class BootstrapUneditableInput(forms.TextInput):
         klass = add_to_css_class(self.attrs.pop('class', ''), 'uneditable-input')
         klass = add_to_css_class(klass, attrs.pop('class', ''))
         base = super(BootstrapUneditableInput, self).render(name, value, attrs)
-        return mark_safe(base + u'<span class="%s">%s</span>' % (klass, value))
+        return mark_safe(base + u'<span class="%s">%s</span>' % (klass, conditional_escape(value)))
 
 
 class BootstrapTextInput(forms.TextInput):
