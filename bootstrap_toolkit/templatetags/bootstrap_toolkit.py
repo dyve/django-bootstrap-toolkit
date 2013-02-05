@@ -210,4 +210,25 @@ def split(str, splitter):
 
 @register.simple_tag(takes_context=True)
 def bootstrap_messages(context, *args, **kwargs):
+    """
+    Show request messages in Bootstrap style
+    """
     return get_template("bootstrap_toolkit/messages.html").render(context)
+
+@register.inclusion_tag("bootstrap_toolkit/form.html")
+def bootstrap_form(form, **kwargs):
+    """
+    Render a form
+    """
+    context = kwargs.copy()
+    context['form'] = form
+    return context
+
+@register.inclusion_tag("bootstrap_toolkit/field.html")
+def bootstrap_field(field, **kwargs):
+    """
+    Render a field
+    """
+    context = kwargs.copy()
+    context['field'] = field
+    return context

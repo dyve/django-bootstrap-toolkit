@@ -23,7 +23,7 @@
             {% endif %}
         {% endfor %}
 
-        {{ form.color|as_bootstrap:layout }}
+        {% bootstrap_field form.color layout=layout %}
 
         {% if layout == "horizontal" %}
             <p class="form-actions">

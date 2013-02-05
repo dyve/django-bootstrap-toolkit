@@ -22,10 +22,22 @@ Use in templates
 
     {% load bootstrap_toolkit %}
 
+    # Using a filter
+
     <form action="/url/to/submit/" method="post">
         {% csrf_token %}
         {{ form|as_bootstrap }}
-        <div class="actions">
+        <div class="form-actions">
+            <button type="submit" class="btn primary">Submit</button>
+        </div>
+    </form>
+
+    # Using template tags
+
+    <form action="/url/to/submit/" method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form layout="vertical" %}
+        <div class="form-actions">
             <button type="submit" class="btn primary">Submit</button>
         </div>
     </form>
