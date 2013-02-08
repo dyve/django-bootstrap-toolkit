@@ -10,6 +10,11 @@ class TestForm(forms.Form):
         max_length=100,
         help_text=u'This is the standard text input',
     )
+    body = forms.CharField(
+        max_length=100,
+        help_text=u'This is a text area',
+        widget=forms.Textarea(),
+    )
     disabled = forms.CharField(
         max_length=100,
         help_text=u'I am disabled',
