@@ -1,10 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
-from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput
+from bootstrap_toolkit.widgets import (BootstrapDateTimeInput, BootstrapTimeInput, BootstrapDateInput,
+                                       BootstrapTextInput, BootstrapUneditableInput)
 
 class TestForm(forms.Form):
     date = forms.DateField(
         widget=BootstrapDateInput(),
+    )
+    time = forms.TimeField(
+        widget=BootstrapTimeInput(),
+    )
+    datetime = forms.SplitDateTimeField(
+        widget=BootstrapDateTimeInput(),
     )
     title = forms.CharField(
         max_length=100,
@@ -58,7 +65,7 @@ class TestForm(forms.Form):
         help_text=u'And can be inline',
     )
     color = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs = {'data-demo-attr': 'bazinga' }),
+        widget=forms.RadioSelect(attrs={'data-demo-attr': 'bazinga'}),
         choices=(
             ("#f00", "red"),
             ("#0f0", "green"),
@@ -77,9 +84,11 @@ class TestForm(forms.Form):
         raise forms.ValidationError("This error was added to show the non field errors styling.")
         return cleaned_data
 
+
 class TestModelForm(forms.ModelForm):
     class Meta:
         model = User
+
 
 class TestInlineForm(forms.Form):
     query = forms.CharField(required=False, label="")
@@ -94,8 +103,11 @@ class TestInlineForm(forms.Form):
         ('all', 'all'),
         ('active', 'active'),
         ('inactive', 'inactive')
-        ), initial='all')
+    ), initial='all')
     mine = forms.BooleanField(required=False, label='Mine only', initial=False)
+
 
 class WidgetsForm(forms.Form):
     date = forms.DateField(widget=BootstrapDateInput)
+    time = forms.TimeField(widget=BootstrapTimeInput)
+    datetime = forms.DateTimeField(widget=BootstrapDateTimeInput)

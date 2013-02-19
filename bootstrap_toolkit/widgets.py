@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.util import to_current_timezone
 from django.conf import settings
 from django.utils import translation
 from django.utils.safestring import mark_safe
@@ -8,6 +9,9 @@ default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
 if default_date_format:
     default_date_format = str(default_date_format[0])
 
+default_time_format = getattr(settings, 'TIME_INPUT_FORMATS', None)
+if default_time_format:
+    default_time_format = str(default_time_format[0])
 
 def javascript_date_format(python_date_format):
     format = python_date_format.replace(r'%Y', 'yyyy')
@@ -17,6 +21,17 @@ def javascript_date_format(python_date_format):
         format = ''
     if not format:
         format = 'yyyy-mm-dd'
+    return format
+
+
+def javascript_time_format(python_time_format):
+    format = python_time_format.replace(r'%H', 'HH')
+    format = format.replace(r'%M', 'MM')
+    format = format.replace(r'%S', 'SS')
+    if '%' in format:
+        format = ''
+    if not format:
+        format = 'HH:MM:SS'
     return format
 
 
@@ -105,3 +120,53 @@ class BootstrapDateInput(forms.DateInput):
         attrs['data-date-language'] = translation.get_language().split('-')[0].lower()
         attrs['data-bootstrap-widget'] = 'datepicker'
         return super(BootstrapDateInput, self).render(name, value, attrs)
+
+class BootstrapTimeInput(forms.TimeInput):
+
+    bootstrap = {
+        'append': mark_safe('<i class="icon-time"></i>'),
+        'prepend': None,
+    }
+
+    class Media:
+        js = (
+            settings.STATIC_URL + 'timepicker/js/bootstrap-timepicker.js',
+        )
+        lang = translation.get_language().split('-')[0].lower()
+        if lang != 'en':
+            js = js + (
+                settings.STATIC_URL + 'timepicker/js/locales/bootstrap-timepicker.%s.js' % lang,
+            )
+        js = js + (
+            settings.STATIC_URL + 'bootstrap_toolkit/js/init_timepicker.js',
+        )
+        css = {
+            'screen': (
+                settings.STATIC_URL + 'timepicker/css/timepicker.css',
+            )
+        }
+
+    def render(self, name, value, attrs=None):
+        if attrs is None:
+            attrs = {}
+        format = self.format
+        if not format:
+            format = default_time_format
+        attrs['data-time-format'] = javascript_time_format(format)
+        attrs['data-time-language'] = translation.get_language().split('-')[0].lower()
+        attrs['data-bootstrap-widget'] = 'timepicker'
+        return super(BootstrapTimeInput, self).render(name, value, attrs)
+
+
+class BootstrapDateTimeInput(forms.MultiWidget):
+
+    def __init__(self, attrs=None):
+        widgets = (BootstrapDateInput(attrs=attrs),
+                   BootstrapTimeInput(attrs=attrs))
+        super(BootstrapDateTimeInput, self).__init__(widgets, attrs)
+
+    def decompress(self, value):
+        if value:
+            value = to_current_timezone(value)
+            return [value.date(), value.time().replace(microsecond=0)]
+        return [None, None]
