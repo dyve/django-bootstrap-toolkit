@@ -10,8 +10,8 @@
             {% else %}
                 {% if field.value|safe == choice_id|safe %}checked{% endif %}
             {% endif %}
-            {% for attr,value in field.field.widget.attrs.items %}{{ attr }}="{{ value }}" {% endfor %}
-        >
+            {{ field.field.widget.attrs|display_attr}}
+        />
         {{ choice_label }}
     </label>
     {% if not forloop.last and choices_separator > "" and forloop.counter|divisibleby:choices_group %}
