@@ -7,6 +7,8 @@ from django.template.loader import get_template
 from django import template
 from django.conf import settings
 from django.utils.html import format_html_join
+import urllib
+
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
                              'http://twitter.github.com/bootstrap/assets/'
@@ -163,54 +165,8 @@ def pagination(page, pages_to_show=11):
     """
     Generate Bootstrap pagination links from a page object
     """
-    pages_to_show = int(pages_to_show)
-    if pages_to_show < 1:
-        raise ValueError("Pagination pages_to_show should be a positive integer, you specified %s" % pages_to_show)
-    num_pages = page.paginator.num_pages
-    current_page = page.number
-    half_page_num = int(floor(pages_to_show / 2)) - 1
-    if half_page_num < 0:
-        half_page_num = 0
-    first_page = current_page - half_page_num
-    if first_page <= 1:
-        first_page = 1
-    if first_page > 1:
-        pages_back = first_page - half_page_num
-        if pages_back < 1:
-            pages_back = 1
-    else:
-        pages_back = None
-    last_page = first_page + pages_to_show - 1
-    if pages_back is None:
-        last_page += 1
-    if last_page > num_pages:
-        last_page = num_pages
-    if last_page < num_pages:
-        pages_forward = last_page + half_page_num
-        if pages_forward > num_pages:
-            pages_forward = num_pages
-    else:
-        pages_forward = None
-        if first_page > 1:
-            first_page -= 1
-        if pages_back > 1:
-            pages_back -= 1
-        else:
-            pages_back = None
-    pages_shown = []
-    for i in range(first_page, last_page + 1):
-        pages_shown.append(i)
-    return get_template("bootstrap_toolkit/pagination.html").render(
-        Context({
-            'num_pages': num_pages,
-            'current_page': current_page,
-            'first_page': first_page,
-            'last_page': last_page,
-            'pages_shown': pages_shown,
-            'pages_back': pages_back,
-            'pages_forward': pages_forward,
-        })
-    )
+    context = get_pagination_context(page, pages_to_show)
+    return get_template("bootstrap_toolkit/pagination.html").render(Context(context))
 
 
 @register.filter
@@ -260,3 +216,74 @@ def bootstrap_field(field, **kwargs):
     return context
 
 
+@register.inclusion_tag("bootstrap_toolkit/pagination.html")
+def bootstrap_pagination(page, **kwargs):
+    """
+    Render pagination for a page
+    """
+    pagination_kwargs = kwargs.copy()
+    pagination_kwargs['page'] = page
+    return get_pagination_context(**pagination_kwargs)
+
+
+def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
+    """
+    Generate Bootstrap pagination context from a page object
+    """
+    pages_to_show = int(pages_to_show)
+    if pages_to_show < 1:
+        raise ValueError("Pagination pages_to_show should be a positive integer, you specified %s" % pages_to_show)
+    num_pages = page.paginator.num_pages
+    current_page = page.number
+    half_page_num = int(floor(pages_to_show / 2)) - 1
+    if half_page_num < 0:
+        half_page_num = 0
+    first_page = current_page - half_page_num
+    if first_page <= 1:
+        first_page = 1
+    if first_page > 1:
+        pages_back = first_page - half_page_num
+        if pages_back < 1:
+            pages_back = 1
+    else:
+        pages_back = None
+    last_page = first_page + pages_to_show - 1
+    if pages_back is None:
+        last_page += 1
+    if last_page > num_pages:
+        last_page = num_pages
+    if last_page < num_pages:
+        pages_forward = last_page + half_page_num
+        if pages_forward > num_pages:
+            pages_forward = num_pages
+    else:
+        pages_forward = None
+        if first_page > 1:
+            first_page -= 1
+        if pages_back > 1:
+            pages_back -= 1
+        else:
+            pages_back = None
+    pages_shown = []
+    for i in range(first_page, last_page + 1):
+        pages_shown.append(i)
+    if url:
+        url = unicode(url)
+        if u'?' in url:
+            url += u'&'
+        else:
+            url += u'?'
+    if extra:
+        if not url:
+            url = u'?'
+        url += unicode(extra) + u'&'
+    return {
+        'bootstrap_pagination_url': url,
+        'num_pages': num_pages,
+        'current_page': current_page,
+        'first_page': first_page,
+        'last_page': last_page,
+        'pages_shown': pages_shown,
+        'pages_back': pages_back,
+        'pages_forward': pages_forward,
+    }

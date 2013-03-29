@@ -16,4 +16,8 @@
 
     {{ lines|pagination }}
 
+    <hr>
+
+    {% bootstrap_pagination lines url="/pagination?bar=nope" extra="q=foo" %}
+
 {% endblock %}
