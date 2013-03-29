@@ -11,7 +11,7 @@
             {% else %}
                 {% if field.value|safe == choice_id|safe %}checked{% endif %}
             {% endif %}
-            {{ field.field.widget.attrs|display_attr}}
+            {{ field.field.widget.attrs|html_attrs }}
         />
         {{ choice_label }}
     </label>

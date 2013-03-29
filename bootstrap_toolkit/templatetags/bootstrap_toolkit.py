@@ -9,26 +9,27 @@ from django.conf import settings
 from django.utils.html import format_html_join
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    'http://twitter.github.com/bootstrap/assets/'
+                             'http://twitter.github.com/bootstrap/assets/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
-    BOOTSTRAP_BASE_URL + 'js/'
+                                BOOTSTRAP_BASE_URL + 'js/'
 )
 
 BOOTSTRAP_JS_URL = getattr(settings, 'BOOTSTRAP_JS_URL',
-    None
+                           None
 )
 
 BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
-    BOOTSTRAP_BASE_URL + 'css/'
+                                 BOOTSTRAP_BASE_URL + 'css/'
 )
 
 BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
-    BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
+                            BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
 )
 
 register = template.Library()
+
 
 @register.simple_tag
 def bootstrap_stylesheet_url():
@@ -37,12 +38,14 @@ def bootstrap_stylesheet_url():
     """
     return BOOTSTRAP_CSS_URL
 
+
 @register.simple_tag
 def bootstrap_stylesheet_tag():
     """
     HTML tag to insert Bootstrap stylesheet
     """
     return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url()
+
 
 @register.simple_tag
 def bootstrap_javascript_url(name=None):
@@ -56,6 +59,7 @@ def bootstrap_javascript_url(name=None):
     else:
         return BOOTSTRAP_JS_BASE_URL + 'bootstrap.min.js'
 
+
 @register.simple_tag
 def bootstrap_javascript_tag(name=None):
     """
@@ -65,6 +69,7 @@ def bootstrap_javascript_tag(name=None):
     if url:
         return u'<script src="%s"></script>' % url
     return u''
+
 
 @register.filter
 def as_bootstrap(form_or_field, layout='vertical,false'):
@@ -99,6 +104,7 @@ def as_bootstrap(form_or_field, layout='vertical,false'):
         # Display the default
         return settings.TEMPLATE_STRING_IF_INVALID
 
+
 @register.filter
 def is_disabled(field):
     """
@@ -112,12 +118,14 @@ def is_disabled(field):
         return True
     return False
 
+
 @register.filter
 def is_enabled(field):
     """
     Shortcut to return the logical negative of is_disabled
     """
     return not is_disabled(field)
+
 
 @register.filter
 def bootstrap_input_type(field):
@@ -141,12 +149,14 @@ def bootstrap_input_type(field):
         return u'radioset'
     return u'default'
 
+
 @register.simple_tag
 def active_url(request, url, output=u'active'):
     # Tag that outputs text if the given url is active for the request
     if url == request.path:
         return output
     return ''
+
 
 @register.filter
 def pagination(page, pages_to_show=11):
@@ -202,24 +212,24 @@ def pagination(page, pages_to_show=11):
         })
     )
 
+
 @register.filter
-def split(str, splitter):
+def split(text, splitter):
     """
     Split a string
     """
-    return str.split(splitter)
+    return text.split(splitter)
+
 
 @register.filter
-def display_attr(attrs):
+def html_attrs(attrs):
     """
     display the attributes given as html attributes :
     >>> import collections
-    >>> display_attr(collections.OrderedDict([('href',"http://theurl.com/img.png"), ('alt','hi "guy')]))
+    >>> html_attrs(collections.OrderedDict([('href',"http://theurl.com/img.png"), ('alt','hi "guy')]))
     u'href="http://theurl.com/img.png" alt="hi &quot;guy" '
     """
-
     return format_html_join(u' ', '{0}="{1}"', (item for item in attrs.items())) + " "
-
 
 
 @register.simple_tag(takes_context=True)
@@ -229,6 +239,7 @@ def bootstrap_messages(context, *args, **kwargs):
     """
     return get_template("bootstrap_toolkit/messages.html").render(context)
 
+
 @register.inclusion_tag("bootstrap_toolkit/form.html")
 def bootstrap_form(form, **kwargs):
     """
@@ -237,6 +248,7 @@ def bootstrap_form(form, **kwargs):
     context = kwargs.copy()
     context['form'] = form
     return context
+
 
 @register.inclusion_tag("bootstrap_toolkit/field.html")
 def bootstrap_field(field, **kwargs):
