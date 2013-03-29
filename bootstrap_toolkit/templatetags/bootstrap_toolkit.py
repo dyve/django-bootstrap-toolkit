@@ -6,6 +6,7 @@ from django.template import Context
 from django.template.loader import get_template
 from django import template
 from django.conf import settings
+from django.utils.html import format_html_join
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
     'http://twitter.github.com/bootstrap/assets/'
@@ -208,6 +209,19 @@ def split(str, splitter):
     """
     return str.split(splitter)
 
+@register.filter
+def display_attr(attrs):
+    """
+    display the attributes given as html attributes :
+    >>> import collections
+    >>> display_attr(collections.OrderedDict([('href',"http://theurl.com/img.png"), ('alt','hi "guy')]))
+    u'href="http://theurl.com/img.png" alt="hi &quot;guy" '
+    """
+
+    return format_html_join(u' ', '{0}="{1}"', (item for item in attrs.items())) + " "
+
+
+
 @register.simple_tag(takes_context=True)
 def bootstrap_messages(context, *args, **kwargs):
     """
@@ -232,3 +246,5 @@ def bootstrap_field(field, **kwargs):
     context = kwargs.copy()
     context['field'] = field
     return context
+
+
