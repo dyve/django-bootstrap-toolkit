@@ -1,4 +1,6 @@
 from math import floor
+import re
+
 from django.forms import BaseForm
 from django.forms.forms import BoundField
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
@@ -7,7 +9,6 @@ from django.template.loader import get_template
 from django import template
 from django.conf import settings
 from django.utils.html import format_html_join
-import urllib
 
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
@@ -267,16 +268,21 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
     pages_shown = []
     for i in range(first_page, last_page + 1):
         pages_shown.append(i)
+    # Append proper character to url
     if url:
         url = unicode(url)
         if u'?' in url:
             url += u'&'
         else:
             url += u'?'
+    # Append extra string to url
     if extra:
         if not url:
             url = u'?'
         url += unicode(extra) + u'&'
+    # Remove existing page GET parameters
+    if url:
+        url = re.sub('[\?\&]page\=[^\&]+', '', url)
     return {
         'bootstrap_pagination_url': url,
         'num_pages': num_pages,
