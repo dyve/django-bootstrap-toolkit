@@ -1,5 +1,6 @@
-from math import floor
 import re
+
+from math import floor
 
 from django.forms import BaseForm
 from django.forms.forms import BoundField
@@ -8,48 +9,9 @@ from django.template import Context
 from django.template.loader import get_template
 from django import template
 from django.conf import settings
+from django.utils.safestring import mark_safe
+from django.utils.html import escape
 
-try:
-    from django.utils.html import format_html_join
-except ImportError:
-
-    # The code below taken from Django 1.5.1 source
-
-    from django.utils import six
-    from django.utils.html import conditional_escape
-    from django.utils.safestring import mark_safe
-
-    def format_html(format_string, *args, **kwargs):
-        """
-        Similar to str.format, but passes all arguments through conditional_escape,
-        and calls 'mark_safe' on the result. This function should be used instead
-        of str.format or % interpolation to build up small HTML fragments.
-        """
-        args_safe = map(conditional_escape, args)
-        kwargs_safe = dict([(k, conditional_escape(v)) for (k, v) in
-                            six.iteritems(kwargs)])
-        return mark_safe(format_string.format(*args_safe, **kwargs_safe))
-
-    def format_html_join(sep, format_string, args_generator):
-        """
-        A wrapper of format_html, for the common case of a group of arguments that
-        need to be formatted using the same format string, and then joined using
-        'sep'. 'sep' is also passed through conditional_escape.
-
-        'args_generator' should be an iterator that returns the sequence of 'args'
-        that will be passed to format_html.
-
-        Example:
-
-          format_html_join('\n', "<li>{0} {1}</li>", ((u.first_name, u.last_name)
-                                                      for u in users))
-
-        """
-        return mark_safe(conditional_escape(sep).join(
-            format_html(format_string, *tuple(args))
-            for args in args_generator))
-
-    # End code taken from Django 1.5.1 source
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
                              'http://twitter.github.io/bootstrap/assets/'
@@ -221,12 +183,15 @@ def split(text, splitter):
 @register.filter
 def html_attrs(attrs):
     """
-    display the attributes given as html attributes :
+    Display the attributes given as html attributes :
     >>> import collections
     >>> html_attrs(collections.OrderedDict([('href',"http://theurl.com/img.png"), ('alt','hi "guy')]))
     u'href="http://theurl.com/img.png" alt="hi &quot;guy" '
     """
-    return format_html_join(u' ', '{0}="{1}"', (item for item in attrs.items())) + " "
+    pairs = []
+    for name, value in attrs.items():
+        pairs.append(u'%s="%s"' % (escape(name), escape(value)))
+    return mark_safe(u' '.join(pairs))
 
 
 @register.simple_tag(takes_context=True)

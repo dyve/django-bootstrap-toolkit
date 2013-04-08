@@ -13,7 +13,11 @@ class TestForm(forms.Form):
     body = forms.CharField(
         max_length=100,
         help_text=u'This is a text area',
-        widget=forms.Textarea(),
+        widget=forms.Textarea(
+            attrs={
+                'title': 'I am "nice"',
+            }
+        ),
     )
     disabled = forms.CharField(
         max_length=100,
