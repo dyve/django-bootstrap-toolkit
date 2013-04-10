@@ -82,7 +82,8 @@ class BootstrapDateInput(forms.DateInput):
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
         )
         lang = translation.get_language()
-        lang = "%s-%s" % (lang.split('-')[0].lower(), lang.split('-')[1].upper()) if '-' in lang else lang
+        if '-' in lang:
+            lang = "%s-%s" % (lang.split('-')[0].lower(), lang.split('-')[1].upper())
         if lang != 'en':
             js = js + (
                 settings.STATIC_URL + 'datepicker/js/locales/bootstrap-datepicker.%s.js' % lang,
