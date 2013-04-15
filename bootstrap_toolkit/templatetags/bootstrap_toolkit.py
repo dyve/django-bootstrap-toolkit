@@ -37,19 +37,24 @@ register = template.Library()
 
 
 @register.simple_tag
-def bootstrap_stylesheet_url():
+def bootstrap_stylesheet_url(css=None):
     """
     URL to Bootstrap Stylesheet (CSS)
     """
-    return BOOTSTRAP_CSS_URL
+    url = BOOTSTRAP_CSS_URL
+    if css:
+        url = BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
+    else:
+        url = BOOTSTRAP_CSS_URL
+    return url
 
 
 @register.simple_tag
-def bootstrap_stylesheet_tag():
+def bootstrap_stylesheet_tag(css=None):
     """
     HTML tag to insert Bootstrap stylesheet
     """
-    return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url()
+    return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url(css)
 
 
 @register.simple_tag
