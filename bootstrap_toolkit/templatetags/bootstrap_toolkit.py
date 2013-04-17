@@ -280,7 +280,9 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
         pages_shown.append(i)
     # Append proper character to url
     if url:
-        url = unicode(url)
+        # Remove existing page GET parameters
+        url = re.sub('[\?\&]page\=[^\&]+', '', unicode(url))
+        # Append proper separator
         if u'?' in url:
             url += u'&'
         else:
@@ -290,9 +292,7 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
         if not url:
             url = u'?'
         url += unicode(extra) + u'&'
-    # Remove existing page GET parameters
-    if url:
-        url = re.sub('[\?\&]page\=[^\&]+', '', url)
+    # Build context object
     return {
         'bootstrap_pagination_url': url,
         'num_pages': num_pages,
