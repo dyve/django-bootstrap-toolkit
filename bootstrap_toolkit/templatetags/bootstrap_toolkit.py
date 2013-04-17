@@ -281,7 +281,10 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
     # Append proper character to url
     if url:
         # Remove existing page GET parameters
-        url = re.sub('[\?\&]page\=[^\&]+', '', unicode(url))
+        url = unicode(url)
+        url = re.sub('\?page\=[^\&]+', '?', url)
+        url = re.sub('\&page\=[^\&]+', '', url)
+        url = url.replace('?&', '?')
         # Append proper separator
         if u'?' in url:
             url += u'&'

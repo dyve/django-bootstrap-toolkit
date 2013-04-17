@@ -20,4 +20,8 @@
 
     {% bootstrap_pagination lines url="/pagination?bar=nope&page=888" extra="q=foo" %}
 
+    <hr>
+
+    {% bootstrap_pagination lines url=request.get_full_path %}
+
 {% endblock %}
