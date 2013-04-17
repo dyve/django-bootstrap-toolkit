@@ -282,9 +282,8 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
     if url:
         # Remove existing page GET parameters
         url = unicode(url)
-        url = re.sub('\?page\=[^\&]+', '?', url)
-        url = re.sub('\&page\=[^\&]+', '', url)
-        url = url.replace('?&', '?')
+        url = re.sub(r'\?page\=[^\&]+', u'?', url)
+        url = re.sub(r'\&page\=[^\&]+', u'', url)
         # Append proper separator
         if u'?' in url:
             url += u'&'
@@ -295,6 +294,8 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
         if not url:
             url = u'?'
         url += unicode(extra) + u'&'
+    if url:
+        url = url.replace(u'?&', u'?')
     # Build context object
     return {
         'bootstrap_pagination_url': url,
