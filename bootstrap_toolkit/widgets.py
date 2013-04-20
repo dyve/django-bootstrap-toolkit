@@ -77,7 +77,8 @@ class BootstrapDateInput(forms.DateInput):
         'prepend': None,
     }
 
-    class Media:
+    @property
+    def media(self):
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
         )
@@ -96,6 +97,7 @@ class BootstrapDateInput(forms.DateInput):
                 settings.STATIC_URL + 'datepicker/css/datepicker.css',
             )
         }
+        return forms.Media(css=css, js=js)
 
     def render(self, name, value, attrs=None):
         if attrs is None:
