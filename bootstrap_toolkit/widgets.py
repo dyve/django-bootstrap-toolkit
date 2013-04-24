@@ -3,6 +3,8 @@ from django.conf import settings
 from django.utils import translation
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
+from django.contrib.staticfiles import finders
+
 
 default_date_format = getattr(settings, 'DATE_INPUT_FORMATS', None)
 if default_date_format:
@@ -44,6 +46,22 @@ def create_prepend_append(**kwargs):
     return bootstrap, kwargs
 
 
+def get_language():
+    lang = translation.get_language()
+    if '-' in lang:
+        lang = "%s-%s" % (lang.split('-')[0].lower(), lang.split('-')[1].upper())
+    return lang
+
+
+def get_locale_js_url(lang):
+    url = 'datepicker/js/locales/bootstrap-datepicker.%s.js' % lang
+    if finders.find(url):
+        return settings.STATIC_URL + url
+    if '-' in lang:
+        return get_locale_js_url(lang.split('-')[0].lower())
+    return ''
+
+
 class BootstrapUneditableInput(forms.TextInput):
 
     def render(self, name, value, attrs=None):
@@ -82,13 +100,13 @@ class BootstrapDateInput(forms.DateInput):
         js = (
             settings.STATIC_URL + 'datepicker/js/bootstrap-datepicker.js',
         )
-        lang = translation.get_language()
-        if '-' in lang:
-            lang = "%s-%s" % (lang.split('-')[0].lower(), lang.split('-')[1].upper())
+        lang = get_language()
         if lang != 'en':
-            js = js + (
-                settings.STATIC_URL + 'datepicker/js/locales/bootstrap-datepicker.%s.js' % lang,
-            )
+            locale_js_url = get_locale_js_url(lang)
+            if locale_js_url:
+                js = js + (
+                    locale_js_url,
+                )
         js = js + (
             settings.STATIC_URL + 'bootstrap_toolkit/js/init_datepicker.js',
         )
@@ -106,6 +124,6 @@ class BootstrapDateInput(forms.DateInput):
         if not format:
             format = default_date_format
         attrs['data-date-format'] = javascript_date_format(format)
-        attrs['data-date-language'] = translation.get_language().split('-')[0].lower()
+        attrs['data-date-language'] = get_language()
         attrs['data-bootstrap-widget'] = 'datepicker'
         return super(BootstrapDateInput, self).render(name, value, attrs)
