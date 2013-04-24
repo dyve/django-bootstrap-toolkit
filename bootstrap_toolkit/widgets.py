@@ -118,12 +118,15 @@ class BootstrapDateInput(forms.DateInput):
         return forms.Media(css=css, js=js)
 
     def render(self, name, value, attrs=None):
-        if attrs is None:
-            attrs = {}
-        format = self.format
-        if not format:
-            format = default_date_format
-        attrs['data-date-format'] = javascript_date_format(format)
-        attrs['data-date-language'] = get_language()
-        attrs['data-bootstrap-widget'] = 'datepicker'
-        return super(BootstrapDateInput, self).render(name, value, attrs)
+        date_input_attrs = {}
+        if attrs:
+            date_input_attrs.update(attrs)
+        date_format = self.format
+        if not date_format:
+            date_format = default_date_format
+        date_input_attrs.update({
+            'data-date-format': javascript_date_format(date_format),
+            'data-date-language': get_language(),
+            'data-bootstrap-widget': 'datepicker',
+        })
+        return super(BootstrapDateInput, self).render(name, value, attrs=date_input_attrs)
