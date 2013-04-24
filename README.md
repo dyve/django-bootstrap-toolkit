@@ -106,7 +106,7 @@ You can use this under Apache 2.0. See LICENSE file for details.
 Thanks
 ------
 
-* to Twitter for building and releasing Bootstrap
+* to Twitter, @fat and @mdo for building and releasing Bootstrap
 * to the Django community for Django
 * to the authors of django-bootstrap-form for the inspiration
 * to Stefan Petre and Andy Rowles for the datepicker https://github.com/eternicode/bootstrap-datepicker
