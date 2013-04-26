@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block extra_head %}
+    {{ formset.media }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>This is a <em>{{ layout }}</em> Django formset, bootstrapped</h1>
+
+    <p>&nbsp;</p>
+
+    <form class="form-inline" action="" method="post">
+        {% csrf_token %}
+
+        {% bootstrap_formset formset=formset layout=layout %}
+
+        {% if layout == "horizontal" %}
+            <p class="form-actions">
+                <input type="submit" value="Submit" class="btn btn-primary">
+            </p>
+        {% else %}
+            <input type="submit" value="Submit" class="btn btn-primary">
+        {% endif %}
+    </form>
+
+    <p>Submit the form to see error messages styled into it.</p>
+
+{% endblock %}

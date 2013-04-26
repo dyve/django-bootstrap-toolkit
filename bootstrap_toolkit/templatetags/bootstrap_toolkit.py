@@ -217,6 +217,16 @@ def bootstrap_form(form, **kwargs):
     return context
 
 
+@register.inclusion_tag("bootstrap_toolkit/formset.html")
+def bootstrap_formset(formset, **kwargs):
+    """
+    Render a formset
+    """
+    context = kwargs.copy()
+    context['formset'] = formset
+    return context
+
+
 @register.inclusion_tag("bootstrap_toolkit/field.html")
 def bootstrap_field(field, **kwargs):
     """

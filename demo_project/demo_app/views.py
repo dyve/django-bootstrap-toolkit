@@ -1,9 +1,13 @@
 from django.contrib import messages
+from django.forms.formsets import formset_factory
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from forms import TestForm, TestModelForm, TestInlineForm, WidgetsForm
-from bootstrap_toolkit.widgets import BootstrapUneditableInput
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from bootstrap_toolkit.widgets import BootstrapUneditableInput
+
+from .forms import TestForm, TestModelForm, TestInlineForm, WidgetsForm, FormSetInlineForm
+
 
 def demo_form_with_template(request):
     layout = request.GET.get('layout')
@@ -45,6 +49,23 @@ def demo_form_inline(request):
         'form': form,
         'layout': layout,
     }))
+
+
+def demo_formset(request):
+    layout = request.GET.get('layout')
+    if not layout:
+        layout = 'inline'
+    DemoFormSet = formset_factory(FormSetInlineForm)
+    if request.method == 'POST':
+        formset = DemoFormSet(request.POST, request.FILES)
+        formset.is_valid()
+    else:
+        formset = DemoFormSet()
+    return render_to_response('formset.html', RequestContext(request, {
+        'formset': formset,
+        'layout': layout,
+    }))
+
 
 def demo_tabs(request):
     layout = request.GET.get('layout')
