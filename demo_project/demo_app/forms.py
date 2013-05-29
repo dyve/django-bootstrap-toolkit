@@ -79,8 +79,7 @@ class TestForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(TestForm, self).clean()
-        if not self.is_valid():
-            raise forms.ValidationError("This error was added to show the non field errors styling.")
+        raise forms.ValidationError("This error was added to show the non field errors styling.")
         return cleaned_data
 
 
