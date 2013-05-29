@@ -29,20 +29,20 @@
             <a class="brand" href="/">django-bootstrap-toolkit</a>
             <ul class="nav">
                 <li><a href="{% url 'home' %}" class="">Home</a></li>
-                <li><a href="{% url 'cbv_df' %}">Form</a></li>
+                <li><a href="{% url 'demo_app.views.demo_form' %}">Form</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forms<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a class="nav" href="{% url 'cbv_df' %}?layout=vertical">Vertical</a></li>
-                        <li><a href="{% url 'cbv_df' %}?layout=horizontal">Horizontal</a></li>
-                        <li><a href="{% url 'cbv_dfil' %}?layout=inline">Inline</a></li>
-                        <li><a href="{% url 'cbv_dfil' %}?layout=search">Search</a></li>
-                        <li><a href="{% url 'cbv_tf' %}?layout=horizontal">Using template</a></li>
+                        <li><a href="{% url 'demo_app.views.demo_form' %}?layout=vertical">Vertical</a></li>
+                        <li><a href="{% url 'demo_app.views.demo_form' %}?layout=horizontal">Horizontal</a></li>
+                        <li><a href="{% url 'demo_app.views.demo_form_inline' %}?layout=inline">Inline</a></li>
+                        <li><a href="{% url 'demo_app.views.demo_form_inline' %}?layout=search">Search</a></li>
+                        <li><a href="{% url 'demo_app.views.demo_form_with_template' %}?layout=horizontal">Using template</a></li>
                     </ul>
                 </li>
-                <li><a href="{% url 'cbv_fs' %}">Formset</a></li>
-                <li><a href="{% url 'cbv_dt' %}">Tabs &amp; Pills</a></li>
-                <li><a href="{% url 'cbv_dp' %}">Pagination</a></li>
+                <li><a href="{% url 'formset' %}">Formset</a></li>
+                <li><a href="{% url 'tabs' %}">Tabs &amp; Pills</a></li>
+                <li><a href="{% url 'pagination' %}">Pagination</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
         </div>
