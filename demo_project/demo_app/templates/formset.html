@@ -12,7 +12,7 @@
 
     <p>&nbsp;</p>
 
-    <form class="form-inline" action="" method="post">
+    <form class="form-{{ layout }}" action="" method="post">
         {% csrf_token %}
 
         {% bootstrap_formset formset=formset layout=layout %}

@@ -4,6 +4,12 @@ from django.conf.urls import patterns, url
 # from django.contrib import admin
 # admin.autodiscover()
 from django.views.generic import TemplateView
+from demo_app.views import TemplateFormView
+from demo_app.views import DemoFormView
+from demo_app.views import DemoFormInlineView
+from demo_app.views import DemoFormSetView
+from demo_app.views import DemoTabsView
+from demo_app.views import DemoPaginationView
 
 urlpatterns = patterns('',
     # Examples:
@@ -25,4 +31,11 @@ urlpatterns = patterns('',
     url(r'^tabs$', 'demo_app.views.demo_tabs', {}, "tabs"),
     url(r'^pagination$', 'demo_app.views.demo_pagination', {}, "pagination"),
     url(r'^widgets$', 'demo_app.views.demo_widgets', {}, "widgets"),
+
+    url(r'^cbv_tf$', TemplateFormView.as_view(), name='cbv_tf'),
+    url(r'^cbv_df$', DemoFormView.as_view(), name='cbv_df'),
+    url(r'^cbv_dfil$', DemoFormInlineView.as_view(), name='cbv_dfil'),
+    url(r'^cbv_fs$', DemoFormSetView.as_view(), {}, name='cbv_fs'),
+    url(r'^cbv_dt$', DemoTabsView.as_view(), {}, name='cbv_dt'),
+    url(r'^cbv_dp$', DemoPaginationView.as_view(), {}, name='cbv_dp'),
 )

@@ -21,6 +21,7 @@ class TestForm(forms.Form):
     )
     disabled = forms.CharField(
         max_length=100,
+        required=False,
         help_text=u'I am disabled',
         widget=forms.TextInput(attrs={
             'disabled': 'disabled',
@@ -62,7 +63,7 @@ class TestForm(forms.Form):
         help_text=u'And can be inline',
     )
     color = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs = {'data-demo-attr': 'bazinga' }),
+        widget=forms.RadioSelect(attrs={'data-demo-attr': 'bazinga'}),
         choices=(
             ("#f00", "red"),
             ("#0f0", "green"),
@@ -78,7 +79,8 @@ class TestForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(TestForm, self).clean()
-        raise forms.ValidationError("This error was added to show the non field errors styling.")
+        if not self.is_valid():
+            raise forms.ValidationError("This error was added to show the non field errors styling.")
         return cleaned_data
 
 
