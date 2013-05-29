@@ -84,7 +84,7 @@ def demo_tabs(request):
     return render_to_response('tabs.html', RequestContext(request, {
         'tabs': tabs,
         'layout': layout,
-        }))
+    }))
 
 
 def demo_pagination(request):
