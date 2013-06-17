@@ -90,16 +90,16 @@ def as_bootstrap(form_or_field, layout='vertical,false'):
     layout = str(params[0]).lower()
 
     try:
-        float = str(params[1]).lower() == "float"
+        bootstrap_float = str(params[1]).lower() == "float"
     except IndexError:
-        float = False
+        bootstrap_float = False
 
     if isinstance(form_or_field, BaseForm):
         return get_template("bootstrap_toolkit/form.html").render(
             Context({
                 'form': form_or_field,
                 'layout': layout,
-                'float': float,
+                'float': bootstrap_float,
             })
         )
     elif isinstance(form_or_field, BoundField):
@@ -107,7 +107,7 @@ def as_bootstrap(form_or_field, layout='vertical,false'):
             Context({
                 'field': form_or_field,
                 'layout': layout,
-                'float': float,
+                'float': bootstrap_float,
             })
         )
     else:
