@@ -1,6 +1,13 @@
 # Django settings for demo_app project.
 
 import os
+
+from django import get_version
+
+
+# This demo requires Django >= 1.5
+assert get_version() >= '1.5', 'This demo requires Django >= 1.5'
+
 SETTINGS_ROOT = os.path.dirname(__file__)
 
 DEBUG = True
