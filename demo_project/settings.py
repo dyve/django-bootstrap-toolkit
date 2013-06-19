@@ -1,12 +1,6 @@
 # Django settings for demo_app project.
-
 import os
 
-from django import get_version
-
-
-# This demo requires Django >= 1.5, django-bootstrap-toolikit works fine in 1.3+, see https://github.com/dyve/django-bootstrap-toolkit
-assert get_version() >= '1.5', 'This demo requires Django >= 1.5. Note that you can use django-bootstrap-toolkit with Django >= 1.3.'
 
 SETTINGS_ROOT = os.path.dirname(__file__)
 
