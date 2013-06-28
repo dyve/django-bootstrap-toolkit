@@ -25,4 +25,5 @@ urlpatterns = patterns('',
     url(r'^tabs$', 'demo_app.views.demo_tabs', {}, "tabs"),
     url(r'^pagination$', 'demo_app.views.demo_pagination', {}, "pagination"),
     url(r'^widgets$', 'demo_app.views.demo_widgets', {}, "widgets"),
+    url(r'^buttons$', TemplateView.as_view(template_name='buttons.html'), name="buttons"),
 )

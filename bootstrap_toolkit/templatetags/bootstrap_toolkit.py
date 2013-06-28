@@ -237,6 +237,39 @@ def bootstrap_field(field, **kwargs):
     return context
 
 
+@register.inclusion_tag("bootstrap_toolkit/button.html")
+def bootstrap_button(text, **kwargs):
+    """
+    Render pagination for a page
+    """
+    button_type = kwargs.get('type', '')
+    button_size = kwargs.get('size', '')
+    button_disabled = kwargs.get('disabled', False) and kwargs.get('enabled', True)
+    button_icon = kwargs.get('icon', '')
+
+    # Build button classes
+    button_class = 'btn'
+    if button_type:
+        button_class += ' btn-' + button_type
+    if button_size:
+        button_class += ' btn-' + button_size
+    if button_disabled:
+        button_class += ' disabled'
+    # Build icon classes
+    icon_class = ''
+    if button_icon:
+        icon_class = 'icon-' + button_icon
+        if button_type and button_type != 'link':
+            icon_class += ' icon-white'
+    # Return context for template
+    return {
+        'text': text,
+        'url': kwargs.get('url', '#'),
+        'button_class': button_class,
+        'icon_class': icon_class,
+    }
+
+
 @register.inclusion_tag("bootstrap_toolkit/pagination.html")
 def bootstrap_pagination(page, **kwargs):
     """

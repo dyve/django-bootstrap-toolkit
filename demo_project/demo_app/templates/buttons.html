@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block content %}
+
+    <h1>Buttons</h1>
+
+    {% bootstrap_button 'test' icon='info-sign' url='wakka' %}
+
+    {% bootstrap_button 'test' icon='info-sign' url='wakka' size='mini' %}
+
+{% endblock %}

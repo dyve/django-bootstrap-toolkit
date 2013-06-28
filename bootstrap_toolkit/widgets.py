@@ -12,14 +12,14 @@ if default_date_format:
 
 
 def javascript_date_format(python_date_format):
-    format = python_date_format.replace(r'%Y', 'yyyy')
-    format = format.replace(r'%m', 'mm')
-    format = format.replace(r'%d', 'dd')
-    if '%' in format:
-        format = ''
-    if not format:
-        format = 'yyyy-mm-dd'
-    return format
+    js_date_format = python_date_format.replace(r'%Y', 'yyyy')
+    js_date_format = js_date_format.replace(r'%m', 'mm')
+    js_date_format = js_date_format.replace(r'%d', 'dd')
+    if '%' in js_date_format:
+        js_date_format = ''
+    if not js_date_format:
+        js_date_format = 'yyyy-mm-dd'
+    return js_date_format
 
 
 def add_to_css_class(classes, new_class):
@@ -35,7 +35,7 @@ def add_to_css_class(classes, new_class):
         if not new_class in classes:
             classes.append(new_class)
             # Convert to string
-        classes = u" ".join(classes)
+        classes = u' '.join(classes)
     return classes
 
 
@@ -49,7 +49,7 @@ def create_prepend_append(**kwargs):
 def get_language():
     lang = translation.get_language()
     if '-' in lang:
-        lang = "%s-%s" % (lang.split('-')[0].lower(), lang.split('-')[1].upper())
+        lang = '%s-%s' % (lang.split('-')[0].lower(), lang.split('-')[1].upper())
     return lang
 
 
