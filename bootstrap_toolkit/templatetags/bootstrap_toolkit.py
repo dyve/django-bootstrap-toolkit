@@ -240,7 +240,7 @@ def bootstrap_field(field, **kwargs):
 @register.inclusion_tag("bootstrap_toolkit/button.html")
 def bootstrap_button(text, **kwargs):
     """
-    Render pagination for a page
+    Render a button
     """
     button_type = kwargs.get('type', '')
     button_size = kwargs.get('size', '')
@@ -255,17 +255,30 @@ def bootstrap_button(text, **kwargs):
         button_class += ' btn-' + button_size
     if button_disabled:
         button_class += ' disabled'
-    # Build icon classes
+        # Build icon classes
     icon_class = ''
     if button_icon:
         icon_class = 'icon-' + button_icon
         if button_type and button_type != 'link':
             icon_class += ' icon-white'
-    # Return context for template
+            # Return context for template
     return {
         'text': text,
         'url': kwargs.get('url', '#'),
         'button_class': button_class,
+        'icon_class': icon_class,
+    }
+
+
+@register.inclusion_tag("bootstrap_toolkit/icon.html")
+def bootstrap_icon(icon, **kwargs):
+    """
+    Render an icon
+    """
+    icon_class = 'icon-' + icon
+    if kwargs.get('inverse'):
+        icon_class += ' icon-white'
+    return {
         'icon_class': icon_class,
     }
 
