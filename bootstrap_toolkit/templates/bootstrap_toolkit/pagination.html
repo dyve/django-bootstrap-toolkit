@@ -1,6 +1,6 @@
 {% with bootstrap_pagination_url=bootstrap_pagination_url|default:"?" %}
 
-    <div class="pagination">
+    <div class="pagination {{ css_class_extra }}">
         <ul>
 
             <li class="prev{% if current_page == 1 %} disabled{% endif %}">

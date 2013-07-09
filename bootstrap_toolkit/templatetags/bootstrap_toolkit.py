@@ -293,7 +293,7 @@ def bootstrap_pagination(page, **kwargs):
     return get_pagination_context(**pagination_kwargs)
 
 
-def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
+def get_pagination_context(page, pages_to_show=11, url=None, css_class_extra="", extra=None):
     """
     Generate Bootstrap pagination context from a page object
     """
@@ -362,4 +362,5 @@ def get_pagination_context(page, pages_to_show=11, url=None, extra=None):
         'pages_shown': pages_shown,
         'pages_back': pages_back,
         'pages_forward': pages_forward,
+        'css_class_extra': css_class_extra,
     }
