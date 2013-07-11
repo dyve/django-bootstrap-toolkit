@@ -1,5 +1,7 @@
 {% load bootstrap_toolkit %}
-{{ choices_start }}
+{% if choices_start %}
+    {{ choices_start }}
+{% endif %}
 {% for choice_id, choice_label in field.field.choices %}
     <label class="{{ type }}{% if display == "inline" or field.field.widget.attrs.inline %} inline{% endif %}">
         <input
@@ -19,4 +21,6 @@
         {{ choices_separator }}
     {% endif %}
 {% endfor %}
-{{ choices_end }}
+{% if choices_end %}
+    {{ choices_end }}
+{% endif %}
