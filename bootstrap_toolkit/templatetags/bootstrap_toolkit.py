@@ -293,7 +293,7 @@ def bootstrap_pagination(page, **kwargs):
     return get_pagination_context(**pagination_kwargs)
 
 
-def get_pagination_context(page, pages_to_show=11, url=None, css_class_extra="", extra=None):
+def get_pagination_context(page, pages_to_show=11, url=None, size=None, align=None, extra=None):
     """
     Generate Bootstrap pagination context from a page object
     """
@@ -352,6 +352,14 @@ def get_pagination_context(page, pages_to_show=11, url=None, css_class_extra="",
         url += unicode(extra) + u'&'
     if url:
         url = url.replace(u'?&', u'?')
+    # Set CSS classes, see http://twitter.github.io/bootstrap/components.html#pagination
+    pagination_css_classes = ['pagination']
+    if size in ['small', 'large', 'mini']:
+        pagination_css_classes.append('pagination-%s' % size)
+    if align == 'center':
+        pagination_css_classes.append('pagination-centered')
+    elif align == 'right':
+        pagination_css_classes.append('pagination-right')
     # Build context object
     return {
         'bootstrap_pagination_url': url,
@@ -362,5 +370,5 @@ def get_pagination_context(page, pages_to_show=11, url=None, css_class_extra="",
         'pages_shown': pages_shown,
         'pages_back': pages_back,
         'pages_forward': pages_forward,
-        'css_class_extra': css_class_extra,
+        'pagination_css_classes': ' '.join(pagination_css_classes),
     }
