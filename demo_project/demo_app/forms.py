@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput
+from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput, BootstrapFileInput
+
 
 class TestForm(forms.Form):
     date = forms.DateField(
@@ -76,6 +77,7 @@ class TestForm(forms.Form):
         help_text=u'I am prepended by a P',
         widget=BootstrapTextInput(prepend='P'),
     )
+    file = forms.FileField(widget=BootstrapFileInput)
 
     def clean(self):
         cleaned_data = super(TestForm, self).clean()
@@ -107,6 +109,8 @@ class TestInlineForm(forms.Form):
 
 class WidgetsForm(forms.Form):
     date = forms.DateField(widget=BootstrapDateInput)
+    file_simple = forms.FileField(widget=BootstrapFileInput(format_type='simple'))
+    file_text = forms.FileField(widget=BootstrapFileInput(format_type='text_input'))
 
 
 class FormSetInlineForm(forms.Form):
