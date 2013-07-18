@@ -15,7 +15,11 @@
                     {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
                     {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
                 {% else %}
-                    {% include "bootstrap_toolkit/field_default.html" %}
+                    {% if input_type == "file" %}
+                        {% include "bootstrap_toolkit/field_file.html" %}
+                    {% else %}
+                        {% include "bootstrap_toolkit/field_default.html" %}
+                    {% endif %}
                     {% include "bootstrap_toolkit/field_errors.html" with display="inline" %}
                 {% endif %}
             {% endif %}

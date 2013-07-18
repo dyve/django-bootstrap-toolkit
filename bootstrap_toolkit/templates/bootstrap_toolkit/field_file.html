@@ -1,0 +1,33 @@
+<div class='fileupload fileupload-new' data-provides='fileupload'>
+    {% if field.field.widget.format_type == 'text_input' %}
+        <div class='input-prepend input-append'>
+            <div class='uneditable-input'>
+                <i class='icon-file fileupload-exists'></i>
+                <span class='fileupload-preview'></span>
+            </div>
+            <span class='btn btn-file'>
+                <span class='fileupload-new'>Select file</span>
+                <span class='fileupload-exists'>Change</span>
+    {% elif field.field.widget.format_type == 'simple' %}
+        <span class='btn btn-file'>
+            <span class='fileupload-new'>Select file</span>
+            <span class='fileupload-exists'>Change</span>
+    {% elif field.field.widget.format_type == 'default' %}
+        <span class='btn btn-file'>
+            <span class='fileupload-new'>Choose file</span>
+            <span class='fileupload-exists'>Choose file</span>
+    {% endif %}
+    {% include 'bootstrap_toolkit/field_default.html' %}
+    {% if field.field.widget.format_type == 'text_input' %}
+            </span>
+            <a href='#' class='btn fileupload-exists' data-dismiss='fileupload'>Remove</a>
+        </div>
+    {% elif field.field.widget.format_type == 'simple' %}
+        </span>
+        <span class='fileupload-preview'></span>
+        <a href='#' class='close fileupload-exists' data-dismiss='fileupload' style='float: none'>×</a>
+    {% elif field.field.widget.format_type == 'default' %}
+        </span>
+        <span class='fileupload-preview'></span>
+    {% endif %}
+</div>

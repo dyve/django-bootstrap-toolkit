@@ -1,10 +1,11 @@
+from pprint import pprint
 import re
 
 from math import floor
 
 from django.forms import BaseForm
 from django.forms.forms import BoundField
-from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
+from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect, FileInput
 from django.template import Context
 from django.template.loader import get_template
 from django import template
@@ -150,13 +151,15 @@ def bootstrap_input_type(field):
     if input_type:
         return unicode(input_type)
     if isinstance(widget, TextInput):
-        return u'text'
+        return u'tlext'
     if isinstance(widget, CheckboxInput):
         return u'checkbox'
     if isinstance(widget, CheckboxSelectMultiple):
         return u'multicheckbox'
     if isinstance(widget, RadioSelect):
         return u'radioset'
+    if isinstance(widget, FileInput):
+        return u'file'
     return u'default'
 
 

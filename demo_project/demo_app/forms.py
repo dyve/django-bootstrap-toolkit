@@ -77,7 +77,7 @@ class TestForm(forms.Form):
         help_text=u'I am prepended by a P',
         widget=BootstrapTextInput(prepend='P'),
     )
-    file = forms.FileField(widget=BootstrapFileInput)
+    file_simple = forms.FileField(widget=BootstrapFileInput(format_type='simple'))
 
     def clean(self):
         cleaned_data = super(TestForm, self).clean()
@@ -111,6 +111,8 @@ class WidgetsForm(forms.Form):
     date = forms.DateField(widget=BootstrapDateInput)
     file_simple = forms.FileField(widget=BootstrapFileInput(format_type='simple'))
     file_text = forms.FileField(widget=BootstrapFileInput(format_type='text_input'))
+    file_default = forms.FileField(widget=BootstrapFileInput)
+    file_no_widget = forms.FileField()
 
 
 class FormSetInlineForm(forms.Form):

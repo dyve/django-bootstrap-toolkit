@@ -130,9 +130,9 @@ class BootstrapDateInput(forms.DateInput):
 
 
 class BootstrapFileInput(forms.FileInput):
-    def __init__(self, format_type='text_input', *args, **kwargs):
-        if format_type not in ['simple', 'text_input']:
-            format_type = 'text_input'
+    def __init__(self, format_type='default', *args, **kwargs):
+        if format_type not in ['simple', 'text_input', 'default']:
+            format_type = 'default'
         self.format_type = format_type
 
         # self.bootstrap, kwargs = create_prepend_append(**kwargs)
@@ -150,39 +150,5 @@ class BootstrapFileInput(forms.FileInput):
         }
         return forms.Media(css=css, js=js)
 
-
     def render(self, name, value, attrs=None):
-        pre = u"""<div class='fileupload fileupload-new' data-provides='fileupload'>"""
-        post = u''
-        if self.format_type == 'text_input':
-            pre += u"""
-                    <div class='input-append'>
-                        <div class='uneditable-input'>
-                            <i class='icon-file fileupload-exists'></i>
-                            <span class='fileupload-preview'></span>
-                        </div>
-                        <span class='btn btn-file'>
-                            <span class='fileupload-new'>Select file</span>
-                            <span class='fileupload-exists'>Change</span>
-                    """
-            post += u"""
-                        </span>
-                        <a href='#' class='btn fileupload-exists' data-dismiss='fileupload'>Remove</a>
-                    </div>
-                    """
-        elif self.format_type == 'simple':
-            pre += u"""
-                        <span class="btn btn-file">
-                            <span class="fileupload-new">Select file</span>
-                            <span class="fileupload-exists">Change</span>
-                    """
-            post += u"""
-                            <input type="file" />
-                        </span>
-                        <span class='fileupload-preview'></span>
-                        <a href='#' class='close fileupload-exists' data-dismiss='fileupload' style='float: none'>×</a>
-                    """
-        else:
-            raise ValueError('format_type=%s has unexpected value' % self.format_type)
-        post += mark_safe('</div>')
-        return mark_safe(pre) + super(BootstrapFileInput, self).render(name, value, attrs=attrs) + mark_safe(post)
+        return super(BootstrapFileInput, self).render(name, value, attrs=attrs)
