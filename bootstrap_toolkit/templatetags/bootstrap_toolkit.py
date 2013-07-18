@@ -151,7 +151,7 @@ def bootstrap_input_type(field):
     if input_type:
         return unicode(input_type)
     if isinstance(widget, TextInput):
-        return u'tlext'
+        return u'text'
     if isinstance(widget, CheckboxInput):
         return u'checkbox'
     if isinstance(widget, CheckboxSelectMultiple):
