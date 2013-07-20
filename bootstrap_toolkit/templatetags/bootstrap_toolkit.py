@@ -294,7 +294,7 @@ def bootstrap_pagination(page, **kwargs):
 
 
 def get_pagination_context(page, pages_to_show=11, always_show_first=False, always_show_last=False,
-                           url=None, size=None, align=None, extra=None):
+                           show_prev_and_next=False, url=None, size=None, align=None, extra=None):
     """
     Generate Bootstrap pagination context from a page object
     """
@@ -366,6 +366,7 @@ def get_pagination_context(page, pages_to_show=11, always_show_first=False, alwa
         'bootstrap_pagination_url': url,
         'always_show_first': always_show_first,
         'always_show_last': always_show_last,
+        'show_prev_and_next': show_prev_and_next,
         'num_pages': num_pages,
         'current_page': current_page,
         'first_page': first_page,

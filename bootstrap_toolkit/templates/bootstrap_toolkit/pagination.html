@@ -3,6 +3,11 @@
     <div class="{{ pagination_css_classes }}">
         <ul>
 
+            {% if show_prev_and_next %}
+                <li class="prev{% if current_page == 1 %} disabled{% endif %}">
+                    <a href="{% if current_page == 1 %}#{% else %}{{ bootstrap_pagination_url }}page={{ current_page|add:'-1' }}{% endif %}">&larr;</a>
+                </li>
+            {% endif %}
             {% if always_show_first %}
                 {% if  1 not in pages_shown %}
                     <li>
@@ -45,6 +50,11 @@
                 </li>
             {% endif %}
 
+            {% if show_prev_and_next %}
+                <li class="next{% if current_page == num_pages %} disabled{% endif %}">
+                    <a href="{% if current_page == num_pages %}#{% else %}{{ bootstrap_pagination_url }}page={{ current_page|add:'1' }}{% endif %}">&rarr;</a>
+                </li>
+            {% endif %}
         </ul>
 
     </div>
