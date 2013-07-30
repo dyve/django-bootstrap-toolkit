@@ -56,6 +56,22 @@ def bootstrap_stylesheet_tag(css=None):
 
 
 @register.simple_tag
+def glyphicons_stylesheet_url():
+    """
+    URL to Glyphicons Stylesheet (CSS)
+    """
+    return settings.STATIC_URL + "glyphicons/css/bootstrap-glyphicons.css"
+
+
+@register.simple_tag
+def glyphicons_stylesheet_tag():
+    """
+    HTML tag to insert Glyphicons stylesheet
+    """
+    return u"<link rel='stylesheet' href='{}'>".format(glyphicons_stylesheet_url())
+
+
+@register.simple_tag
 def bootstrap_javascript_url(name=None):
     """
     URL to Bootstrap javascript file
@@ -247,6 +263,8 @@ def bootstrap_button(text, **kwargs):
     button_class = 'btn'
     if button_type:
         button_class += ' btn-' + button_type
+    else:
+        button_class += ' btn-default'
     if button_size:
         button_class += ' btn-' + button_size
     if button_disabled:
@@ -254,9 +272,9 @@ def bootstrap_button(text, **kwargs):
         # Build icon classes
     icon_class = ''
     if button_icon:
-        icon_class = 'icon-' + button_icon
+        icon_class = 'glyphicon glyphicon-' + button_icon
         if button_type and button_type != 'link':
-            icon_class += ' icon-white'
+            icon_class += ' glyphicon-white'
             # Return context for template
     return {
         'text': text,
@@ -271,9 +289,9 @@ def bootstrap_icon(icon, **kwargs):
     """
     Render an icon
     """
-    icon_class = 'icon-' + icon
+    icon_class = 'glyphicon glyphicon-' + icon
     if kwargs.get('inverse'):
-        icon_class += ' icon-white'
+        icon_class += ' glphyicon-white'
     return {
         'icon_class': icon_class,
     }
