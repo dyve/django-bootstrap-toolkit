@@ -22,7 +22,7 @@ BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
 )
 
 BOOTSTRAP_JS_URL = getattr(settings, 'BOOTSTRAP_JS_URL',
-                           None
+                           BOOTSTRAP_JS_BASE_URL + "bootstrap.js"
 )
 
 BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
@@ -41,12 +41,10 @@ def bootstrap_stylesheet_url(css=None):
     """
     URL to Bootstrap Stylesheet (CSS)
     """
-    url = BOOTSTRAP_CSS_URL
     if css:
-        url = BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
+        return BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
     else:
-        url = BOOTSTRAP_CSS_URL
-    return url
+        return BOOTSTRAP_CSS_URL
 
 
 @register.simple_tag
@@ -62,12 +60,10 @@ def bootstrap_javascript_url(name=None):
     """
     URL to Bootstrap javascript file
     """
-    if BOOTSTRAP_JS_URL:
-        return BOOTSTRAP_JS_URL
     if name:
         return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
     else:
-        return BOOTSTRAP_JS_BASE_URL + 'bootstrap.min.js'
+        return BOOTSTRAP_JS_URL
 
 
 @register.simple_tag
