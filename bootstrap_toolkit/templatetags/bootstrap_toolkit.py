@@ -14,7 +14,7 @@ from django.utils.html import escape
 
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-                             '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/'
+                             '//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
