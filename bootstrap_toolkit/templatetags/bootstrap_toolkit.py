@@ -368,7 +368,7 @@ def get_pagination_context(page, pages_to_show=11, url=None, size=None, align=No
         url = url.replace(u'?&', u'?')
     # Set CSS classes, see http://twitter.github.io/bootstrap/components.html#pagination
     pagination_css_classes = ['pagination']
-    if size in ['small', 'large', 'mini']:
+    if size in ['small', 'large']:
         pagination_css_classes.append('pagination-%s' % size)
     if align == 'center':
         pagination_css_classes.append('pagination-centered')
