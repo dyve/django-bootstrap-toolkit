@@ -1,0 +1,13 @@
+{% load bootstrap_toolkit %}
+
+{% html_attrs field.field.widget.attrs class='form-control' as html_attrs %}
+<select id="{{ field.auto_id }}" name="{{ field.html_name }}" {{ html_attrs }}{% if field.field.widget.allow_multiple_selected %} multiple{% endif %}>
+{% for choice_id, choice_label in field.field.choices %}
+    <option value="{{ choice_id }}"
+        {% if field.field.widget.allow_multiple_selected %}
+            {% if choice_id|safe in field.value|safeseq %}checked{% endif %}
+        {% else %}
+            {% if field.value|safe == choice_id|safe %}checked{% endif %}
+        {% endif %}>{{ choice_label }}</option>
+{% endfor %}
+</select>

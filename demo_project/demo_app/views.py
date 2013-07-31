@@ -4,8 +4,6 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from bootstrap_toolkit.widgets import BootstrapUneditableInput
-
 from .forms import TestForm, TestModelForm, TestInlineForm, WidgetsForm, FormSetInlineForm
 
 
@@ -34,7 +32,6 @@ def demo_form(request):
         form.is_valid()
     else:
         form = TestForm()
-    form.fields['title'].widget = BootstrapUneditableInput()
     return render_to_response('form.html', RequestContext(request, {
         'form': form,
         'layout': layout,

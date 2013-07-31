@@ -1,0 +1,6 @@
+{% load bootstrap_toolkit %}
+
+{% with field|bootstrap_input_type as input_type %}
+{% html_attrs field.field.widget.attrs class='form-control' as html_attrs %}
+<input type="{{ input_type }}" id="{{ field.auto_id }}" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" {{ html_attrs }}>
+{% endwith %}

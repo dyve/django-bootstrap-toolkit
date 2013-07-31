@@ -1,5 +1,9 @@
 {% if field.is_hidden %}
     {{ field }}
+{% elif layout == "horizontal" %}
+    {% include "bootstrap_toolkit/field_horizontal.html" %}
+{% elif layout == "inline" %}
+    {% include "bootstrap_toolkit/field_inline.html" %}
 {% else %}
-    {% include "bootstrap_toolkit/field_visible.html" %}
+    {% include "bootstrap_toolkit/field_vertical.html" %}
 {% endif %}

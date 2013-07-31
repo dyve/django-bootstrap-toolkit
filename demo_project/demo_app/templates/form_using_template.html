@@ -26,15 +26,15 @@
         {% bootstrap_field form.color layout=layout %}
 
         {% if layout == "horizontal" %}
-            <p class="form-actions">
+            <div class="col-10 col-offset-2">
                 <input type="submit" value="Submit" class="btn btn-primary">
-            </p>
+                <p class="help-block">Submit the form to see error messages styled into it.</p>
+            </div>
         {% else %}
             <input type="submit" value="Submit" class="btn btn-primary">
+            <p class="help-block">Submit the form to see error messages styled into it.</p>
         {% endif %}
-
     </form>
-
-    <p>Submit the form to see error messages styled into it.</p>
-
+    
+    <p>&nbsp;</p>
 {% endblock %}

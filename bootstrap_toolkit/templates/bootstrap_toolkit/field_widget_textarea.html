@@ -1,0 +1,4 @@
+{% load bootstrap_toolkit %}
+
+{% html_attrs field.field.widget.attrs class='form-control' as html_attrs %}
+<textarea id="{{ field.auto_id }}" name="{{ field.html_name }}" {{ html_attrs }}>{{ field.value|default_if_none:'' }}</textarea>

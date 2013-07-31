@@ -4,10 +4,12 @@ from math import floor
 
 from django.forms import BaseForm
 from django.forms.forms import BoundField
-from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
+from django.forms.widgets import (TextInput, Textarea, CheckboxInput, Select, 
+    SelectMultiple, CheckboxSelectMultiple, RadioSelect)
 from django.template import Context
 from django.template.loader import get_template
 from django import template
+from django.template import Library, Node, TemplateSyntaxError
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
@@ -34,6 +36,30 @@ BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
 )
 
 register = template.Library()
+
+
+def parse_args_kwargs_and_as_var(parser, bits):
+    """
+    Parse args, kwargs and the 'as' var. 
+    """
+    args = []
+    kwargs = {}
+    as_var = None
+    
+    bits = iter(bits)
+    for bit in bits:
+        if bit == 'as':
+            as_var = bits.next()
+            break
+        else:
+            for arg in bit.split(","):
+                if '=' in arg:
+                    k, v = arg.split('=', 1)
+                    k = k.strip()
+                    kwargs[k] = parser.compile_filter(v)
+                elif arg:
+                    args.append(parser.compile_filter(arg))
+    return args, kwargs, as_var
 
 
 @register.simple_tag
@@ -68,7 +94,7 @@ def glyphicons_stylesheet_tag():
     """
     HTML tag to insert Glyphicons stylesheet
     """
-    return u"<link rel='stylesheet' href='{}'>".format(glyphicons_stylesheet_url())
+    return u'<link rel="stylesheet" href="%s">' % glyphicons_stylesheet_url()
 
 
 @register.simple_tag
@@ -166,10 +192,30 @@ def bootstrap_input_type(field):
     if isinstance(widget, CheckboxInput):
         return u'checkbox'
     if isinstance(widget, CheckboxSelectMultiple):
-        return u'multicheckbox'
+        return u'checkbox'
     if isinstance(widget, RadioSelect):
-        return u'radioset'
+        return u'radio'
+    if isinstance(widget, Select):
+        return u'select'
+    if isinstance(widget, SelectMultiple):
+        return u'select'
+    if isinstance(widget, Textarea):
+        return u'textarea'
     return u'default'
+
+
+@register.filter
+def bootstrap_prepend(field):
+    if hasattr(field.field.widget, 'bootstrap'):
+        return field.field.widget.bootstrap.get('prepend')
+    return None
+
+
+@register.filter
+def bootstrap_append(field):
+    if hasattr(field.field.widget, 'bootstrap'):
+        return field.field.widget.bootstrap.get('append')
+    return None
 
 
 @register.simple_tag
@@ -209,6 +255,65 @@ def html_attrs(attrs):
     for name, value in attrs.items():
         pairs.append(u'%s="%s"' % (escape(name), escape(value)))
     return mark_safe(u' '.join(pairs))
+
+
+class HTMLAttrs(Node):
+    def __init__(self, args, kwargs, as_var):
+        self.args = args
+        self.kwargs = kwargs
+        self.as_var = as_var
+    
+    def render(self, context):
+        args = [a.resolve(context) for a in self.args]
+        kwargs = dict([(k, v.resolve(context)) for k, v in self.kwargs.items()])
+        attrs = self.get_attrs(args, kwargs)
+        result = self.join_attrs(attrs)
+        
+        if self.as_var:
+            context[self.as_var] = mark_safe(result)
+            return ''
+        else:
+            return mark_safe(result)
+    
+    def get_attrs(self, args, kwargs):
+        attrs = args[0] if len(args) else dict()
+        for key, value in kwargs.items():
+            try:
+                attrs[key] += ' ' + value
+            except KeyError:
+                attrs[key] = value
+        return attrs
+    
+    def join_attrs(self, attrs):
+        pairs = []
+        for name, value in attrs.items():
+            pairs.append(u'%s="%s"' % (escape(name), escape(value)))
+        return u' '.join(pairs)
+
+
+@register.tag('html_attrs')
+def html_attrs_tag(parser, token):
+    """
+    Like the `html_attrs` filter, this tag displays the passed dict of attrs 
+    appropriate for inclusion in an HTML tag. It also allows additional keyed 
+    arguments to be appended to the attrs.
+    
+    {% html_attrs attr_dict %} # Same functionality as `html_attrs`.
+    
+    {% html_attrs attr_dict class="foo" src="bar" %}
+    
+    {% html_attrs attr_dict class="foo" as html_attrs %}
+    """
+    bits = token.contents.split(' ')
+    if len(bits) < 2:
+        raise TemplateSyntaxError("'%s' takes at least two arguments" % bits[0])
+    
+    if len(bits) > 2:
+        args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits[1:])
+    else:
+        args, kwargs, as_var = (bits[1], None, None)
+    
+    return HTMLAttrs(args, kwargs, as_var)
 
 
 @register.simple_tag(takes_context=True)
