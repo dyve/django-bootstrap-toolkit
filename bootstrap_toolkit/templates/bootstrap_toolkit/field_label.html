@@ -1,1 +1,1 @@
-<label class="control-label"{% if field.html_name %} for="{{ field.html_name }}"{% endif %}>{{ field.label }}</label>
+{% if field.label %}<label class="control-label"{% if field.html_name %} for="{{ field.html_name }}"{% endif %}>{{ field.label }}</label>{% endif %}

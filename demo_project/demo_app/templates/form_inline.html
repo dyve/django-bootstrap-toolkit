@@ -4,30 +4,19 @@
 
 {% block content %}
 
-{# Inputs, selects, and textareas are 100% wide by default in Bootstrap. To use #}
-{# the inline form, you'll have to set a width on the form controls used within. #}
-<style type="text/css" media="screen">
-    .form-inline input[type=text], 
-    .form-inline input[type=password], 
-    .form-inline select {
-        width: 25%;
-    }
-    .form-inline input[type=submit], 
-    .form-inline .checkbox {
-        width: 10%;
-    }
-</style>
-
-<h1>This is form layout is <em>{{ layout }}</em></h1>
+<h1>This is a <em>{{ layout }}</em> Django form, bootstrapped</h1>
 
 <p>&nbsp;</p>
 
-<form class="form-{{ layout }}" action="" method="post">
+<form class="form-{{ layout }} clearfix" action="" method="post">
     {% csrf_token %}
-    {{ form|as_bootstrap:layout }}
-    <input type="submit" class="btn btn-primary">
+    
+    {% bootstrap_form form layout=layout inline_group_class='col-2' %}
+    
+    <div class="col-2">
+        <input type="submit" class="btn btn-primary">
+    </div>
 </form>
 
-<p>Submit the form to see error messages styled into it.</p>
-
+<p class="help-block">Submit the form to see error messages styled into it.</p>
 {% endblock %}

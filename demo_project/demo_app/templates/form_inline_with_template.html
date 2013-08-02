@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block content %}
+
+<h1>This is a <em>{{ layout }}</em> Django form, bootstrapped</h1>
+<h3>It is rendered with a custom template.</h3>
+
+<p>&nbsp;</p>
+
+<form class="form-{{ layout }} clearfix" action="" method="post">
+    {% csrf_token %}
+    
+    {% if form.non_field_errors %}
+        {% include "bootstrap_toolkit/non_field_errors.html" %}
+    {% endif %}
+    
+    {% for field in form %}
+        {% if field.name == 'vegetable' or field.name == 'active' %}
+            {% bootstrap_field field layout=layout inline_group_class='col-3' %}
+        {% else %}
+            {% bootstrap_field field layout=layout inline_group_class='col-2' %}
+        {% endif %}
+    {% endfor %}
+    
+    <div class="col-2">
+        <input type="submit" class="btn btn-primary">
+    </div>
+</form>
+
+<p class="help-block">Submit the form to see error messages styled into it.</p>
+{% endblock %}

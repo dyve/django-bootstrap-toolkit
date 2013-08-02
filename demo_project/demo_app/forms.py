@@ -84,22 +84,26 @@ class TestModelForm(forms.ModelForm):
 
 class TestInlineForm(forms.Form):
     query = forms.CharField(
+        required=True, 
+        label='', 
         widget=forms.TextInput(attrs={
             'placeholder': "Query"
         }))
     vegetable = forms.ChoiceField(
+        label='', 
         choices=(
             ("broccoli", "Broccoli"),
             ("carrots", "Carrots"),
             ("turnips", "Turnips"),
         ))
     active = forms.ChoiceField(
+        label='', 
         choices=(
             ('all', 'all'),
             ('active', 'active'),
             ('inactive', 'inactive')), 
         initial='all')
-    mine = forms.BooleanField(label='Mine only', initial=False)
+    mine = forms.BooleanField(label='Mine only', initial=False, required=True)
 
 
 class WidgetsForm(forms.Form):
@@ -107,7 +111,20 @@ class WidgetsForm(forms.Form):
 
 
 class FormSetInlineForm(forms.Form):
-    foo = forms.CharField()
-    bar = forms.CharField()
+    foo = forms.CharField(
+        help_text=u'This is the standard text input',
+        widget=forms.TextInput(attrs={
+            'placeholder': "Foo"
+        }))
+    bar = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'placeholder': "Bar"
+        }))
+    vegetable = forms.ChoiceField(
+        choices=(
+            ("broccoli", "Broccoli"),
+            ("carrots", "Carrots"),
+            ("turnips", "Turnips"),
+        ))
 
 

@@ -9,3 +9,4 @@ MANIFEST
 dist/
 django_bootstrap_toolkit.egg-info/
 build/
+demo_project/database.db

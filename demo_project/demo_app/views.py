@@ -1,32 +1,16 @@
+from django.db import DatabaseError
 from django.contrib import messages
 from django.forms.formsets import formset_factory
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .forms import TestForm, TestModelForm, TestInlineForm, WidgetsForm, FormSetInlineForm
 
 
-def demo_form_with_template(request):
-    layout = request.GET.get('layout')
-    if not layout:
-        layout = 'vertical'
-    if request.method == 'POST':
-        form = TestForm(request.POST)
-        form.is_valid()
-    else:
-        form = TestForm()
-    modelform = TestModelForm()
-    return render_to_response('form_using_template.html', RequestContext(request, {
-        'form': form,
-        'layout': layout,
-    }))
-
 def demo_form(request):
     messages.success(request, 'I am a success message.')
-    layout = request.GET.get('layout')
-    if not layout:
-        layout = 'vertical'
+    layout = request.GET.get('layout', 'vertical')
     if request.method == 'POST':
         form = TestForm(request.POST)
         form.is_valid()
@@ -37,22 +21,67 @@ def demo_form(request):
         'layout': layout,
     }))
 
+
+def demo_model_form(request):
+    messages.success(request, 'Model forms work, too.')
+    layout = request.GET.get('layout', 'vertical')
+    if request.method == 'POST':
+        form = TestModelForm(request.POST)
+        form.is_valid()
+    else:
+        form = TestModelForm()
+    try:
+        return render_to_response('form.html', RequestContext(request, {
+            'form': form,
+            'layout': layout,
+        }))
+    except DatabaseError:
+        messages.error(request, "Run <code>manage.py syncdb</code> to interact with Model Forms.")
+        return redirect('/')
+
+
+def demo_form_with_template(request):
+    layout = request.GET.get('layout', 'vertical')
+    if request.method == 'POST':
+        form = TestForm(request.POST)
+        form.is_valid()
+    else:
+        form = TestForm()
+    return render_to_response('form_with_template.html', RequestContext(request, {
+        'form': form,
+        'layout': layout,
+    }))
+
+
 def demo_form_inline(request):
-    layout = request.GET.get('layout', '')
-    if layout != 'search':
-        layout = 'inline'
-    form = TestInlineForm()
+    layout = request.GET.get('layout', 'inline')
+    if request.method == 'POST':
+        form = TestInlineForm(request.POST)
+        form.is_valid()
+    else:
+        form = TestInlineForm()
     return render_to_response('form_inline.html', RequestContext(request, {
         'form': form,
         'layout': layout,
     }))
 
 
+def demo_form_inline_with_template(request):
+    layout = request.GET.get('layout', 'inline')
+    if request.method == 'POST':
+        form = TestInlineForm(request.POST)
+        form.is_valid()
+    else:
+        form = TestInlineForm()
+    return render_to_response('form_inline_with_template.html', RequestContext(request, {
+        'form': form,
+        'layout': layout,
+    }))
+
+
 def demo_formset(request):
-    layout = request.GET.get('layout')
-    if not layout:
-        layout = 'inline'
-    DemoFormSet = formset_factory(FormSetInlineForm)
+    layout = request.GET.get('layout', 'inline')
+    DemoFormSet = formset_factory(FormSetInlineForm, extra=3)
     if request.method == 'POST':
         formset = DemoFormSet(request.POST, request.FILES)
         formset.is_valid()

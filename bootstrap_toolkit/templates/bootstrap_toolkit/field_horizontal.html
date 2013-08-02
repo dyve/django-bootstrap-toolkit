@@ -3,7 +3,6 @@
 {% with field|bootstrap_input_type as input_type %}
 {% with left_column_class|default:"col-2" as left_column_class %}
 {% with right_column_class|default:"col-10" as right_column_class %}
-{# TODO: Configurable column widths. #}
 <div class="form-group{% if field.errors %} has-error{% endif %}{% if field.field.required %} required{% endif %}">
     <label class="{{ left_column_class }} control-label"{% if field.html_name %} for="{{ field.html_name }}"{% endif %}>{{ field.label }}</label>
     

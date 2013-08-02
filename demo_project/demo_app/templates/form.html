@@ -10,7 +10,7 @@
         
     <form class="form-{{ layout }}" action="" method="post">
         {% csrf_token %}
-        {{ form|as_bootstrap:layout }}
+        {% bootstrap_form form layout=layout left_column_class='col-2' right_column_class='col-10' %}
         
         {% if layout == "horizontal" %}
             <div class="col-10 col-offset-2">

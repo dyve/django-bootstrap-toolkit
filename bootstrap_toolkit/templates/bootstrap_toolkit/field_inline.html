@@ -1,18 +1,26 @@
 {% load bootstrap_toolkit %}
 
 {% with field|bootstrap_input_type as input_type %}
-{% if input_type == "checkbox" or input_type == "radio" %}
+<div class="{{ inline_group_class|default:'form-group-inline' }}{% if field.errors %} has-error{% endif %}{% if field.field.required %} required{% endif %}">
+{% if input_type == "checkbox" %}
     {% if field.field.widget.allow_multiple_selected %}
         {% include "bootstrap_toolkit/field_widget_choices.html" %}
     {% else %}
         {% include "bootstrap_toolkit/field_widget_checkbox.html" %}
     {% endif %}
+{% elif input_type == "radio" %}
+    {% include "bootstrap_toolkit/field_widget_choices.html" %}
 {% elif input_type == "select" %}
+    {% include "bootstrap_toolkit/field_label.html" %}
     {% include "bootstrap_toolkit/field_widget_select.html" %}
 {% elif input_type == "textarea" %}
+    {% include "bootstrap_toolkit/field_label.html" %}
     {% include "bootstrap_toolkit/field_widget_textarea.html" %}
 {% else %}
+    {% include "bootstrap_toolkit/field_label.html" %}
     {% include "bootstrap_toolkit/field_widget_default.html" %}
 {% endif %}
-{% include "bootstrap_toolkit/field_errors.html" with display="inline" %}
+{% include "bootstrap_toolkit/field_help.html" %}
+{% include "bootstrap_toolkit/field_errors.html" %}
+</div>
 {% endwith %}
