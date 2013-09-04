@@ -1,6 +1,8 @@
 Django Toolkit for integration with Bootstrap
 =============================================
 
+**For Bootstrap3 support, please use https://github.com/dyve/django-bootstrap3**
+
 The easiest way to use Bootstrap in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
 
 Installation
