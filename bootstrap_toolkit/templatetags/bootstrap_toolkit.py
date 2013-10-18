@@ -16,7 +16,7 @@ from django.utils.html import escape
 
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-                             '//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/'
+                             '//netdna.bootstrapcdn.com/bootstrap/3.0.0/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
