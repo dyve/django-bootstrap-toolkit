@@ -80,6 +80,12 @@ More examples
 
 See Django project `demo_project/demo_app` for more examples.
 
+TODO
+----
+
+- Create a more easy way to customize BootstrapDateInput
+
+
 Questions
 ---------
 
