@@ -55,6 +55,8 @@ Use in templates
 Use in forms
 ------------
 
+    from bootstrap_toolkit.widgets import BootstrapDateInput, BootstrapTextInput, BootstrapUneditableInput
+
     class TestForm(forms.Form):
         date = forms.DateField(
             widget=BootstrapDateInput(),
