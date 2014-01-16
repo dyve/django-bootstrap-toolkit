@@ -1,16 +1,23 @@
-Django Toolkit for integration with Bootstrap
-=============================================
+Django Toolkit for integration with Bootstrap v2
+================================================
 
 [![PyPi version](https://pypip.in/v/django-bootstrap-toolkit/badge.png)](https://crate.io/packages/django-bootstrap-toolkit/)
 
 [![PyPi downloads](https://pypip.in/d/django-bootstrap-toolkit/badge.png)](https://crate.io/packages/django-bootstrap-toolkit/)
 
-The easiest way to use Bootstrap in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
+The easiest way to use Bootstrap v2 in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
 
-Bootstrap3 Support
-------------------
 
-A new app was started to provide support for Bootstrap3. This means that Bootstrap2 apps can continue to use this package. For Bootstrap3 support, please use https://github.com/dyve/django-bootstrap3.
+Bootstrap v3
+------------
+
+A new app was started to provide support for Bootstrap v3. It is called `django-bootstrap3`, and you can find it at  https://github.com/dyve/django-bootstrap3.
+
+
+Updates for Bootstrap v2
+------------------------
+
+Sinc development on Bootstrap v2 has stopped, it is safe to assume that this Django app won't receive much updates in the future. Everyone using Botstrap is encouraged to upgrade to Bootstrap v3 and https://github.com/dyve/django-bootstrap3.
 
 
 Installation
