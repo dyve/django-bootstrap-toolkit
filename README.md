@@ -17,7 +17,7 @@ A new app was started to provide support for Bootstrap v3. It is called `django-
 Updates for Bootstrap v2
 ------------------------
 
-Sinc development on Bootstrap v2 has stopped, it is safe to assume that this Django app won't receive much updates in the future. Everyone using Botstrap is encouraged to upgrade to Bootstrap v3 and https://github.com/dyve/django-bootstrap3.
+Since development on Bootstrap v2 has stopped, it is safe to assume that this Django app won't receive any updates in the future. Everyone using Bootstrap is encouraged to upgrade to Bootstrap v3 and https://github.com/dyve/django-bootstrap3.
 
 
 Installation
