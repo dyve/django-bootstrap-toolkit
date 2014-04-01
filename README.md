@@ -17,8 +17,7 @@ A new app was started to provide support for Bootstrap v3. It is called `django-
 Updates for Bootstrap v2
 ------------------------
 
-Sinc development on Bootstrap v2 has stopped, it is safe to assume that this Django app won't receive much updates in the future. Everyone using Botstrap is encouraged to upgrade to Bootstrap v3 and https://github.com/dyve/django-bootstrap3.
-
+Since development of Bootstrap v2 has stopped, it is safe to assume that this Django app won't be updated much. Everyone using Botstrap is encouraged to upgrade to Bootstrap v3 and https://github.com/dyve/django-bootstrap3.
 
 Installation
 ------------
@@ -32,7 +31,7 @@ Installation
 
 Alternatively, you can add `django-bootstrap-toolkit` to your requirements.txt.
 
-If you want to hack django-bootstrap itself, clone this repo and call `pip install -e .`.
+If you want to hack `django-bootstrap` itself, clone this repo and call `pip install -e .`.
 
 Use in templates
 ----------------
@@ -90,15 +89,15 @@ See Django project `demo_project/demo_app` for more examples.
 TODO
 ----
 
-- Create a more easy way to customize BootstrapDateInput
+- Create an easier way to customize BootstrapDateInput
 
 
 Questions
 ---------
 
-Do you have a question about the usage of this toolkit in your Django project? Please ask it on StackOverflow.com so others can help out and/or learn. Label your question django-bootstrap-toolkit if possible.
+Do you have a question about the usage of this toolkit in your Django project? Please ask it on StackOverflow.com so others can help out and/or learn. Label your question `django-bootstrap-toolkit` if possible.
 
-http://stackoverflow.com/
+http://stackoverflow.com/questions/tagged/django-bootstrap-toolkit
 
 Bugs and requests
 -----------------
@@ -117,7 +116,7 @@ History
 
 When building my first Django project with Bootstrap I went looking for available open source applications that connected Django and Bootstrap.
 
-I found  https://github.com/tzangms/django-bootstrap-form. The approach to template tags and filters seemed right, but Bootstrap does so much more than just forms.
+I found https://github.com/tzangms/django-bootstrap-form. The approach to template tags and filters seemed right, but Bootstrap does so much more than just forms.
 
 This is how `django-bootstrap-toolkit` started. I used ideas from other Django apps. The code was started from scratch.
 
