@@ -8,16 +8,12 @@ Django Toolkit for integration with Bootstrap v2
 The easiest way to use Bootstrap v2 in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
 
 
-Bootstrap v3
-------------
+This project is retired, and will not receive any updates
+---------------------------------------------------------
 
-A new app was started to provide support for Bootstrap v3. It is called `django-bootstrap3`, and you can find it at  https://github.com/dyve/django-bootstrap3.
+The time for development on Bootstrap v2 has passed. This app is provided 'as is', and will not be updated.
 
-
-Updates for Bootstrap v2
-------------------------
-
-Sinc development on Bootstrap v2 has stopped, it is safe to assume that this Django app won't receive much updates in the future. Everyone using Botstrap is encouraged to upgrade to Bootstrap v3 and https://github.com/dyve/django-bootstrap3.
+Everyone using Django and Bootstrap is encouraged to upgrade to `django-bootstrap3`. You can find it at https://github.com/dyve/django-bootstrap3.
 
 
 Installation
