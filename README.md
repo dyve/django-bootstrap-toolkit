@@ -8,8 +8,8 @@ Django Toolkit for integration with Bootstrap v2
 The easiest way to use Bootstrap v2 in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
 
 
-This project is retired, and will not receive any updates
----------------------------------------------------------
+This project is retired
+-----------------------
 
 The time for development on Bootstrap v2 has passed. This app is provided 'as is', and will not be updated.
 
