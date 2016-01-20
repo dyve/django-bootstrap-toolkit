@@ -1,9 +1,9 @@
 Django Toolkit for integration with Bootstrap v2
 ================================================
 
-[![PyPi version](https://pypip.in/v/django-bootstrap-toolkit/badge.png)](https://crate.io/packages/django-bootstrap-toolkit/)
+[![PyPI version](https://img.shields.io/pypi/v/django-bootstrap-toolkit/.svg)](https://pypi.python.org/pypi/django-bootstrap-toolkit/)
 
-[![PyPi downloads](https://pypip.in/d/django-bootstrap-toolkit/badge.png)](https://crate.io/packages/django-bootstrap-toolkit/)
+[![PyPI downloads per month](https://img.shields.io/pypi/dm/django-bootstrap-toolkit.svg)](https://pypi.python.org/pypi/django-bootstrap-toolkit/)
 
 The easiest way to use Bootstrap v2 in your Django project. What is Bootstrap? You can find out all about it here: http://getbootstrap.com
 
