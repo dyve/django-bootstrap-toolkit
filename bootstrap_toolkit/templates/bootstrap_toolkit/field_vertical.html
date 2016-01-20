@@ -24,7 +24,11 @@
             {% else %}
                 <label class="control-label"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
                 <div class="controls">
-                    {% include "bootstrap_toolkit/field_default.html" %}
+                    {% if input_type == "file" %}
+                        {% include "bootstrap_toolkit/field_file.html" %}
+                    {% else %}
+                        {% include "bootstrap_toolkit/field_default.html" %}
+                    {% endif %}
                     {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
                     {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
                 </div>

@@ -1,3 +1,4 @@
+# coding=utf-8
 from django import forms
 from django.conf import settings
 from django.utils import translation
@@ -63,7 +64,6 @@ def get_locale_js_url(lang):
 
 
 class BootstrapUneditableInput(forms.TextInput):
-
     def render(self, name, value, attrs=None):
         if attrs is None:
             attrs = {}
@@ -75,21 +75,18 @@ class BootstrapUneditableInput(forms.TextInput):
 
 
 class BootstrapTextInput(forms.TextInput):
-
     def __init__(self, *args, **kwargs):
         self.bootstrap, kwargs = create_prepend_append(**kwargs)
         super(BootstrapTextInput, self).__init__(*args, **kwargs)
 
 
 class BootstrapPasswordInput(forms.PasswordInput):
-
     def __init__(self, *args, **kwargs):
         self.bootstrap, kwargs = create_prepend_append(**kwargs)
         super(BootstrapPasswordInput, self).__init__(*args, **kwargs)
 
 
 class BootstrapDateInput(forms.DateInput):
-
     bootstrap = {
         'append': mark_safe('<i class="icon-calendar"></i>'),
         'prepend': None,
@@ -130,3 +127,28 @@ class BootstrapDateInput(forms.DateInput):
             'data-bootstrap-widget': 'datepicker',
         })
         return super(BootstrapDateInput, self).render(name, value, attrs=date_input_attrs)
+
+
+class BootstrapFileInput(forms.FileInput):
+    def __init__(self, format_type='default', *args, **kwargs):
+        if format_type not in ['simple', 'text_input', 'default']:
+            format_type = 'default'
+        self.format_type = format_type
+
+        # self.bootstrap, kwargs = create_prepend_append(**kwargs)
+        super(BootstrapFileInput, self).__init__(*args, **kwargs)
+
+    @property
+    def media(self):
+        js = (
+            settings.STATIC_URL + 'jasny/js/bootstrap-fileupload.min.js',
+        )
+        css = {
+            'screen': (
+                settings.STATIC_URL + 'jasny/css/bootstrap-fileupload.min.css',
+            )
+        }
+        return forms.Media(css=css, js=js)
+
+    def render(self, name, value, attrs=None):
+        return super(BootstrapFileInput, self).render(name, value, attrs=attrs)
