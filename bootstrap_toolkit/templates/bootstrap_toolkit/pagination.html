@@ -3,9 +3,22 @@
     <div class="{{ pagination_css_classes }}">
         <ul>
 
-            <li class="prev{% if current_page == 1 %} disabled{% endif %}">
-                <a href="{% if current_page == 1 %}#{% else %}{{ bootstrap_pagination_url }}page=1{% endif %}">&laquo;</a>
-            </li>
+            {% if show_prev_and_next %}
+                <li class="prev{% if current_page == 1 %} disabled{% endif %}">
+                    <a href="{% if current_page == 1 %}#{% else %}{{ bootstrap_pagination_url }}page={{ current_page|add:'-1' }}{% endif %}">&larr;</a>
+                </li>
+            {% endif %}
+            {% if always_show_first %}
+                {% if  1 not in pages_shown %}
+                    <li>
+                        <a href="{{ bootstrap_pagination_url }}page=1">1</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li class="prev{% if current_page == 1 %} disabled{% endif %}">
+                    <a href="{% if current_page == 1 %}#{% else %}{{ bootstrap_pagination_url }}page=1{% endif %}">&laquo;</a>
+                </li>
+            {% endif %}
 
             {% if pages_back %}
                 <li>
@@ -25,10 +38,23 @@
                 </li>
             {% endif %}
 
-            <li class="last{% if current_page == num_pages %} disabled{% endif %}">
-                <a href="{% if current_page == num_pages %}#{% else %}{{ bootstrap_pagination_url }}page={{ num_pages }}{% endif %}">&raquo;</a>
-            </li>
+            {% if always_show_last %}
+                {% if num_pages not in pages_shown %}
+                    <li>
+                        <a href="{{ bootstrap_pagination_url }}page={{ num_pages }}">{{ num_pages }}</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li class="last{% if current_page == num_pages %} disabled{% endif %}">
+                    <a href="{% if current_page == num_pages %}#{% else %}{{ bootstrap_pagination_url }}page={{ num_pages }}{% endif %}">&raquo;</a>
+                </li>
+            {% endif %}
 
+            {% if show_prev_and_next %}
+                <li class="next{% if current_page == num_pages %} disabled{% endif %}">
+                    <a href="{% if current_page == num_pages %}#{% else %}{{ bootstrap_pagination_url }}page={{ current_page|add:'1' }}{% endif %}">&rarr;</a>
+                </li>
+            {% endif %}
         </ul>
 
     </div>
