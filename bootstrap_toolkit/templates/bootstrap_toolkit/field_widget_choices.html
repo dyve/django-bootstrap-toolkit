@@ -1,9 +1,12 @@
 {% load bootstrap_toolkit %}
+
+{# For use with groups of 'radio' or 'checkbox' #}
+{% with field|bootstrap_input_type as input_type %}
 {{ choices_start }}
 {% for choice_id, choice_label in field.field.choices %}
-    <label class="{{ type }}{% if display == "inline" or field.field.widget.attrs.inline %} inline{% endif %}">
+    <label class="{{ input_type }}{% if display == "inline" or field.field.widget.attrs.inline %} inline{% endif %}">
         <input
-            type="{{ type }}"
+            type="{{ input_type }}"
             name="{{ field.html_name }}"
             value="{{ choice_id }}"
             {% if field.field.widget.allow_multiple_selected %}
@@ -20,3 +23,4 @@
     {% endif %}
 {% endfor %}
 {{ choices_end }}
+{% endwith %}

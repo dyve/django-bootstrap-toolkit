@@ -4,17 +4,19 @@ from math import floor
 
 from django.forms import BaseForm
 from django.forms.forms import BoundField
-from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
+from django.forms.widgets import (TextInput, Textarea, CheckboxInput, Select, 
+    SelectMultiple, CheckboxSelectMultiple, RadioSelect)
 from django.template import Context
 from django.template.loader import get_template
 from django import template
+from django.template import Library, Node, TemplateSyntaxError
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
 
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-                             '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/'
+                             '//netdna.bootstrapcdn.com/bootstrap/3.0.0/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
@@ -22,7 +24,7 @@ BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
 )
 
 BOOTSTRAP_JS_URL = getattr(settings, 'BOOTSTRAP_JS_URL',
-                           None
+                           BOOTSTRAP_JS_BASE_URL + "bootstrap.js"
 )
 
 BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
@@ -36,17 +38,39 @@ BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
 register = template.Library()
 
 
+def parse_args_kwargs_and_as_var(parser, bits):
+    """
+    Parse args, kwargs and the 'as' var. 
+    """
+    args = []
+    kwargs = {}
+    as_var = None
+    
+    bits = iter(bits)
+    for bit in bits:
+        if bit == 'as':
+            as_var = bits.next()
+            break
+        else:
+            for arg in bit.split(","):
+                if '=' in arg:
+                    k, v = arg.split('=', 1)
+                    k = k.strip()
+                    kwargs[k] = parser.compile_filter(v)
+                elif arg:
+                    args.append(parser.compile_filter(arg))
+    return args, kwargs, as_var
+
+
 @register.simple_tag
 def bootstrap_stylesheet_url(css=None):
     """
     URL to Bootstrap Stylesheet (CSS)
     """
-    url = BOOTSTRAP_CSS_URL
     if css:
-        url = BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
+        return BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
     else:
-        url = BOOTSTRAP_CSS_URL
-    return url
+        return BOOTSTRAP_CSS_URL
 
 
 @register.simple_tag
@@ -58,16 +82,30 @@ def bootstrap_stylesheet_tag(css=None):
 
 
 @register.simple_tag
+def glyphicons_stylesheet_url():
+    """
+    URL to Glyphicons Stylesheet (CSS)
+    """
+    return settings.STATIC_URL + "glyphicons/css/bootstrap-glyphicons.css"
+
+
+@register.simple_tag
+def glyphicons_stylesheet_tag():
+    """
+    HTML tag to insert Glyphicons stylesheet
+    """
+    return u'<link rel="stylesheet" href="%s">' % glyphicons_stylesheet_url()
+
+
+@register.simple_tag
 def bootstrap_javascript_url(name=None):
     """
     URL to Bootstrap javascript file
     """
-    if BOOTSTRAP_JS_URL:
-        return BOOTSTRAP_JS_URL
     if name:
         return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
     else:
-        return BOOTSTRAP_JS_BASE_URL + 'bootstrap.min.js'
+        return BOOTSTRAP_JS_URL
 
 
 @register.simple_tag
@@ -154,10 +192,30 @@ def bootstrap_input_type(field):
     if isinstance(widget, CheckboxInput):
         return u'checkbox'
     if isinstance(widget, CheckboxSelectMultiple):
-        return u'multicheckbox'
+        return u'checkbox'
     if isinstance(widget, RadioSelect):
-        return u'radioset'
+        return u'radio'
+    if isinstance(widget, Select):
+        return u'select'
+    if isinstance(widget, SelectMultiple):
+        return u'select'
+    if isinstance(widget, Textarea):
+        return u'textarea'
     return u'default'
+
+
+@register.filter
+def bootstrap_prepend(field):
+    if hasattr(field.field.widget, 'bootstrap'):
+        return field.field.widget.bootstrap.get('prepend')
+    return None
+
+
+@register.filter
+def bootstrap_append(field):
+    if hasattr(field.field.widget, 'bootstrap'):
+        return field.field.widget.bootstrap.get('append')
+    return None
 
 
 @register.simple_tag
@@ -197,6 +255,65 @@ def html_attrs(attrs):
     for name, value in attrs.items():
         pairs.append(u'%s="%s"' % (escape(name), escape(value)))
     return mark_safe(u' '.join(pairs))
+
+
+class HTMLAttrs(Node):
+    def __init__(self, args, kwargs, as_var):
+        self.args = args
+        self.kwargs = kwargs
+        self.as_var = as_var
+    
+    def render(self, context):
+        args = [a.resolve(context) for a in self.args]
+        kwargs = dict([(k, v.resolve(context)) for k, v in self.kwargs.items()])
+        attrs = self.get_attrs(args, kwargs)
+        result = self.join_attrs(attrs)
+        
+        if self.as_var:
+            context[self.as_var] = mark_safe(result)
+            return ''
+        else:
+            return mark_safe(result)
+    
+    def get_attrs(self, args, kwargs):
+        attrs = args[0] if len(args) else dict()
+        for key, value in kwargs.items():
+            try:
+                attrs[key] += ' ' + value
+            except KeyError:
+                attrs[key] = value
+        return attrs
+    
+    def join_attrs(self, attrs):
+        pairs = []
+        for name, value in attrs.items():
+            pairs.append(u'%s="%s"' % (escape(name), escape(value)))
+        return u' '.join(pairs)
+
+
+@register.tag('html_attrs')
+def html_attrs_tag(parser, token):
+    """
+    Like the `html_attrs` filter, this tag displays the passed dict of attrs 
+    appropriate for inclusion in an HTML tag. It also allows additional keyed 
+    arguments to be appended to the attrs.
+    
+    {% html_attrs attr_dict %} # Same functionality as `html_attrs`.
+    
+    {% html_attrs attr_dict class="foo" src="bar" %}
+    
+    {% html_attrs attr_dict class="foo" as html_attrs %}
+    """
+    bits = token.contents.split(' ')
+    if len(bits) < 2:
+        raise TemplateSyntaxError("'%s' takes at least two arguments" % bits[0])
+    
+    if len(bits) > 2:
+        args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits[1:])
+    else:
+        args, kwargs, as_var = (bits[1], None, None)
+    
+    return HTMLAttrs(args, kwargs, as_var)
 
 
 @register.simple_tag(takes_context=True)
@@ -251,6 +368,8 @@ def bootstrap_button(text, **kwargs):
     button_class = 'btn'
     if button_type:
         button_class += ' btn-' + button_type
+    else:
+        button_class += ' btn-default'
     if button_size:
         button_class += ' btn-' + button_size
     if button_disabled:
@@ -258,9 +377,9 @@ def bootstrap_button(text, **kwargs):
         # Build icon classes
     icon_class = ''
     if button_icon:
-        icon_class = 'icon-' + button_icon
+        icon_class = 'glyphicon glyphicon-' + button_icon
         if button_type and button_type != 'link':
-            icon_class += ' icon-white'
+            icon_class += ' glyphicon-white'
             # Return context for template
     return {
         'text': text,
@@ -275,9 +394,9 @@ def bootstrap_icon(icon, **kwargs):
     """
     Render an icon
     """
-    icon_class = 'icon-' + icon
+    icon_class = 'glyphicon glyphicon-' + icon
     if kwargs.get('inverse'):
-        icon_class += ' icon-white'
+        icon_class += ' glphyicon-white'
     return {
         'icon_class': icon_class,
     }
@@ -354,7 +473,7 @@ def get_pagination_context(page, pages_to_show=11, url=None, size=None, align=No
         url = url.replace(u'?&', u'?')
     # Set CSS classes, see http://twitter.github.io/bootstrap/components.html#pagination
     pagination_css_classes = ['pagination']
-    if size in ['small', 'large', 'mini']:
+    if size in ['small', 'large']:
         pagination_css_classes.append('pagination-%s' % size)
     if align == 'center':
         pagination_css_classes.append('pagination-centered')

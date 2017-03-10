@@ -62,18 +62,6 @@ def get_locale_js_url(lang):
     return ''
 
 
-class BootstrapUneditableInput(forms.TextInput):
-
-    def render(self, name, value, attrs=None):
-        if attrs is None:
-            attrs = {}
-        attrs['type'] = 'hidden'
-        klass = add_to_css_class(self.attrs.pop('class', ''), 'uneditable-input')
-        klass = add_to_css_class(klass, attrs.pop('class', ''))
-        base = super(BootstrapUneditableInput, self).render(name, value, attrs)
-        return mark_safe(base + u'<span class="%s">%s</span>' % (klass, conditional_escape(value)))
-
-
 class BootstrapTextInput(forms.TextInput):
 
     def __init__(self, *args, **kwargs):
@@ -91,7 +79,7 @@ class BootstrapPasswordInput(forms.PasswordInput):
 class BootstrapDateInput(forms.DateInput):
 
     bootstrap = {
-        'append': mark_safe('<i class="icon-calendar"></i>'),
+        'append': mark_safe('<i class="glyphicon glyphicon-calendar"></i>'),
         'prepend': None,
     }
 

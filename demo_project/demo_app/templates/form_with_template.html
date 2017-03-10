@@ -4,9 +4,8 @@
 
 {% block content %}
 
-    <h1>This form uses templates</h1>
-    
-    <p>The disabled field gets a $ appended using a template.</p>
+    <h1>This is a <em>{{ layout }}</em> Django form, bootstrapped</h1>
+    <h3>It is rendered with a custom template.</h3>
     
     <p>&nbsp;</p>
         
@@ -15,10 +14,10 @@
 
         {% for field in form %}
             {% if field.name == 'disabled' %}
-                {% include "bootstrap_toolkit/field.html" with append='$' %}
+                {% bootstrap_field field layout=layout append='$' %}
             {% else %}
                 {% if field.name != 'color' %}
-                    {% include "bootstrap_toolkit/field.html" %}
+                    {% bootstrap_field field layout=layout %}
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -26,15 +25,15 @@
         {% bootstrap_field form.color layout=layout %}
 
         {% if layout == "horizontal" %}
-            <p class="form-actions">
+            <div class="col-10 col-offset-2">
                 <input type="submit" value="Submit" class="btn btn-primary">
-            </p>
+                <p class="help-block">Submit the form to see error messages styled into it.</p>
+            </div>
         {% else %}
             <input type="submit" value="Submit" class="btn btn-primary">
+            <p class="help-block">Submit the form to see error messages styled into it.</p>
         {% endif %}
-
     </form>
-
-    <p>Submit the form to see error messages styled into it.</p>
-
+    
+    <p>&nbsp;</p>
 {% endblock %}

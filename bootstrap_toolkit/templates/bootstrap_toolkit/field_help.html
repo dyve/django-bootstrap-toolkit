@@ -1,9 +1,5 @@
 {% if field.help_text %}
     {% autoescape off %}
-        {% if display == "inline" %}
-            <span class="help-inline">{{ field.help_text }}</span>
-        {% else %}
-            <p class="help-block">{{ field.help_text }}</p>
-        {% endif %}
+        <p class="help-block">{{ field.help_text }}</p>
     {% endautoescape %}
 {% endif %}

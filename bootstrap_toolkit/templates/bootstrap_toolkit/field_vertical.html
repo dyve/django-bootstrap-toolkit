@@ -1,34 +1,29 @@
-<div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+{% load bootstrap_toolkit %}
+
+{% with field|bootstrap_input_type as input_type %}
+<div class="form-group{% if field.errors %} has-error{% endif %}{% if field.field.required %} required{% endif %}">
     {% if input_type == "checkbox" %}
-        <div class="controls">
-            {% include "bootstrap_toolkit/field_checkbox.html" %}
-            {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
-            {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
-        </div>
-    {% else %}
-        {% if input_type == "multicheckbox" %}
-            <label class="control-label">{{ field.label }}</label>
-            <div class="controls">
-                {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
-                {% include "bootstrap_toolkit/field_help.html" with display="block" %}
-                {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
-            </div>
+        {% if field.field.widget.allow_multiple_selected %}
+            <label>{{ field.label }}</label>
+            {% include "bootstrap_toolkit/field_widget_choices.html" %}
         {% else %}
-            {% if input_type == "radioset" %}
-                <label class="control-label">{{ field.label }}</label>
-                <div class="controls">
-                    {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
-                    {% include "bootstrap_toolkit/field_help.html" with display="block" %}
-                    {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
-                </div>
-            {% else %}
-                <label class="control-label"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
-                <div class="controls">
-                    {% include "bootstrap_toolkit/field_default.html" %}
-                    {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
-                    {% include "bootstrap_toolkit/field_errors.html" with display="block" %}
-                </div>
-            {% endif %}
+            {% include "bootstrap_toolkit/field_widget_checkbox.html" %}
         {% endif %}
+    {% elif input_type == "radio" %}
+        <label>{{ field.label }}</label>
+        {% include "bootstrap_toolkit/field_widget_choices.html" %}
+    {% elif input_type == "select" %}
+        {% include "bootstrap_toolkit/field_label.html" %}
+        {% include "bootstrap_toolkit/field_widget_select.html" %}
+    {% elif input_type == "textarea" %}
+        {% include "bootstrap_toolkit/field_label.html" %}
+        {% include "bootstrap_toolkit/field_widget_textarea.html" %}
+    {% else %}
+        {% include "bootstrap_toolkit/field_label.html" %}
+        {% include "bootstrap_toolkit/field_widget_default.html" %}
     {% endif %}
+    
+    {% include "bootstrap_toolkit/field_help.html" %}
+    {% include "bootstrap_toolkit/field_errors.html" %}
 </div>
+{% endwith %}

@@ -1,23 +1,26 @@
-<span class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+{% load bootstrap_toolkit %}
+
+{% with field|bootstrap_input_type as input_type %}
+<div class="{{ inline_group_class|default:'form-group-inline' }}{% if field.errors %} has-error{% endif %}{% if field.field.required %} required{% endif %}">
 {% if input_type == "checkbox" %}
-    {% include "bootstrap_toolkit/field_checkbox.html" %}
-    {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
-{% else %}
-    {% if input_type == "multicheckbox" %}
-        {% include "bootstrap_toolkit/field_choices.html" with type="checkbox" %}
-        {% include "bootstrap_toolkit/field_help.html" with display="block" %}
+    {% if field.field.widget.allow_multiple_selected %}
+        {% include "bootstrap_toolkit/field_widget_choices.html" %}
     {% else %}
-        {% if field.label %}
-            <label class="control-label"{% if field.auto_id %} for="{{ field.auto_id }}"{% endif %}>{{ field.label }}</label>
-        {% endif %}
-        {% if input_type == "radioset" %}
-            {% include "bootstrap_toolkit/field_choices.html" with type="radio" %}
-            {% include "bootstrap_toolkit/field_help.html" with display="block" %}
-        {% else %}
-            {% include "bootstrap_toolkit/field_default.html" with display="inline"%}
-            {% include "bootstrap_toolkit/field_help.html" with display="inline" %}
-        {% endif %}
+        {% include "bootstrap_toolkit/field_widget_checkbox.html" %}
     {% endif %}
+{% elif input_type == "radio" %}
+    {% include "bootstrap_toolkit/field_widget_choices.html" %}
+{% elif input_type == "select" %}
+    {% include "bootstrap_toolkit/field_label.html" %}
+    {% include "bootstrap_toolkit/field_widget_select.html" %}
+{% elif input_type == "textarea" %}
+    {% include "bootstrap_toolkit/field_label.html" %}
+    {% include "bootstrap_toolkit/field_widget_textarea.html" %}
+{% else %}
+    {% include "bootstrap_toolkit/field_label.html" %}
+    {% include "bootstrap_toolkit/field_widget_default.html" %}
 {% endif %}
-{% include "bootstrap_toolkit/field_errors.html" with display="inline" %}
-</span>
+{% include "bootstrap_toolkit/field_help.html" %}
+{% include "bootstrap_toolkit/field_errors.html" %}
+</div>
+{% endwith %}

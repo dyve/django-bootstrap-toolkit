@@ -4,21 +4,19 @@
 
 {% block content %}
 
-<h1>This is form layout is {{ layout }}</h1>
+<h1>This is a <em>{{ layout }}</em> Django form, bootstrapped</h1>
 
 <p>&nbsp;</p>
 
-<form class="form-{{ layout }}" action="" method="post">
-
+<form class="form-{{ layout }} clearfix" action="" method="post">
     {% csrf_token %}
-
-    {{ form|as_bootstrap:layout }}
-
-    <input type="submit" class="text btn btn-primary">
-
+    
+    {% bootstrap_form form layout=layout inline_group_class='col-2' %}
+    
+    <div class="col-2">
+        <input type="submit" class="btn btn-primary">
+    </div>
 </form>
 
-<p>Submit the form to see error messages styled into it.</p>
-
+<p class="help-block">Submit the form to see error messages styled into it.</p>
 {% endblock %}
-

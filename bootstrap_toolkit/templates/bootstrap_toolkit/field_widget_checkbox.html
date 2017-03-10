@@ -1,0 +1,10 @@
+{% load bootstrap_toolkit %}
+
+<div class="checkbox">
+    <label>
+        <input type="checkbox" id="{{ field.auto_id }}" name="{{ field.html_name }}"
+            {% if field.value %}checked{% endif %}
+            {{ field.field.widget.attrs|html_attrs }}>
+        {{ field.label }}
+    </label>
+</div>
