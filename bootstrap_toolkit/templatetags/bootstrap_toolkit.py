@@ -14,7 +14,7 @@ from django.utils.html import escape
 
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-                             '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/'
+                             '//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
@@ -22,7 +22,7 @@ BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
 )
 
 BOOTSTRAP_JS_URL = getattr(settings, 'BOOTSTRAP_JS_URL',
-                           None
+                           BOOTSTRAP_JS_BASE_URL + "bootstrap.js"
 )
 
 BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
@@ -41,12 +41,10 @@ def bootstrap_stylesheet_url(css=None):
     """
     URL to Bootstrap Stylesheet (CSS)
     """
-    url = BOOTSTRAP_CSS_URL
     if css:
-        url = BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
+        return BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
     else:
-        url = BOOTSTRAP_CSS_URL
-    return url
+        return BOOTSTRAP_CSS_URL
 
 
 @register.simple_tag
@@ -58,16 +56,30 @@ def bootstrap_stylesheet_tag(css=None):
 
 
 @register.simple_tag
+def glyphicons_stylesheet_url():
+    """
+    URL to Glyphicons Stylesheet (CSS)
+    """
+    return settings.STATIC_URL + "glyphicons/css/bootstrap-glyphicons.css"
+
+
+@register.simple_tag
+def glyphicons_stylesheet_tag():
+    """
+    HTML tag to insert Glyphicons stylesheet
+    """
+    return u"<link rel='stylesheet' href='{}'>".format(glyphicons_stylesheet_url())
+
+
+@register.simple_tag
 def bootstrap_javascript_url(name=None):
     """
     URL to Bootstrap javascript file
     """
-    if BOOTSTRAP_JS_URL:
-        return BOOTSTRAP_JS_URL
     if name:
         return BOOTSTRAP_JS_BASE_URL + 'bootstrap-' + name + '.js'
     else:
-        return BOOTSTRAP_JS_BASE_URL + 'bootstrap.min.js'
+        return BOOTSTRAP_JS_URL
 
 
 @register.simple_tag
@@ -251,6 +263,8 @@ def bootstrap_button(text, **kwargs):
     button_class = 'btn'
     if button_type:
         button_class += ' btn-' + button_type
+    else:
+        button_class += ' btn-default'
     if button_size:
         button_class += ' btn-' + button_size
     if button_disabled:
@@ -258,9 +272,9 @@ def bootstrap_button(text, **kwargs):
         # Build icon classes
     icon_class = ''
     if button_icon:
-        icon_class = 'icon-' + button_icon
+        icon_class = 'glyphicon glyphicon-' + button_icon
         if button_type and button_type != 'link':
-            icon_class += ' icon-white'
+            icon_class += ' glyphicon-white'
             # Return context for template
     return {
         'text': text,
@@ -275,9 +289,9 @@ def bootstrap_icon(icon, **kwargs):
     """
     Render an icon
     """
-    icon_class = 'icon-' + icon
+    icon_class = 'glyphicon glyphicon-' + icon
     if kwargs.get('inverse'):
-        icon_class += ' icon-white'
+        icon_class += ' glphyicon-white'
     return {
         'icon_class': icon_class,
     }
@@ -354,7 +368,7 @@ def get_pagination_context(page, pages_to_show=11, url=None, size=None, align=No
         url = url.replace(u'?&', u'?')
     # Set CSS classes, see http://twitter.github.io/bootstrap/components.html#pagination
     pagination_css_classes = ['pagination']
-    if size in ['small', 'large', 'mini']:
+    if size in ['small', 'large']:
         pagination_css_classes.append('pagination-%s' % size)
     if align == 'center':
         pagination_css_classes.append('pagination-centered')
